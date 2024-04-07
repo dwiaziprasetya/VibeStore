@@ -55,7 +55,7 @@ fun Search() {
             },
             placeholder = {
                 Text(
-                    text = "search product...",
+                    text = "Search product...",
                     color = MaterialTheme.colorScheme.outline,
                     fontSize = 17.sp
                 )
