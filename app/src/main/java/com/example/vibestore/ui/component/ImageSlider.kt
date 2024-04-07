@@ -35,14 +35,11 @@ fun ImageSlider() {
     })
     Column {
         HorizontalPager(
-            contentPadding = PaddingValues(horizontal = 40.dp),
+            contentPadding = PaddingValues(),
             pageSpacing = 16.dp,
             state = pagerState,
             modifier = Modifier
-                .padding(
-                    top = 16.dp,
-                    bottom = 16.dp
-                )
+                .padding(16.dp)
         ) { page ->
             Image(
                 painter = painterResource(dummySliderImage[page].image),

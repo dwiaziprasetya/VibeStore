@@ -50,6 +50,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.foundation)
     implementation(libs.accompanist.pager.indicators)
     implementation(libs.androidx.material.icons.extended.android)

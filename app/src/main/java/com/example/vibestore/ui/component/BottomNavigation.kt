@@ -8,66 +8,110 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.graphics.toColorInt
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import com.example.vibestore.R
-import com.example.vibestore.model.BottomBarItem
+import com.example.vibestore.ui.navigation.NavigationItem
+import com.example.vibestore.ui.navigation.Screen
 import com.example.vibestore.ui.theme.VibeStoreTheme
 
 @Composable
 fun BottomNavigation(
+    navController: NavHostController
 ) {
     NavigationBar(
         containerColor = Color.White,
         modifier = Modifier
             .height(75.dp)
     ) {
+        val navBackStackEntry by navController.currentBackStackEntryAsState()
+        val currentRoute = navBackStackEntry?.destination?.route
         val navigationItems = listOf(
-            BottomBarItem(
+            NavigationItem(
                 title = "Home",
                 icon = painterResource(R.drawable.homeoutlined),
+                iconActive = painterResource(R.drawable.homefilled),
+                screen = Screen.Home
             ),
-            BottomBarItem(
-                title = "Cart",
+            NavigationItem(
+                title = "My Cart",
                 icon = painterResource(R.drawable.cartoutlined),
+                iconActive = painterResource(R.drawable.cartfilled),
+                screen = Screen.MyCart
             ),
-            BottomBarItem(
+            NavigationItem(
                 title = "Coupon",
                 icon = painterResource(R.drawable.couponoutlined),
+                iconActive = painterResource(R.drawable.couponfilled),
+                screen = Screen.Coupon
             ),
-            BottomBarItem(
+            NavigationItem(
                 title = "Favourite",
                 icon = painterResource(R.drawable.favouriteoutlined),
+                iconActive = painterResource(R.drawable.favouritefilled),
+                screen = Screen.Favourite
             ),
-            BottomBarItem(
+            NavigationItem(
                 title = "Profile",
                 icon = painterResource(R.drawable.profileoutlined),
+                iconActive = painterResource(R.drawable.profilefilled),
+
+                screen = Screen.Profile
             ),
         )
-        navigationItems.map {
+        navigationItems.map { item ->
+            val isSelected = currentRoute == item.screen.route
             NavigationBarItem(
-                selected = it.title == navigationItems[0].title,
-                onClick = {
-                },
+                selected = isSelected,
                 icon = {
-                    Icon(
-                        painter = it.icon,
-                        contentDescription = it.title,
-                        tint = MaterialTheme.colorScheme.outline
-                    )
+                    if (isSelected) {
+                        Icon(
+                            painter = item.iconActive,
+                            contentDescription = item.title,
+                            tint = Color("#008DDA".toColorInt())
+                        )
+                    } else {
+                        Icon(
+                            painter = item.icon,
+                            contentDescription = item.title,
+                            tint = MaterialTheme.colorScheme.outline
+                        )
+                    }
                 },
                 label = {
-                    Text(
-                        text = it.title,
-                        color = MaterialTheme.colorScheme.outline
-                    )
+                    if (isSelected) {
+                        Text(
+                            text = item.title,
+                            color = Color("#008DDA".toColorInt())
+                        )
+                    } else {
+                        Text(
+                            text = item.title,
+                            color = MaterialTheme.colorScheme.outline
+                        )
+                    }
                 },
                 colors = NavigationBarItemDefaults.colors(
                     indicatorColor = Color.White
-                )
+                ),
+                onClick = {
+                    navController.navigate(item.screen.route) {
+                        popUpTo(navController.graph.findStartDestination().id){
+                            saveState = true
+                        }
+                        restoreState = true
+                        launchSingleTop = true
+                    }
+                }
             )
         }
     }
@@ -77,6 +121,6 @@ fun BottomNavigation(
 @Composable
 private fun BottomNavigationPreview() {
     VibeStoreTheme {
-        BottomNavigation()
+        BottomNavigation(rememberNavController())
     }
 }
