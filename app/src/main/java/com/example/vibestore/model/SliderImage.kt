@@ -10,4 +10,5 @@ val dummySliderImage = listOf(
     SliderImage(R.drawable.sliderimageone),
     SliderImage(R.drawable.sliderimagetwo),
     SliderImage(R.drawable.sliderimagethree),
+    SliderImage(R.drawable.sliderimagefour),
 )

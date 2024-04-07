@@ -13,7 +13,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.vibestore.ui.component.BottomNavigation
-import com.example.vibestore.ui.component.Search
 import com.example.vibestore.ui.navigation.Screen
 import com.example.vibestore.ui.screen.coupon.CouponScreen
 import com.example.vibestore.ui.screen.favourite.FavouriteScreen
@@ -27,9 +26,6 @@ fun VibeStoreApp(
     navController: NavHostController = rememberNavController(),
 ) {
     Scaffold(
-        topBar = {
-            Search()
-        },
         bottomBar = { BottomNavigation(navController) }
     ) { innerPadding ->
         NavHost(

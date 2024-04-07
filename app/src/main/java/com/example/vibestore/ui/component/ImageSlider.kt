@@ -35,11 +35,11 @@ fun ImageSlider() {
     })
     Column {
         HorizontalPager(
-            contentPadding = PaddingValues(),
+            contentPadding = PaddingValues(horizontal = 16.dp),
             pageSpacing = 16.dp,
             state = pagerState,
             modifier = Modifier
-                .padding(16.dp)
+                .padding(top = 16.dp, bottom = 16.dp)
         ) { page ->
             Image(
                 painter = painterResource(dummySliderImage[page].image),
@@ -56,7 +56,7 @@ fun ImageSlider() {
             horizontalArrangement = Arrangement.Center
         ) {
             repeat(pagerState.pageCount) { iteration ->
-                val color = if (pagerState.currentPage == iteration) Color("#008DDA".toColorInt()) else Color.LightGray
+                val color = if (pagerState.currentPage == iteration) Color("#29bf12".toColorInt()) else Color.LightGray
                 Box(
                     modifier = Modifier
                         .padding(2.dp)

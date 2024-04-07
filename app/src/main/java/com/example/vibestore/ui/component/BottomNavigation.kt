@@ -77,7 +77,7 @@ fun BottomNavigation(
                         Icon(
                             painter = item.iconActive,
                             contentDescription = item.title,
-                            tint = Color("#008DDA".toColorInt())
+                            tint = Color("#29bf12".toColorInt())
                         )
                     } else {
                         Icon(
@@ -91,7 +91,7 @@ fun BottomNavigation(
                     if (isSelected) {
                         Text(
                             text = item.title,
-                            color = Color("#008DDA".toColorInt())
+                            color = Color("#29bf12".toColorInt())
                         )
                     } else {
                         Text(
