@@ -2,6 +2,7 @@ package com.example.vibestore.ui.component
 
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
@@ -27,36 +28,43 @@ fun BottomNavigation(
         val navigationItems = listOf(
             BottomBarItem(
                 title = "Home",
-                icon = painterResource(R.drawable.homeoutlined)
+                icon = painterResource(R.drawable.homeoutlined),
             ),
             BottomBarItem(
                 title = "Cart",
-                icon = painterResource(R.drawable.cartoutlined)
+                icon = painterResource(R.drawable.cartoutlined),
             ),
             BottomBarItem(
                 title = "Coupon",
-                icon = painterResource(R.drawable.couponoutlined)
+                icon = painterResource(R.drawable.couponoutlined),
             ),
             BottomBarItem(
                 title = "Favourite",
-                icon = painterResource(R.drawable.favouriteoutlined)
+                icon = painterResource(R.drawable.favouriteoutlined),
             ),
             BottomBarItem(
                 title = "Profile",
-                icon = painterResource(R.drawable.profileoutlined)
+                icon = painterResource(R.drawable.profileoutlined),
             ),
         )
         navigationItems.map {
             NavigationBarItem(
                 selected = it.title == navigationItems[0].title,
-                onClick = {},
+                onClick = {
+                },
                 icon = {
                     Icon(
                         painter = it.icon,
-                        contentDescription = it.title
+                        contentDescription = it.title,
+                        tint = MaterialTheme.colorScheme.outline
                     )
                 },
-                label = { Text(text = it.title) },
+                label = {
+                    Text(
+                        text = it.title,
+                        color = MaterialTheme.colorScheme.outline
+                    )
+                },
                 colors = NavigationBarItemDefaults.colors(
                     indicatorColor = Color.White
                 )

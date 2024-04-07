@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -21,10 +20,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.graphics.toColorInt
+import com.example.vibestore.R
 import com.example.vibestore.ui.theme.VibeStoreTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -75,15 +76,15 @@ fun Search() {
                     color = Color("#EEEEEE".toColorInt()),
                     shape = RoundedCornerShape(50.dp)
                 )
-                .padding(14.dp),
+                .padding(16.dp),
         ){
             Icon(
-                imageVector = Icons.Outlined.Notifications,
+                painter = painterResource(R.drawable.notificationoutlined),
                 contentDescription = null,
                 modifier = Modifier
                     .fillMaxSize()
                     .size(24.dp),
-                tint = MaterialTheme.colorScheme.onSurfaceVariant
+                tint = MaterialTheme.colorScheme.outline
             )
         }
     }
