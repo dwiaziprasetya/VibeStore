@@ -51,7 +51,7 @@ fun Search() {
                 Icon(
                     imageVector = Icons.Default.Search,
                     contentDescription = "Search Icon",
-                    tint = MaterialTheme.colorScheme.onSurfaceVariant
+                    tint = MaterialTheme.colorScheme.outline
                 )
             },
             placeholder = {

@@ -16,11 +16,13 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.toColorInt
@@ -34,12 +36,27 @@ fun ImageSlider() {
         dummySliderImage.size
     })
     Column {
+        Row(
+            modifier = Modifier
+                .padding(16.dp)
+        ) {
+            Text(
+                text = "Best Seller",
+                modifier = Modifier
+                    .weight(1f),
+                fontWeight = FontWeight.Bold
+            )
+            Text(
+                text = "See all",
+                color = Color("#29bf12".toColorInt())
+            )
+        }
         HorizontalPager(
             contentPadding = PaddingValues(horizontal = 16.dp),
             pageSpacing = 16.dp,
             state = pagerState,
             modifier = Modifier
-                .padding(top = 16.dp, bottom = 16.dp)
+                .padding(bottom = 16.dp)
         ) { page ->
             Image(
                 painter = painterResource(dummySliderImage[page].image),
