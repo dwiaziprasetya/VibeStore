@@ -3,6 +3,7 @@ package com.example.vibestore.ui.component
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -36,6 +37,7 @@ fun ProductCard() {
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .fillMaxWidth()
+                .height(200.dp)
                 .padding(bottom = 8.dp)
                 .clip(RoundedCornerShape(10.dp))
         )

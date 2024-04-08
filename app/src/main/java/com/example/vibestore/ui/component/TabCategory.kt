@@ -2,7 +2,6 @@ package com.example.vibestore.ui.component
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,7 +20,6 @@ import androidx.compose.material.Text
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
@@ -97,12 +95,13 @@ fun TabCategory() {
         ) { page ->
             Column(
                 modifier = Modifier.wrapContentHeight(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
             ) {
                 when (page) {
                     0 -> AllScreen()
                     1 -> AllScreen()
+                    2 -> AllScreen()
+                    3 -> AllScreen()
+                    4 -> AllScreen()
                 }
             }
         }
