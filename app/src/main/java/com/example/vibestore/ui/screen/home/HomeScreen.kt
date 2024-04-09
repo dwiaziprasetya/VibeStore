@@ -12,6 +12,7 @@ import com.example.vibestore.ui.component.HomeSection
 import com.example.vibestore.ui.component.ImageSlider
 import com.example.vibestore.ui.component.Search
 import com.example.vibestore.ui.component.TabCategory
+import com.example.vibestore.ui.screen.foryou.ForYou
 import com.example.vibestore.ui.theme.VibeStoreTheme
 
 @Composable
@@ -33,6 +34,10 @@ fun HomeScreen() {
             HomeSection(
                 title = "Categories",
                 content = { TabCategory() }
+            )
+            HomeSection(
+                title = "For You",
+                content = { ForYou() }
             )
         }
     }

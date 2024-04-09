@@ -2,7 +2,6 @@ package com.example.vibestore.ui.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -23,7 +22,9 @@ import com.example.vibestore.R
 import com.example.vibestore.ui.theme.VibeStoreTheme
 
 @Composable
-fun ProductCard() {
+fun ProductCard(
+    image: Int
+) {
     Column(
         modifier = Modifier
             .padding(16.dp)
@@ -32,11 +33,11 @@ fun ProductCard() {
         horizontalAlignment = Alignment.Start
     ) {
         Image(
-            painter = painterResource(R.drawable.samplemodel),
+            painter = painterResource(image),
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier
-                .fillMaxWidth()
+                .width(160.dp)
                 .height(200.dp)
                 .padding(bottom = 8.dp)
                 .clip(RoundedCornerShape(10.dp))
@@ -58,6 +59,6 @@ fun ProductCard() {
 @Composable
 private fun ProductCardPreview() {
     VibeStoreTheme {
-        ProductCard()
+        ProductCard(R.drawable.samplemodel1)
     }
 }

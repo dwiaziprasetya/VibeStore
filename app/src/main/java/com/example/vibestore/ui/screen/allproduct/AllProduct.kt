@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.vibestore.R
 import com.example.vibestore.ui.component.ProductCard
 import com.example.vibestore.ui.theme.VibeStoreTheme
 
@@ -18,7 +19,7 @@ fun AllScreen() {
             .height(525.dp)
     ) {
         items(4){
-            ProductCard()
+            ProductCard(R.drawable.samplemodel1)
         }
     }
 }
