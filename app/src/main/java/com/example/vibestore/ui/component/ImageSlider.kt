@@ -1,6 +1,5 @@
 package com.example.vibestore.ui.component
 
-import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -92,7 +91,6 @@ fun ImageSlider() {
     LaunchedEffect(Unit) {
         while(true) {
             delay(4000)
-            Log.d("Tag", "${pagerState.currentPage}")
             val nextPage = (pagerState.currentPage + 1) % pagerState.pageCount
             pagerState.animateScrollToPage(nextPage)
         }

@@ -1,4 +1,4 @@
-package com.example.vibestore.ui.screen
+package com.example.vibestore.ui.screen.allproduct
 
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.grid.GridCells

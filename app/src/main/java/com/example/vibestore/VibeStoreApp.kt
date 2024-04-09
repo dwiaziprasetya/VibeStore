@@ -32,8 +32,8 @@ fun VibeStoreApp(
             navController = navController,
             startDestination = Screen.Home.route,
             modifier = Modifier.padding(innerPadding),
-            enterTransition = { fadeIn(tween(700)) },
-            exitTransition = { fadeOut(tween(700)) }
+            enterTransition = { fadeIn(tween(300)) },
+            exitTransition = { fadeOut(tween(300)) }
         ) {
             composable(
                 route = Screen.Home.route,

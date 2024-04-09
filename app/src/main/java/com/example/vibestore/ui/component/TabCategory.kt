@@ -27,7 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.toColorInt
 import com.example.vibestore.model.nameCategory
-import com.example.vibestore.ui.screen.AllScreen
+import com.example.vibestore.ui.screen.allproduct.AllScreen
 import com.example.vibestore.ui.theme.VibeStoreTheme
 import kotlinx.coroutines.launch
 
