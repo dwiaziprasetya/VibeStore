@@ -26,6 +26,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.core.graphics.toColorInt
 import com.example.vibestore.model.dummySliderImage
 import com.example.vibestore.ui.theme.VibeStoreTheme
@@ -40,13 +41,17 @@ fun ImageSlider() {
     Column {
         Row(
             modifier = Modifier
-                .padding(16.dp)
+                .padding(
+                    start = 16.dp,
+                    end = 16.dp
+                )
         ) {
             Text(
                 text = "Best Seller",
                 modifier = Modifier
                     .weight(1f),
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                fontSize = 18.sp
             )
             Text(
                 text = "See all",
@@ -58,7 +63,7 @@ fun ImageSlider() {
             pageSpacing = 16.dp,
             state = pagerState,
             modifier = Modifier
-                .padding(bottom = 16.dp)
+                .padding(top = 16.dp, bottom = 16.dp)
         ) { page ->
             Image(
                 painter = painterResource(dummySliderImage[page].image),
@@ -84,6 +89,25 @@ fun ImageSlider() {
                         .size(8.dp)
                 )
             }
+        }
+        Row(
+            modifier = Modifier
+                .padding(
+                    start = 16.dp,
+                    end = 12.dp
+                )
+        ) {
+            Text(
+                text = "Categories",
+                modifier = Modifier
+                    .weight(1f),
+                fontWeight = FontWeight.Bold,
+                fontSize = 18.sp
+            )
+            Text(
+                text = "See all",
+                color = Color("#29bf12".toColorInt())
+            )
         }
     }
 
