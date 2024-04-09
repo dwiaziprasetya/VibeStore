@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.vibestore.R
 import com.example.vibestore.ui.theme.VibeStoreTheme
+import com.example.vibestore.ui.theme.poppinsFontFamily
 
 @Composable
 fun ProductCard(
@@ -45,12 +46,14 @@ fun ProductCard(
         Text(
             text = "Moth Button Down",
             fontSize = 12.sp,
-            modifier = Modifier
+            fontFamily = poppinsFontFamily,
+            fontWeight = FontWeight.Medium,
         )
         Text(
             text = "$140.00",
             fontSize = 12.sp,
-            fontWeight = FontWeight.ExtraBold
+            fontFamily = poppinsFontFamily,
+            fontWeight = FontWeight.Bold,
         )
     }
 }

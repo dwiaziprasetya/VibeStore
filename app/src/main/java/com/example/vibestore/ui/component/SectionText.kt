@@ -8,14 +8,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.graphics.toColorInt
+import com.example.vibestore.ui.theme.VibeStoreTheme
+import com.example.vibestore.ui.theme.poppinsFontFamily
 
 @Composable
 fun SectionText(
     text: String,
-    navigateToMyProduct: () -> Unit
+    navigateToMyProduct: () -> Unit = {}
 ) {
     Row(
         modifier = Modifier
@@ -26,18 +29,29 @@ fun SectionText(
     ) {
         Text(
             text = text,
+            fontFamily = poppinsFontFamily,
+            fontWeight = FontWeight.Bold,
             modifier = Modifier
                 .weight(1f),
-            fontWeight = FontWeight.Bold,
             fontSize = 18.sp
         )
         Text(
             text = "See all",
+            fontFamily = poppinsFontFamily,
+            fontWeight = FontWeight.Medium,
             color = Color("#29bf12".toColorInt()),
             modifier = Modifier
                 .clickable {
                     navigateToMyProduct()
                 }
         )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun SectionTextPreview() {
+    VibeStoreTheme {
+        SectionText("Categories")
     }
 }

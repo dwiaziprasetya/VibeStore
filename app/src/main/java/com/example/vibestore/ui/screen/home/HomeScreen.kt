@@ -11,7 +11,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.vibestore.ui.component.HomeSection
 import com.example.vibestore.ui.component.ImageSlider
 import com.example.vibestore.ui.component.Search
-import com.example.vibestore.ui.component.TabCategory
 import com.example.vibestore.ui.screen.foryou.ForYou
 import com.example.vibestore.ui.theme.VibeStoreTheme
 
@@ -36,7 +35,7 @@ fun HomeScreen(
             )
             HomeSection(
                 title = "Categories",
-                content = { TabCategory() },
+                content = {  },
                 navigateToMyProduct = navigateToMyProduct
             )
             HomeSection(

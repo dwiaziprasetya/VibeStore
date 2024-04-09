@@ -12,9 +12,11 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.vibestore.ui.component.TabCategory
 import com.example.vibestore.ui.theme.VibeStoreTheme
+import com.example.vibestore.ui.theme.poppinsFontFamily
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -22,7 +24,13 @@ fun MyProductScreen() {
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
-                title = { Text("My Product") },
+                title = {
+                    Text(
+                        text = "My Product",
+                        fontFamily = poppinsFontFamily,
+                        fontWeight = FontWeight.Bold
+                    )
+                },
                 navigationIcon = {
                     IconButton(onClick = {}) {
                         Icon(

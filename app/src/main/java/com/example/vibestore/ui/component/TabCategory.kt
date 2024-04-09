@@ -22,13 +22,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.toColorInt
 import com.example.vibestore.model.nameCategory
 import com.example.vibestore.ui.screen.allproduct.AllScreen
 import com.example.vibestore.ui.theme.VibeStoreTheme
+import com.example.vibestore.ui.theme.poppinsFontFamily
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -68,13 +69,15 @@ fun TabCategory(
                         if (index == pagerState.currentPage) {
                             Text(
                                 text = productCategory.nameCategory,
-                                fontFamily = FontFamily.SansSerif,
+                                fontFamily = poppinsFontFamily,
+                                fontWeight = FontWeight.Medium,
                                 color = Color("#29bf12".toColorInt())
                             )
                         } else {
                             Text(
                                 text = productCategory.nameCategory,
-                                fontFamily = FontFamily.SansSerif,
+                                fontFamily = poppinsFontFamily,
+                                fontWeight = FontWeight.Medium,
                                 color = MaterialTheme.colorScheme.outline
                             )
                         }
