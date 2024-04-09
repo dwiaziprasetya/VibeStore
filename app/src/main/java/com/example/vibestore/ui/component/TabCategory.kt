@@ -33,7 +33,8 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun TabCategory() {
+fun TabCategory(
+) {
     val pagerState = rememberPagerState(pageCount = {
         nameCategory.size
     })
