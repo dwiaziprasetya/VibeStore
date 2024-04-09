@@ -19,10 +19,10 @@ fun HomeScreen() {
         topBar = {
             Search()
         }
-    ) { innerPading ->
+    ) { innerPadding ->
         Column(
             modifier = Modifier
-                .padding(innerPading)
+                .padding(innerPadding)
                 .verticalScroll(rememberScrollState())
         ) {
             ImageSlider()
