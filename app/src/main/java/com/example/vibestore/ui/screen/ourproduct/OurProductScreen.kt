@@ -1,4 +1,4 @@
-package com.example.vibestore.ui.screen.myproduct
+package com.example.vibestore.ui.screen.ourproduct
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
@@ -20,13 +20,13 @@ import com.example.vibestore.ui.theme.poppinsFontFamily
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MyProductScreen() {
+fun OurProductScreen() {
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
                     Text(
-                        text = "My Product",
+                        text = "Our Product",
                         fontFamily = poppinsFontFamily,
                         fontWeight = FontWeight.Bold
                     )
@@ -52,6 +52,6 @@ fun MyProductScreen() {
 @Composable
 private fun MyProductPreview() {
     VibeStoreTheme {
-        MyProductScreen()
+        OurProductScreen()
     }
 }

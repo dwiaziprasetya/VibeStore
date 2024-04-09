@@ -8,10 +8,10 @@ import com.example.vibestore.ui.component.ProductCard
 import com.example.vibestore.ui.theme.VibeStoreTheme
 
 @Composable
-fun ForYou() {
-    LazyRow {
+fun ForYou(image: Int) {
+    LazyRow{
         items(5){
-            ProductCard(R.drawable.samplemodel2)
+            ProductCard(image)
         }
     }
 }
@@ -20,6 +20,14 @@ fun ForYou() {
 @Composable
 private fun ForYouPreview() {
     VibeStoreTheme {
-        ForYou()
+        ForYou(R.drawable.samplemodel2)
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun ForYouPreview2() {
+    VibeStoreTheme {
+        ForYou(R.drawable.samplemodel1)
     }
 }

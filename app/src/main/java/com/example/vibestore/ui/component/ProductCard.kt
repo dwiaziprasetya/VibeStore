@@ -28,8 +28,8 @@ fun ProductCard(
 ) {
     Column(
         modifier = Modifier
+            .width(196.dp)
             .padding(16.dp)
-            .width(160.dp)
             .wrapContentHeight(),
         horizontalAlignment = Alignment.Start
     ) {
@@ -38,8 +38,8 @@ fun ProductCard(
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier
-                .width(160.dp)
-                .height(200.dp)
+                .width(196.dp)
+                .height(210.dp)
                 .padding(bottom = 8.dp)
                 .clip(RoundedCornerShape(10.dp))
         )

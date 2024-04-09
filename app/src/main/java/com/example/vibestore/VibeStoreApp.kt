@@ -20,7 +20,7 @@ import com.example.vibestore.ui.screen.coupon.CouponScreen
 import com.example.vibestore.ui.screen.favourite.FavouriteScreen
 import com.example.vibestore.ui.screen.home.HomeScreen
 import com.example.vibestore.ui.screen.mycart.MyCartScreen
-import com.example.vibestore.ui.screen.myproduct.MyProductScreen
+import com.example.vibestore.ui.screen.ourproduct.OurProductScreen
 import com.example.vibestore.ui.screen.profile.ProfileScreen
 import com.example.vibestore.ui.theme.VibeStoreTheme
 
@@ -66,7 +66,7 @@ fun VibeStoreApp(
                 ProfileScreen()
             }
             composable(Screen.MyProduct.route){
-                MyProductScreen()
+                OurProductScreen()
             }
         }
     }

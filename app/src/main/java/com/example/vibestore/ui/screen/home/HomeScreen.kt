@@ -8,6 +8,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.vibestore.R
 import com.example.vibestore.ui.component.HomeSection
 import com.example.vibestore.ui.component.ImageSlider
 import com.example.vibestore.ui.component.Search
@@ -40,7 +41,7 @@ fun HomeScreen(
             )
             HomeSection(
                 title = "For You",
-                content = { ForYou() },
+                content = { ForYou(R.drawable.samplemodel2) },
                 navigateToMyProduct = {
 
                 }
