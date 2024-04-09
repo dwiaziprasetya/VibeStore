@@ -16,7 +16,9 @@ import com.example.vibestore.ui.screen.foryou.ForYou
 import com.example.vibestore.ui.theme.VibeStoreTheme
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    navigateToMyProduct: () -> Unit
+) {
     Scaffold (
         topBar = {
             Search()
@@ -29,15 +31,20 @@ fun HomeScreen() {
         ) {
             HomeSection(
                 title = "Best Seller",
-                content = { ImageSlider() }
+                content = { ImageSlider() },
+                navigateToMyProduct = {}
             )
             HomeSection(
                 title = "Categories",
-                content = { TabCategory() }
+                content = { TabCategory() },
+                navigateToMyProduct = navigateToMyProduct
             )
             HomeSection(
                 title = "For You",
-                content = { ForYou() }
+                content = { ForYou() },
+                navigateToMyProduct = {
+
+                }
             )
         }
     }
@@ -47,6 +54,5 @@ fun HomeScreen() {
 @Composable
 private fun HomeScreenPreview() {
     VibeStoreTheme {
-        HomeScreen()
     }
 }

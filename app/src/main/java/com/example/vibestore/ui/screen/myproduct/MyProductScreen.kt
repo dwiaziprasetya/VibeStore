@@ -18,7 +18,7 @@ import com.example.vibestore.ui.theme.VibeStoreTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MyProduct() {
+fun MyProductScreen() {
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -44,6 +44,6 @@ fun MyProduct() {
 @Composable
 private fun MyProductPreview() {
     VibeStoreTheme {
-        MyProduct()
+        MyProductScreen()
     }
 }

@@ -1,5 +1,6 @@
 package com.example.vibestore.ui.component
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
@@ -13,7 +14,8 @@ import androidx.core.graphics.toColorInt
 
 @Composable
 fun SectionText(
-    text: String
+    text: String,
+    navigateToMyProduct: () -> Unit
 ) {
     Row(
         modifier = Modifier
@@ -31,7 +33,11 @@ fun SectionText(
         )
         Text(
             text = "See all",
-            color = Color("#29bf12".toColorInt())
+            color = Color("#29bf12".toColorInt()),
+            modifier = Modifier
+                .clickable {
+                    navigateToMyProduct()
+                }
         )
     }
 }
