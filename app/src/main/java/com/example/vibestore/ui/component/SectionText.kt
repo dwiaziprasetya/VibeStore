@@ -30,7 +30,7 @@ fun SectionText(
         Text(
             text = text,
             fontFamily = poppinsFontFamily,
-            fontWeight = FontWeight.Bold,
+            fontWeight = FontWeight.SemiBold,
             modifier = Modifier
                 .weight(1f),
             fontSize = 18.sp

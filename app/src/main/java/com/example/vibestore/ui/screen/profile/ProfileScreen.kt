@@ -131,7 +131,7 @@ fun ProfileScreen() {
                     fontFamily = poppinsFontFamily
                 )
             }
-            Divider()
+            Divider(color = Color(0xFFE3E3E3))
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
@@ -139,15 +139,16 @@ fun ProfileScreen() {
                 Icon(
                     imageVector = Icons.Default.Settings,
                     contentDescription = "settings",
-                    modifier = Modifier.padding(16.dp)
+                    modifier = Modifier.padding(16.dp).size(20.dp)
                 )
                 Text(
                     text = "Settings",
                     fontFamily = poppinsFontFamily,
                     modifier = Modifier.weight(1f),
-                    fontSize = 15.sp,
+                    fontSize = 14.sp,
                 )
                 Icon(
+                    modifier = Modifier.size(20.dp),
                     imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
                     contentDescription = "forward"
                 )
@@ -159,15 +160,16 @@ fun ProfileScreen() {
                 Icon(
                     imageVector = Icons.Default.ShoppingBag,
                     contentDescription = "bag",
-                    modifier = Modifier.padding(16.dp)
+                    modifier = Modifier.padding(16.dp).size(20.dp)
                 )
                 Text(
                     text = "My Orders",
                     fontFamily = poppinsFontFamily,
                     modifier = Modifier.weight(1f),
-                    fontSize = 15.sp
+                    fontSize = 14.sp,
                 )
                 Icon(
+                    modifier = Modifier.size(20.dp),
                     imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
                     contentDescription = "forward"
                 )
@@ -179,15 +181,16 @@ fun ProfileScreen() {
                 Icon(
                     imageVector = Icons.Default.LocationOn,
                     contentDescription = "location",
-                    modifier = Modifier.padding(16.dp)
+                    modifier = Modifier.padding(16.dp).size(20.dp)
                 )
                 Text(
                     text = "Address",
                     fontFamily = poppinsFontFamily,
                     modifier = Modifier.weight(1f),
-                    fontSize = 15.sp
+                    fontSize = 14.sp,
                 )
                 Icon(
+                    modifier = Modifier.size(20.dp),
                     imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
                     contentDescription = "forward"
                 )
@@ -199,20 +202,21 @@ fun ProfileScreen() {
                 Icon(
                     imageVector = Icons.Default.LockOpen,
                     contentDescription = "lock",
-                    modifier = Modifier.padding(16.dp)
+                    modifier = Modifier.padding(16.dp).size(20.dp)
                 )
                 Text(
                     text = "Change Password",
                     fontFamily = poppinsFontFamily,
                     modifier = Modifier.weight(1f),
-                    fontSize = 15.sp
+                    fontSize = 14.sp,
                 )
                 Icon(
+                    modifier = Modifier.size(20.dp),
                     imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
                     contentDescription = "forward"
                 )
             }
-            Divider()
+            Divider(color = Color(0xFFE3E3E3))
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
@@ -220,15 +224,16 @@ fun ProfileScreen() {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.HelpOutline,
                     contentDescription = "help",
-                    modifier = Modifier.padding(16.dp)
+                    modifier = Modifier.padding(16.dp).size(20.dp)
                 )
                 Text(
                     text = "Help & Support",
                     fontFamily = poppinsFontFamily,
                     modifier = Modifier.weight(1f),
-                    fontSize = 15.sp
+                    fontSize = 14.sp,
                 )
                 Icon(
+                    modifier = Modifier.size(20.dp),
                     imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
                     contentDescription = "forward"
                 )
@@ -240,14 +245,14 @@ fun ProfileScreen() {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.Logout,
                     contentDescription = "log out",
-                    modifier = Modifier.padding(16.dp),
+                    modifier = Modifier.padding(16.dp).size(20.dp),
                     tint = Color("#bf122f".toColorInt())
                 )
                 Text(
                     text = "Log out",
                     fontFamily = poppinsFontFamily,
                     color = Color("#bf122f".toColorInt()),
-                    fontSize = 15.sp
+                    fontSize = 14.sp,
                 )
             }
         }

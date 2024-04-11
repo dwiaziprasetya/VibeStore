@@ -1,7 +1,6 @@
 package com.example.vibestore.ui.component
 
 import androidx.compose.foundation.layout.height
-import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -33,9 +32,8 @@ import com.example.vibestore.ui.theme.poppinsFontFamily
 fun BottomNavigation(
     navController: NavHostController
 ) {
-    Divider(thickness = 3.dp, color = Color.Green)
     NavigationBar(
-        containerColor = Color.White,
+        containerColor = MaterialTheme.colorScheme.onPrimary,
         modifier = Modifier
             .height(75.dp)
             .drawWithContent {
