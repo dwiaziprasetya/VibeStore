@@ -8,7 +8,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -23,15 +23,14 @@ import com.example.vibestore.ui.theme.VibeStoreTheme
 @Composable
 fun ProductScreen(
     viewModel: ProductViewModel,
+    string: String
 ) {
+
     val product by viewModel.product.observeAsState(emptyList())
 
-    LaunchedEffect(Unit) {
-        viewModel.getAllProduct()
-    }
-
     Box(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.TopCenter
     ) {
         if (product.isEmpty()) {
             Text(text = "Loading....", modifier = Modifier.align(Alignment.Center))
@@ -46,6 +45,11 @@ fun ProductScreen(
             }
         }
     }
+
+    DisposableEffect(Unit) {
+        viewModel.getProductByCategory(string)
+        onDispose {  }
+    }
 }
 
 
@@ -53,6 +57,6 @@ fun ProductScreen(
 @Composable
 private fun AllScreenPreview() {
     VibeStoreTheme {
-        ProductScreen(viewModel = viewModel())
+        ProductScreen(viewModel = viewModel(), string = "")
     }
 }

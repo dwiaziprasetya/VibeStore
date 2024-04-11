@@ -2,6 +2,9 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
+      <entry key="DetailScreenPreview">
+        <State />
+      </entry>
       <entry key="Development.VibeStore.app">
         <State />
       </entry>

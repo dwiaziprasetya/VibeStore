@@ -19,6 +19,9 @@ import androidx.compose.material.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material.Text
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,7 +30,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.toColorInt
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.vibestore.model.nameCategory
 import com.example.vibestore.ui.screen.product.ProductScreen
 import com.example.vibestore.ui.screen.product.ProductViewModel
 import com.example.vibestore.ui.theme.VibeStoreTheme
@@ -37,11 +39,23 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun TabCategory(
-    viewModel: ProductViewModel = viewModel()
+    viewModel: ProductViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
 ) {
 
+    val category by remember {
+        mutableStateOf(
+            listOf(
+                "All",
+                "Men",
+                "Women",
+                "Electronics",
+                "Jewelery",
+            )
+        )
+    }
+
     val pagerState = rememberPagerState(pageCount = {
-        nameCategory.size
+        category.size
     })
 
     val coroutineScope = rememberCoroutineScope()
@@ -68,20 +82,20 @@ fun TabCategory(
                 )
             }
         ) {
-            val tabItems = nameCategory
+            val tabItems = category
             tabItems.forEachIndexed { index, productCategory ->
                 Tab(
                     text = {
                         if (index == pagerState.currentPage) {
                             Text(
-                                text = productCategory.nameCategory,
+                                text = category[index],
                                 fontFamily = poppinsFontFamily,
                                 fontWeight = FontWeight.Medium,
                                 color = Color("#29bf12".toColorInt())
                             )
                         } else {
                             Text(
-                                text = productCategory.nameCategory,
+                                text = category[index],
                                 fontFamily = poppinsFontFamily,
                                 fontWeight = FontWeight.Medium,
                                 color = MaterialTheme.colorScheme.outline
@@ -101,17 +115,17 @@ fun TabCategory(
         }
         HorizontalPager(
             state = pagerState,
-            userScrollEnabled = false
+            userScrollEnabled = true
         ) { page ->
             Column(
                 modifier = Modifier.wrapContentHeight(),
             ) {
                 when (page) {
-                    0 -> ProductScreen(viewModel)
-                    1 -> Text("Page men")
-                    2 -> Text("Page women")
-                    3 -> Text("Page electronics")
-                    4 -> Text("Page jewelery")
+                    0 -> ProductScreen(viewModel, "jewelery")
+                    1 -> ProductScreen(viewModel, "electronics")
+                    2 -> Text(text = "Hallo")
+                    3 -> Text(text = "Hallo")
+                    4 -> Text(text = "Hallo")
                 }
             }
         }
@@ -122,6 +136,6 @@ fun TabCategory(
 @Composable
 private fun TabCategoryPreview() {
     VibeStoreTheme {
-        TabCategory()
+        TabCategory(viewModel())
     }
 }

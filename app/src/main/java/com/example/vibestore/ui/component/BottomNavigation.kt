@@ -1,6 +1,7 @@
 package com.example.vibestore.ui.component
 
 import androidx.compose.foundation.layout.height
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -10,6 +11,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -30,10 +33,20 @@ import com.example.vibestore.ui.theme.poppinsFontFamily
 fun BottomNavigation(
     navController: NavHostController
 ) {
+    Divider(thickness = 3.dp, color = Color.Green)
     NavigationBar(
         containerColor = Color.White,
         modifier = Modifier
             .height(75.dp)
+            .drawWithContent {
+                drawContent()
+                drawLine(
+                    color = Color(0xFFE3E3E3),
+                    start = Offset(0f, 0f),
+                    end = Offset(size.width, 0f),
+                    strokeWidth = 2f
+                )
+            }
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
