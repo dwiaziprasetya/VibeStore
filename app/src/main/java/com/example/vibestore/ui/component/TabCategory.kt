@@ -26,8 +26,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.toColorInt
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.vibestore.model.nameCategory
-import com.example.vibestore.ui.screen.allproduct.AllScreen
+import com.example.vibestore.ui.screen.product.ProductScreen
+import com.example.vibestore.ui.screen.product.ProductViewModel
 import com.example.vibestore.ui.theme.VibeStoreTheme
 import com.example.vibestore.ui.theme.poppinsFontFamily
 import kotlinx.coroutines.launch
@@ -35,11 +37,15 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun TabCategory(
+    viewModel: ProductViewModel = viewModel()
 ) {
+
     val pagerState = rememberPagerState(pageCount = {
         nameCategory.size
     })
+
     val coroutineScope = rememberCoroutineScope()
+
     Column {
         ScrollableTabRow(
             edgePadding = 0.dp,
@@ -95,17 +101,17 @@ fun TabCategory(
         }
         HorizontalPager(
             state = pagerState,
-            userScrollEnabled = true
+            userScrollEnabled = false
         ) { page ->
             Column(
                 modifier = Modifier.wrapContentHeight(),
             ) {
                 when (page) {
-                    0 -> AllScreen()
-                    1 -> AllScreen()
-                    2 -> AllScreen()
-                    3 -> AllScreen()
-                    4 -> AllScreen()
+                    0 -> ProductScreen(viewModel)
+                    1 -> Text("Page men")
+                    2 -> Text("Page women")
+                    3 -> Text("Page electronics")
+                    4 -> Text("Page jewelery")
                 }
             }
         }

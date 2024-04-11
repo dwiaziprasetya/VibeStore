@@ -1,6 +1,5 @@
 package com.example.vibestore.ui.component
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -13,18 +12,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.vibestore.R
-import com.example.vibestore.ui.theme.VibeStoreTheme
+import coil.compose.AsyncImage
+import com.example.vibestore.model.ProductResponseItem
 import com.example.vibestore.ui.theme.poppinsFontFamily
 
 @Composable
 fun ProductCard(
-    image: Int
+    product: ProductResponseItem
 ) {
     Column(
         modifier = Modifier
@@ -33,35 +30,28 @@ fun ProductCard(
             .wrapContentHeight(),
         horizontalAlignment = Alignment.Start
     ) {
-        Image(
-            painter = painterResource(image),
+        AsyncImage(
+            model = product.image,
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .width(196.dp)
-                .height(210.dp)
+                .height(196.dp)
                 .padding(bottom = 8.dp)
                 .clip(RoundedCornerShape(10.dp))
         )
         Text(
-            text = "Moth Button Down",
+            text = product.title,
+            maxLines = 1,
             fontSize = 12.sp,
             fontFamily = poppinsFontFamily,
             fontWeight = FontWeight.Medium,
         )
         Text(
-            text = "$140.00",
-            fontSize = 12.sp,
+            text = "$"+product.price.toString(),
+            fontSize = 14.sp,
             fontFamily = poppinsFontFamily,
             fontWeight = FontWeight.Bold,
         )
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun ProductCardPreview() {
-    VibeStoreTheme {
-        ProductCard(R.drawable.samplemodel1)
     }
 }
