@@ -9,4 +9,8 @@ class ProductRepository {
     suspend fun getAllProducts(limit: Int): List<ProductResponseItem> {
         return productService.getAllProduct(limit)
     }
+
+    suspend fun getProductByCategory(category: String, limit: Int): List<ProductResponseItem> {
+        return productService.getProductByCategory(category, limit)
+    }
 }

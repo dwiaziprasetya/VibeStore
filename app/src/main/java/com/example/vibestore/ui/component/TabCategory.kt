@@ -119,6 +119,7 @@ fun TabCategory() {
                 when (page) {
                     0 -> ProductScreen(gridHeight = 548.dp, limit = 4)
                     1 -> Text(text = "Hallo")
+                    2 -> Text(text = "Hallo")
                     3 -> Text(text = "Hallo")
                     4 -> Text(text = "Hallo")
                 }
