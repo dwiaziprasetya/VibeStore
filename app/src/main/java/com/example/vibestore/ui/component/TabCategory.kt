@@ -29,6 +29,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.toColorInt
+import com.example.vibestore.ui.screen.product.ProductScreen
 import com.example.vibestore.ui.theme.VibeStoreTheme
 import com.example.vibestore.ui.theme.poppinsFontFamily
 import kotlinx.coroutines.launch
@@ -78,7 +79,7 @@ fun TabCategory() {
             }
         ) {
             val tabItems = category
-            tabItems.forEachIndexed { index, productCategory ->
+            tabItems.forEachIndexed { index, _ ->
                 Tab(
                     text = {
                         if (index == pagerState.currentPage) {
@@ -116,7 +117,7 @@ fun TabCategory() {
                 modifier = Modifier.wrapContentHeight(),
             ) {
                 when (page) {
-                    0 -> Text(text = "Hallo")
+                    0 -> ProductScreen(gridHeight = 548.dp, limit = 4)
                     1 -> Text(text = "Hallo")
                     3 -> Text(text = "Hallo")
                     4 -> Text(text = "Hallo")

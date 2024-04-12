@@ -6,7 +6,7 @@ import com.example.vibestore.model.ProductResponseItem
 class ProductRepository {
     private val productService = ApiConfig.getApiService()
 
-    suspend fun getAllProducts(): List<ProductResponseItem> {
-        return productService.getAllProduct()
+    suspend fun getAllProducts(limit: Int): List<ProductResponseItem> {
+        return productService.getAllProduct(limit)
     }
 }

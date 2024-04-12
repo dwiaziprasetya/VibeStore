@@ -8,7 +8,7 @@ import com.example.vibestore.model.ProductResponseItem
 import com.example.vibestore.repository.ProductRepository
 import kotlinx.coroutines.launch
 
-class ProductViewModel: ViewModel() {
+class ProductViewModel(limit: Int): ViewModel() {
     private val repository = ProductRepository()
 
 
@@ -16,13 +16,13 @@ class ProductViewModel: ViewModel() {
     val products: LiveData<List<ProductResponseItem>> = _products
 
     init {
-        getAllProduct()
+        getAllProduct(limit)
     }
 
-    private fun getAllProduct(){
+    private fun getAllProduct(limit: Int){
         viewModelScope.launch {
             try {
-                val product = repository.getAllProducts()
+                val product = repository.getAllProducts(limit)
                 _products.value = product
             } catch (_: Exception) {
 

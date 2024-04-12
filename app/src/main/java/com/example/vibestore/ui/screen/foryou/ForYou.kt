@@ -2,31 +2,17 @@ package com.example.vibestore.ui.screen.foryou
 
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.vibestore.R
-import com.example.vibestore.ui.theme.VibeStoreTheme
+import com.example.vibestore.ui.component.ProductCard
 
 @Composable
-fun ForYou(image: Int) {
+fun ForYou() {
     LazyRow{
-        items(5){
-
+        items(6){
+            ProductCard(
+                image = "https://images.footballfanatics.com/manchester-united/manchester-united-adidas-home-authentic-shirt-2023-24_ss5_p-13384941+u-urcxn6bi50iq6jiewn9d+v-6luamd4m4wjyksnexulw.jpg?_hv=2&w=600",
+                title = "Manchester United Jersey",
+                price = 450
+            )
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun ForYouPreview() {
-    VibeStoreTheme {
-        ForYou(R.drawable.samplemodel2)
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun ForYouPreview2() {
-    VibeStoreTheme {
-        ForYou(R.drawable.samplemodel1)
     }
 }
