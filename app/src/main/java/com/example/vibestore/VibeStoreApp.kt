@@ -30,9 +30,12 @@ fun VibeStoreApp(
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
+
+
+
     Scaffold(
         bottomBar = {
-            if (currentRoute != Screen.MyProduct.route){
+            if (currentRoute != Screen.OurProduct.route){
                 BottomNavigation(navController)
             }
         }
@@ -49,7 +52,7 @@ fun VibeStoreApp(
             ){
                 HomeScreen(
                     navigateToMyProduct = {
-                        navController.navigate(Screen.MyProduct.route)
+                        navController.navigate(Screen.OurProduct.route)
                     }
                 )
             }
@@ -65,8 +68,10 @@ fun VibeStoreApp(
             composable(Screen.Profile.route){
                 ProfileScreen()
             }
-            composable(Screen.MyProduct.route){
-                OurProductScreen()
+            composable(Screen.OurProduct.route){
+                OurProductScreen(onBackClick = {
+                    navController.navigateUp()
+                })
             }
         }
     }

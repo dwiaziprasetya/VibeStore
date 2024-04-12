@@ -1,5 +1,6 @@
 package com.example.vibestore.ui.screen.product
 
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -8,55 +9,37 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Devices
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.vibestore.ui.component.ProductCard
-import com.example.vibestore.ui.theme.VibeStoreTheme
 
 @Composable
 fun ProductScreen(
-    viewModel: ProductViewModel,
-    string: String
+    viewModel: ProductViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
 ) {
+    val product by viewModel.products.observeAsState(emptyList())
 
-    val product by viewModel.product.observeAsState(emptyList())
-
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.TopCenter
-    ) {
-        if (product.isEmpty()) {
-            Text(text = "Loading....", modifier = Modifier.align(Alignment.Center))
-        } else {
-            LazyVerticalGrid(
-                columns = GridCells.Adaptive(196.dp),
-                modifier = Modifier.wrapContentHeight(),
-            ) {
-                items(product){
-                    ProductCard(it)
-                }
+    Log.d("Product Content", "Ini dipanggil")
+    if (product.isEmpty()){
+        Box(modifier = Modifier.fillMaxSize()){
+            Text(text = "Loading", modifier = Modifier.align(Alignment.Center))
+        }
+    } else {
+        LazyVerticalGrid(
+            columns = GridCells.Adaptive(196.dp),
+            modifier = Modifier.wrapContentHeight(),
+        ) {
+            items(product){
+                ProductCard(
+                    image = it.image,
+                    title = it.title,
+                    price = it.price
+                )
             }
         }
     }
-
-    DisposableEffect(Unit) {
-        viewModel.getProductByCategory(string)
-        onDispose {  }
-    }
 }
 
-
-@Preview(showBackground = true, device = Devices.PIXEL_4_XL)
-@Composable
-private fun AllScreenPreview() {
-    VibeStoreTheme {
-        ProductScreen(viewModel = viewModel(), string = "")
-    }
-}

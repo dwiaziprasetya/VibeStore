@@ -29,18 +29,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.toColorInt
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.vibestore.ui.screen.product.ProductScreen
-import com.example.vibestore.ui.screen.product.ProductViewModel
 import com.example.vibestore.ui.theme.VibeStoreTheme
 import com.example.vibestore.ui.theme.poppinsFontFamily
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun TabCategory(
-    viewModel: ProductViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
-) {
+fun TabCategory() {
 
     val category by remember {
         mutableStateOf(
@@ -121,9 +116,8 @@ fun TabCategory(
                 modifier = Modifier.wrapContentHeight(),
             ) {
                 when (page) {
-                    0 -> ProductScreen(viewModel, "jewelery")
-                    1 -> ProductScreen(viewModel, "electronics")
-                    2 -> Text(text = "Hallo")
+                    0 -> Text(text = "Hallo")
+                    1 -> Text(text = "Hallo")
                     3 -> Text(text = "Hallo")
                     4 -> Text(text = "Hallo")
                 }
@@ -136,6 +130,6 @@ fun TabCategory(
 @Composable
 private fun TabCategoryPreview() {
     VibeStoreTheme {
-        TabCategory(viewModel())
+        TabCategory()
     }
 }

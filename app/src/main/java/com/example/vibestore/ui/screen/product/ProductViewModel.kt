@@ -11,29 +11,33 @@ import kotlinx.coroutines.launch
 class ProductViewModel: ViewModel() {
     private val repository = ProductRepository()
 
-    private val _product = MutableLiveData<List<ProductResponseItem>>()
-    val product: LiveData<List<ProductResponseItem>> = _product
 
+    private val _products = MutableLiveData<List<ProductResponseItem>>()
+    val products: LiveData<List<ProductResponseItem>> = _products
 
-    fun getAllProduct(){
+    init {
+        getAllProduct()
+    }
+
+    private fun getAllProduct(){
         viewModelScope.launch {
             try {
-                val product = repository.getAllProduct()
-                _product.value = product
+                val product = repository.getAllProducts()
+                _products.value = product
             } catch (_: Exception) {
 
             }
         }
     }
 
-    fun getProductByCategory(category: String){
-        viewModelScope.launch {
-            try {
-                val product = repository.getProductByCategory(category)
-                _product.value = product
-            } catch (_: Exception) {
-
-            }
-        }
-    }
+//    fun getProductByCategory(category: String){
+//        viewModelScope.launch {
+//            try {
+//                val product = repository.getProductByCategory(category)
+//                _product.value = product
+//            } catch (_: Exception) {
+//
+//            }
+//        }
+//    }
 }

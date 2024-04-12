@@ -13,15 +13,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.example.vibestore.model.ProductResponseItem
+import com.example.vibestore.ui.theme.VibeStoreTheme
 import com.example.vibestore.ui.theme.poppinsFontFamily
 
 @Composable
 fun ProductCard(
-    product: ProductResponseItem
+    image: String,
+    title: String,
+    price: Any
 ) {
     Column(
         modifier = Modifier
@@ -31,7 +34,7 @@ fun ProductCard(
         horizontalAlignment = Alignment.Start
     ) {
         AsyncImage(
-            model = product.image,
+            model = image,
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier
@@ -41,17 +44,29 @@ fun ProductCard(
                 .clip(RoundedCornerShape(10.dp))
         )
         Text(
-            text = product.title,
+            text = title,
             maxLines = 1,
             fontSize = 12.sp,
             fontFamily = poppinsFontFamily,
             fontWeight = FontWeight.Medium,
         )
         Text(
-            text = "$"+product.price.toString(),
+            text = "$$price",
             fontSize = 14.sp,
             fontFamily = poppinsFontFamily,
             fontWeight = FontWeight.Bold,
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun ProductCardPreview() {
+    VibeStoreTheme {
+        ProductCard(
+            image = "https://cdn.rri.co.id/berita/1/images/1689391542821-images_(22)/1689391542821-images_(22).jpeg",
+            title = "Nasi Padang",
+            price = 184
         )
     }
 }
