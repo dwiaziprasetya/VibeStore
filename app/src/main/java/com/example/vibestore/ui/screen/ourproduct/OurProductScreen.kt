@@ -17,7 +17,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.vibestore.ui.screen.product.ProductScreen
+import com.example.vibestore.ui.component.TabCategory
 import com.example.vibestore.ui.theme.VibeStoreTheme
 import com.example.vibestore.ui.theme.poppinsFontFamily
 
@@ -56,7 +56,7 @@ fun OurProductScreen(
         }
     ) { innerPadding ->
         Column(modifier = Modifier.padding(innerPadding)) {
-            ProductScreen()
+            TabCategory()
         }
     }
 }

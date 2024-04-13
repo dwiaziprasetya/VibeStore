@@ -6,7 +6,7 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface ApiService {
-    @GET("products/")
+    @GET("products")
     suspend fun getAllProduct(
         @Query("limit") limit: Int
     ): List<ProductResponseItem>

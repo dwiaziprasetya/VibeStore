@@ -1,4 +1,4 @@
-package com.example.vibestore.ui.screen.product
+package com.example.vibestore.ui.screen.product.jewelery
 
 import android.util.Log
 import androidx.compose.foundation.layout.Box
@@ -23,23 +23,26 @@ import androidx.core.graphics.toColorInt
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.vibestore.helper.ViewModelFactory
 import com.example.vibestore.ui.component.ProductCard
+import com.example.vibestore.ui.screen.product.all.AllProductScreen
 import com.example.vibestore.ui.theme.VibeStoreTheme
 
 @Composable
-fun ProductScreen(
+fun JeweleryProductScreen(
     gridHeight: Dp = Dp.Unspecified,
-    limit: Int = 20,
+    limit: Int
 ) {
-    val viewModel: ProductViewModel = viewModel(
+
+    val viewModel2: JeweleryProductViewModel = viewModel(
         factory = ViewModelFactory(limit)
     )
-    val product by viewModel.products.observeAsState(emptyList())
+    val product by viewModel2.products.observeAsState(emptyList())
 
     Log.d("Product Content", "Ini dipanggil")
     if (product.isEmpty()){
         Box(modifier = Modifier
             .fillMaxWidth()
-            .height(274.dp)){
+            .height(548.dp)
+        ){
             CircularProgressIndicator(
                 modifier = Modifier
                     .width(64.dp)
@@ -65,33 +68,9 @@ fun ProductScreen(
 
 @Preview(showBackground = true)
 @Composable
-private fun ProductScreenPreview() {
+private fun JeweleryProductScreenPreview() {
     VibeStoreTheme {
-        ProductScreen()
-    }
-}
-
-@Composable
-fun ProductContent() {
-    LazyVerticalGrid(
-        columns = GridCells.Adaptive(196.dp),
-        modifier = Modifier.height(548.dp),
-    ) {
-        items(4){
-            ProductCard(
-                image = "sdaasda",
-                title = "Hallo",
-                price = 5
-            )
-        }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun ProductContentPreview() {
-    VibeStoreTheme {
-        ProductContent()
+        AllProductScreen(limit = 20)
     }
 }
 

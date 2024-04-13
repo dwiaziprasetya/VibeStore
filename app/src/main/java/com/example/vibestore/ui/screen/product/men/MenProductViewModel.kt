@@ -1,4 +1,4 @@
-package com.example.vibestore.ui.screen.product
+package com.example.vibestore.ui.screen.product.men
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,26 +8,17 @@ import com.example.vibestore.model.ProductResponseItem
 import com.example.vibestore.repository.ProductRepository
 import kotlinx.coroutines.launch
 
-class ProductViewModel(limit: Int): ViewModel() {
+class MenProductViewModel(limit: Int): ViewModel() {
     private val repository = ProductRepository()
 
     private val _products = MutableLiveData<List<ProductResponseItem>>()
     val products: LiveData<List<ProductResponseItem>> = _products
 
+
     init {
-        getAllProduct(limit)
+        getProductByCategory("men's clothing", limit)
     }
 
-    private fun getAllProduct(limit: Int){
-        viewModelScope.launch {
-            try {
-                val product = repository.getAllProducts(limit)
-                _products.value = product
-            } catch (_: Exception) {
-
-            }
-        }
-    }
 
     private fun getProductByCategory(category: String, limit: Int){
         viewModelScope.launch {

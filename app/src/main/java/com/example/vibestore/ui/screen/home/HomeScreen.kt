@@ -8,11 +8,12 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.example.vibestore.ui.component.HomeSection
 import com.example.vibestore.ui.component.ImageSlider
 import com.example.vibestore.ui.component.Search
 import com.example.vibestore.ui.component.TabCategory
-import com.example.vibestore.ui.screen.foryou.ForYou
+import com.example.vibestore.ui.screen.foryou.ForYouScreen
 import com.example.vibestore.ui.theme.VibeStoreTheme
 
 @Composable
@@ -36,12 +37,17 @@ fun HomeScreen(
             )
             HomeSection(
                 title = "Categories",
-                content = { TabCategory() },
+                content = {
+                      TabCategory(
+                          gridHeight = 548.dp,
+                          limit = 4
+                      )
+                },
                 navigateToMyProduct = navigateToMyProduct
             )
             HomeSection(
                 title = "For You",
-                content = { ForYou() },
+                content = { ForYouScreen() },
                 navigateToMyProduct = {
 
                 }
