@@ -10,8 +10,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.Badge
-import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -36,7 +34,7 @@ import com.example.vibestore.ui.theme.poppinsFontFamily
 @Composable
 fun Search() {
     Row(
-        verticalAlignment = Alignment.Bottom
+        verticalAlignment = Alignment.Bottom,
     ) {
         SearchBar(
             query = "",
@@ -62,7 +60,7 @@ fun Search() {
                 Text(
                     text = "Search product...",
                     color = MaterialTheme.colorScheme.outline,
-                    fontSize = 17.sp,
+                    fontSize = 16.sp,
                     fontFamily = poppinsFontFamily,
                     fontWeight = FontWeight.Normal,
                 )
@@ -84,16 +82,14 @@ fun Search() {
                 )
                 .padding(16.dp),
         ){
-            BadgedBox(badge = { Badge { Text(text = "25") } }) {
-                Icon(
-                    painter = painterResource(R.drawable.notificationoutlined),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .size(24.dp),
-                    tint = MaterialTheme.colorScheme.outline
-                )
-            }
+            Icon(
+                painter = painterResource(R.drawable.notificationoutlined),
+                contentDescription = null,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .size(24.dp),
+                tint = MaterialTheme.colorScheme.outline
+            )
         }
     }
 }

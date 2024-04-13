@@ -36,7 +36,7 @@ fun ProductCard(
         AsyncImage(
             model = image,
             contentDescription = null,
-            contentScale = ContentScale.Crop,
+            contentScale = ContentScale.FillHeight,
             modifier = Modifier
                 .width(196.dp)
                 .height(196.dp)

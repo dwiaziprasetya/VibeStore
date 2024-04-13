@@ -17,10 +17,10 @@ import androidx.navigation.compose.rememberNavController
 import com.example.vibestore.ui.component.BottomNavigation
 import com.example.vibestore.ui.navigation.Screen
 import com.example.vibestore.ui.screen.coupon.CouponScreen
+import com.example.vibestore.ui.screen.detail.DetailScreen
 import com.example.vibestore.ui.screen.favourite.FavouriteScreen
 import com.example.vibestore.ui.screen.home.HomeScreen
 import com.example.vibestore.ui.screen.mycart.MyCartScreen
-import com.example.vibestore.ui.screen.ourproduct.OurProductScreen
 import com.example.vibestore.ui.screen.profile.ProfileScreen
 import com.example.vibestore.ui.theme.VibeStoreTheme
 
@@ -69,9 +69,7 @@ fun VibeStoreApp(
                 ProfileScreen()
             }
             composable(Screen.OurProduct.route){
-                OurProductScreen(onBackClick = {
-                    navController.navigateUp()
-                })
+                DetailScreen()
             }
         }
     }

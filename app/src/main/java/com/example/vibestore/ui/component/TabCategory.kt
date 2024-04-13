@@ -119,7 +119,7 @@ fun TabCategory(
         }
         HorizontalPager(
             state = pagerState,
-            userScrollEnabled = false
+            userScrollEnabled = true
         ) { page ->
             Box(modifier = Modifier.fillMaxHeight()){
                 when (page) {
