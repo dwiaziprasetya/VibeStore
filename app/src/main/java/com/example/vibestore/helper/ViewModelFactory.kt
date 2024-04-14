@@ -2,6 +2,7 @@ package com.example.vibestore.helper
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.vibestore.ui.screen.detail.DetailViewModel
 import com.example.vibestore.ui.screen.foryou.ForYouProductViewModel
 import com.example.vibestore.ui.screen.product.all.AllProductViewModel
 import com.example.vibestore.ui.screen.product.electronic.ElectronicProductViewModel
@@ -10,7 +11,7 @@ import com.example.vibestore.ui.screen.product.men.MenProductViewModel
 import com.example.vibestore.ui.screen.product.women.WomenProductViewModel
 
 @Suppress("UNCHECKED_CAST", "UNREACHABLE_CODE")
-class ViewModelFactory(private val limit: Int) : ViewModelProvider.NewInstanceFactory(){
+class ViewModelFactory(private val limit: Int = 20, private val id: Int = 1) : ViewModelProvider.NewInstanceFactory(){
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return if (modelClass.isAssignableFrom(AllProductViewModel::class.java)){
             AllProductViewModel(limit) as T
@@ -22,8 +23,10 @@ class ViewModelFactory(private val limit: Int) : ViewModelProvider.NewInstanceFa
             ElectronicProductViewModel(limit) as T
         } else if (modelClass.isAssignableFrom(JeweleryProductViewModel::class.java)){
             JeweleryProductViewModel(limit) as T
-        } else {
+        } else if (modelClass.isAssignableFrom(ForYouProductViewModel::class.java)){
             ForYouProductViewModel(limit) as T
+        } else {
+            DetailViewModel(id) as T
         }
         throw IllegalArgumentException("")
     }

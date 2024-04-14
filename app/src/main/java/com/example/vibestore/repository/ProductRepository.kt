@@ -13,4 +13,8 @@ class ProductRepository {
     suspend fun getProductByCategory(category: String, limit: Int): List<ProductResponseItem> {
         return productService.getProductByCategory(category, limit)
     }
+
+    suspend fun getSingleProduct(id: Int): ProductResponseItem {
+        return productService.getSingleProduct(id)
+    }
 }

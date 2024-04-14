@@ -10,10 +10,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.vibestore.ui.component.BottomNavigation
 import com.example.vibestore.ui.navigation.Screen
 import com.example.vibestore.ui.screen.coupon.CouponScreen
@@ -21,6 +23,7 @@ import com.example.vibestore.ui.screen.detail.DetailScreen
 import com.example.vibestore.ui.screen.favourite.FavouriteScreen
 import com.example.vibestore.ui.screen.home.HomeScreen
 import com.example.vibestore.ui.screen.mycart.MyCartScreen
+import com.example.vibestore.ui.screen.ourproduct.OurProductScreen
 import com.example.vibestore.ui.screen.profile.ProfileScreen
 import com.example.vibestore.ui.theme.VibeStoreTheme
 
@@ -35,7 +38,7 @@ fun VibeStoreApp(
 
     Scaffold(
         bottomBar = {
-            if (currentRoute != Screen.OurProduct.route){
+            if (currentRoute != Screen.OurProduct.route && currentRoute != Screen.DetailProduct.route){
                 BottomNavigation(navController)
             }
         }
@@ -53,6 +56,9 @@ fun VibeStoreApp(
                 HomeScreen(
                     navigateToMyProduct = {
                         navController.navigate(Screen.OurProduct.route)
+                    },
+                    navigateToDetail = { productId ->
+                        navController.navigate(Screen.DetailProduct.createRoute(productId))
                     }
                 )
             }
@@ -69,7 +75,24 @@ fun VibeStoreApp(
                 ProfileScreen()
             }
             composable(Screen.OurProduct.route){
-                DetailScreen()
+                OurProductScreen(
+                    onBackClick = { navController.navigateUp() },
+                    navigateToDetail = { productId ->
+                        navController.navigate(Screen.DetailProduct.createRoute(productId))
+                    }
+                )
+            }
+            composable(
+                route = Screen.DetailProduct.route,
+                arguments = listOf(navArgument("productId") { type = NavType.IntType }),
+            ){
+                val id = it.arguments?.getInt("productId") ?: -2
+                DetailScreen(
+                    productId = id,
+                    onBackClick = {
+                        navController.navigateUp()
+                    }
+                )
             }
         }
     }

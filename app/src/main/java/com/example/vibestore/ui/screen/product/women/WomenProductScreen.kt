@@ -1,6 +1,7 @@
 package com.example.vibestore.ui.screen.product.women
 
 import android.util.Log
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -29,7 +30,8 @@ import com.example.vibestore.ui.theme.VibeStoreTheme
 @Composable
 fun WomenProductScreen(
     gridHeight: Dp = Dp.Unspecified,
-    limit: Int
+    limit: Int,
+    navigateToDetail: (Int) -> Unit
 ) {
 
     val viewModel2: WomenProductViewModel = viewModel(
@@ -59,7 +61,10 @@ fun WomenProductScreen(
                 ProductCard(
                     image = it.image,
                     title = it.title,
-                    price = it.price
+                    price = it.price,
+                    modifier = Modifier.clickable {
+                        navigateToDetail(it.id)
+                    }
                 )
             }
         }
@@ -70,7 +75,7 @@ fun WomenProductScreen(
 @Composable
 private fun WomenProductScreenPreview() {
     VibeStoreTheme {
-        AllProductScreen(limit = 20)
+        AllProductScreen(limit = 20, navigateToDetail = {})
     }
 }
 

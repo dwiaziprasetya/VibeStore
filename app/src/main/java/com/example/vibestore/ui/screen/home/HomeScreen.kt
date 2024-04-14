@@ -18,7 +18,8 @@ import com.example.vibestore.ui.theme.VibeStoreTheme
 
 @Composable
 fun HomeScreen(
-    navigateToMyProduct: () -> Unit
+    navigateToMyProduct: () -> Unit,
+    navigateToDetail: (Int) -> Unit
 ) {
     Scaffold (
         topBar = {
@@ -40,16 +41,20 @@ fun HomeScreen(
                 content = {
                       TabCategory(
                           gridHeight = 548.dp,
-                          limit = 4
+                          limit = 4,
+                          navigateToDetail = navigateToDetail
                       )
                 },
                 navigateToMyProduct = navigateToMyProduct
             )
             HomeSection(
                 title = "For You",
-                content = { ForYouScreen() },
+                content = {
+                    ForYouScreen(
+                        navigateToDetail = navigateToDetail
+                    )
+                },
                 navigateToMyProduct = {
-
                 }
             )
         }
@@ -60,6 +65,6 @@ fun HomeScreen(
 @Composable
 private fun HomeScreenPreview() {
     VibeStoreTheme {
-        HomeScreen {}
+        HomeScreen(navigateToDetail = {}, navigateToMyProduct = {})
     }
 }

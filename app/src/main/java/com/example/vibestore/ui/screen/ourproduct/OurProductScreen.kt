@@ -25,7 +25,8 @@ import com.example.vibestore.ui.theme.poppinsFontFamily
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OurProductScreen(
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    navigateToDetail: (Int) -> Unit
 ) {
     Scaffold(
         topBar = {
@@ -56,7 +57,7 @@ fun OurProductScreen(
         }
     ) { innerPadding ->
         Column(modifier = Modifier.padding(innerPadding)) {
-            TabCategory()
+            TabCategory(navigateToDetail = navigateToDetail)
         }
     }
 }
@@ -65,6 +66,9 @@ fun OurProductScreen(
 @Composable
 private fun MyProductPreview() {
     VibeStoreTheme {
-        OurProductScreen {}
+        OurProductScreen(
+            onBackClick = {},
+            navigateToDetail = {}
+        )
     }
 }

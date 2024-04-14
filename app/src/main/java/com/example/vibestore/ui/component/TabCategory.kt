@@ -43,7 +43,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun TabCategory(
     limit: Int = 20,
-    gridHeight: Dp = Dp.Unspecified
+    gridHeight: Dp = Dp.Unspecified,
+    navigateToDetail: (Int) -> Unit
 ) {
 
     val category by remember {
@@ -123,11 +124,32 @@ fun TabCategory(
         ) { page ->
             Box(modifier = Modifier.fillMaxHeight()){
                 when (page) {
-                    0 -> AllProductScreen(gridHeight, limit)
-                    1 -> MenProductScreen(gridHeight, limit)
-                    2 -> WomenProductScreen(gridHeight, limit)
-                    3 -> ElectronicProductScreen(gridHeight, limit)
-                    4 -> JeweleryProductScreen(gridHeight, limit)
+                    0 -> {
+                        AllProductScreen(
+                            gridHeight, limit,
+                            navigateToDetail = navigateToDetail
+                        )
+                    } 1 -> {
+                        MenProductScreen(
+                            gridHeight, limit,
+                            navigateToDetail = navigateToDetail
+                        )
+                    } 2 -> {
+                        WomenProductScreen(
+                            gridHeight, limit,
+                            navigateToDetail = navigateToDetail
+                        )
+                    } 3 -> {
+                        ElectronicProductScreen(
+                            gridHeight, limit,
+                            navigateToDetail = navigateToDetail
+                        )
+                    } 4 -> {
+                        JeweleryProductScreen(
+                            gridHeight, limit,
+                            navigateToDetail = navigateToDetail
+                        )
+                    }
                 }
             }
         }
@@ -138,6 +160,6 @@ fun TabCategory(
 @Composable
 private fun TabCategoryPreview() {
     VibeStoreTheme {
-        TabCategory()
+        TabCategory(navigateToDetail = {})
     }
 }

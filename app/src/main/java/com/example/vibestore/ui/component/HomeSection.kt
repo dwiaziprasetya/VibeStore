@@ -9,7 +9,7 @@ fun HomeSection(
     title: String,
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit,
-    navigateToMyProduct: () -> Unit
+    navigateToMyProduct: () -> Unit,
 ) {
     Column {
         SectionText(title, navigateToMyProduct)

@@ -18,4 +18,10 @@ interface ApiService {
         @Query("limit")
         limit: Int
     ): List<ProductResponseItem>
+
+    @GET("products/{id}")
+    suspend fun getSingleProduct(
+        @Path("id")
+        id: Int
+    ): ProductResponseItem
 }

@@ -22,12 +22,13 @@ import com.example.vibestore.ui.theme.poppinsFontFamily
 
 @Composable
 fun ProductCard(
+    modifier: Modifier = Modifier,
     image: String,
     title: String,
     price: Any
 ) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .width(196.dp)
             .padding(16.dp)
             .wrapContentHeight(),
