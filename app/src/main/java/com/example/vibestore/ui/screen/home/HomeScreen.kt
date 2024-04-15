@@ -29,7 +29,7 @@ import com.example.vibestore.ui.theme.VibeStoreTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    navigateToMyProduct: () -> Unit,
+    navigateToSeeAll: () -> Unit,
     navigateToDetail: (Int) -> Unit
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
@@ -71,7 +71,7 @@ fun HomeScreen(
             HomeSection(
                 title = "",
                 content = { ImageSlider() },
-                navigateToMyProduct = {}
+                navigateToSeeAll = {}
             )
             HomeSection(
                 title = "Categories",
@@ -82,7 +82,7 @@ fun HomeScreen(
                           navigateToDetail = navigateToDetail
                       )
                 },
-                navigateToMyProduct = navigateToMyProduct
+                navigateToSeeAll = navigateToSeeAll
             )
             HomeSection(
                 title = "For You",
@@ -91,8 +91,7 @@ fun HomeScreen(
                         navigateToDetail = navigateToDetail
                     )
                 },
-                navigateToMyProduct = {
-                }
+                navigateToSeeAll = {}
             )
         }
     }
@@ -102,6 +101,6 @@ fun HomeScreen(
 @Composable
 private fun HomeScreenPreview() {
     VibeStoreTheme {
-        HomeScreen(navigateToDetail = {}, navigateToMyProduct = {})
+        HomeScreen(navigateToDetail = {}, navigateToSeeAll = {})
     }
 }

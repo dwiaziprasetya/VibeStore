@@ -8,11 +8,11 @@ fun HomeSection(
     title: String,
     title2: String = "See all",
     content: @Composable () -> Unit,
-    navigateToMyProduct: () -> Unit,
+    navigateToSeeAll: () -> Unit,
 ) {
     Column {
         if (title != ""){
-            SectionText(title, title2, navigateToMyProduct)
+            SectionText(title, title2, navigateToSeeAll)
         }
         content()
     }

@@ -18,6 +18,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.vibestore.ui.component.BottomNavigation
 import com.example.vibestore.ui.navigation.Screen
+import com.example.vibestore.ui.screen.categories.CategoriesScreen
 import com.example.vibestore.ui.screen.coupon.CouponScreen
 import com.example.vibestore.ui.screen.detail.DetailScreen
 import com.example.vibestore.ui.screen.favourite.FavouriteScreen
@@ -36,7 +37,7 @@ fun VibeStoreApp(
     Scaffold(
         bottomBar = {
             if (currentRoute !in listOf(
-                    Screen.OurProduct.route,
+                    Screen.Categories.route,
                     Screen.DetailProduct.route,
                     Screen.MyCart.route
             )
@@ -56,15 +57,15 @@ fun VibeStoreApp(
                 route = Screen.Home.route,
             ){
                 HomeScreen(
-                    navigateToMyProduct = {
-                        navController.navigate(Screen.OurProduct.route)
+                    navigateToSeeAll = {
+                        navController.navigate(Screen.Categories.route)
                     },
                     navigateToDetail = { productId ->
                         navController.navigate(Screen.DetailProduct.createRoute(productId))
                     }
                 )
             }
-            composable(Screen.MyCart.route){
+            composable(Screen.MyCart.route) {
                 MyCartScreen(onBackClick = {
                     navController.navigateUp()
                 })
@@ -80,6 +81,13 @@ fun VibeStoreApp(
             }
             composable(Screen.OurProduct.route){
                 OurProductScreen(
+                    navigateToDetail = { productId ->
+                        navController.navigate(Screen.DetailProduct.createRoute(productId))
+                    }
+                )
+            }
+            composable(Screen.Categories.route){
+                CategoriesScreen(
                     onBackClick = { navController.navigateUp() },
                     navigateToDetail = { productId ->
                         navController.navigate(Screen.DetailProduct.createRoute(productId))
