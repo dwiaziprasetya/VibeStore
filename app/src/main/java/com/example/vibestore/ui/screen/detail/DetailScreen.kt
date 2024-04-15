@@ -172,39 +172,46 @@ fun DetailScreen(
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(85.dp)
                         .align(Alignment.BottomCenter)
-                        .background(color = Color.White)
-                ) {
+                        .height(85.dp)
+                        .background(Color.White)
+                ){
                     Divider()
                     Row(
                         verticalAlignment = Alignment.Bottom,
                         modifier = Modifier
-                            .padding(horizontal = 16.dp)
                             .align(Alignment.CenterStart)
-                            .fillMaxWidth(),
+                            .padding(16.dp)
+                            .fillMaxWidth()
                     ) {
                         Text(
-                            fontWeight = FontWeight.SemiBold,
+                            modifier = Modifier
+                                .weight(
+                                    1f
+                                ),
                             fontFamily = poppinsFontFamily,
-                            fontSize = 30.sp,
-                            modifier = Modifier.weight(1f),
-                            text = "$${product?.price.toString()}"
+                            fontWeight = FontWeight.SemiBold,
+                            fontSize = 40.sp,
+                            text = "$${product?.price?.toString()}"
                         )
                         Button(
-                            onClick =  { navigateToCart() },
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = Color("#29bf12".toColorInt())
-                            ),
                             modifier = Modifier
                                 .height(55.dp)
                                 .width(170.dp),
-                            shape = RoundedCornerShape(10.dp)
+                            shape = RoundedCornerShape(10.dp),
+                            onClick = {},
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color("#29bf12".toColorInt())
+                            )
                         ) {
                             Text(
                                 fontFamily = poppinsFontFamily,
-                                text = "Add to Cart",
-                                fontSize = 16.sp
+                                text = "Checkout",
+                                fontSize = 16.sp,
+                                modifier = Modifier
+                                    .clickable {
+                                        navigateToCart()
+                                    }
                             )
                         }
                     }

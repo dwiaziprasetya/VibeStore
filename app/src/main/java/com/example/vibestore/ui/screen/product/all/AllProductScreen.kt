@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -93,11 +94,36 @@ fun ProductContent() {
     }
 }
 
+@Composable
+fun ProductContent2() {
+    LazyRow(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(275.dp)
+    ){
+        items(6){
+            ProductCard(
+                image = "",
+                title = "Mu Jersey",
+                price = 456.5
+            )
+        }
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 private fun ProductContentPreview() {
     VibeStoreTheme {
         ProductContent()
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun ProductContentPreview2() {
+    VibeStoreTheme {
+        ProductContent2()
     }
 }
 

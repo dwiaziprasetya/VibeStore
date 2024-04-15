@@ -79,8 +79,9 @@ fun MyCartScreen(
             ){
                 Divider()
                 Row(
+                    verticalAlignment = Alignment.Bottom,
                     modifier = Modifier
-                        .align(Alignment.Center)
+                        .align(Alignment.CenterStart)
                         .padding(16.dp)
                         .fillMaxWidth()
                 ) {
@@ -91,7 +92,7 @@ fun MyCartScreen(
                             ),
                         fontFamily = poppinsFontFamily,
                         fontWeight = FontWeight.SemiBold,
-                        fontSize = 30.sp,
+                        fontSize = 40.sp,
                         text = "$198.5"
                     )
                     Button(

@@ -33,9 +33,6 @@ fun VibeStoreApp(
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
-
-
-
     Scaffold(
         bottomBar = {
             if (currentRoute !in listOf(

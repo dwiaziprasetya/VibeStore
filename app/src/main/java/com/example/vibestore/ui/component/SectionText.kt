@@ -19,6 +19,7 @@ import com.example.vibestore.ui.theme.poppinsFontFamily
 @Composable
 fun SectionText(
     text: String,
+    text2: String,
     navigateToMyProduct: () -> Unit = {}
 ) {
     Row(
@@ -38,7 +39,7 @@ fun SectionText(
             fontSize = 18.sp
         )
         Text(
-            text = "See all",
+            text = text2,
             fontFamily = poppinsFontFamily,
             fontWeight = FontWeight.Medium,
             color = Color("#29bf12".toColorInt()),
@@ -54,6 +55,6 @@ fun SectionText(
 @Composable
 private fun SectionTextPreview() {
     VibeStoreTheme {
-        SectionText("Categories")
+        SectionText("Categories", "See all")
     }
 }
