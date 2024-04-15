@@ -55,12 +55,12 @@ fun BottomNavigation(
                 iconActive = painterResource(R.drawable.homefilled),
                 screen = Screen.Home
             ),
-            NavigationItem(
-                title = "My Cart",
-                icon = painterResource(R.drawable.cartoutlined),
-                iconActive = painterResource(R.drawable.cartfilled),
-                screen = Screen.MyCart
-            ),
+//            NavigationItem(
+//                title = "My Cart",
+//                icon = painterResource(R.drawable.cartoutlined),
+//                iconActive = painterResource(R.drawable.cartfilled),
+//                screen = Screen.MyCart
+//            ),
             NavigationItem(
                 title = "Coupon",
                 icon = painterResource(R.drawable.couponoutlined),

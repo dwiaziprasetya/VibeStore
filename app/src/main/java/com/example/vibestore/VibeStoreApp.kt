@@ -38,7 +38,12 @@ fun VibeStoreApp(
 
     Scaffold(
         bottomBar = {
-            if (currentRoute != Screen.OurProduct.route && currentRoute != Screen.DetailProduct.route){
+            if (currentRoute !in listOf(
+                    Screen.OurProduct.route,
+                    Screen.DetailProduct.route,
+                    Screen.MyCart.route
+            )
+                ){
                 BottomNavigation(navController)
             }
         }
@@ -63,7 +68,9 @@ fun VibeStoreApp(
                 )
             }
             composable(Screen.MyCart.route){
-                MyCartScreen()
+                MyCartScreen(onBackClick = {
+                    navController.navigateUp()
+                })
             }
             composable(Screen.Coupon.route){
                 CouponScreen()
@@ -91,6 +98,9 @@ fun VibeStoreApp(
                     productId = id,
                     onBackClick = {
                         navController.navigateUp()
+                    },
+                    navigateToCart = {
+                        navController.navigate(Screen.MyCart.route)
                     }
                 )
             }

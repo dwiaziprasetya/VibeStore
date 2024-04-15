@@ -32,7 +32,7 @@ fun CartItem() {
             .background(Color.White)
     ) {
         Image(
-            modifier = Modifier.size(100.dp),
+            modifier = Modifier.size(90.dp),
             painter = painterResource(R.drawable.clothes),
             contentDescription = null
         )

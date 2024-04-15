@@ -52,7 +52,8 @@ import com.example.vibestore.ui.theme.poppinsFontFamily
 @Composable
 fun DetailScreen(
     productId: Int,
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    navigateToCart: () -> Unit
 ) {
     val viewModel: DetailViewModel = viewModel(
         factory = ViewModelFactory(id = productId)
@@ -191,7 +192,7 @@ fun DetailScreen(
                             text = "$${product?.price.toString()}"
                         )
                         Button(
-                            onClick = {},
+                            onClick =  { navigateToCart() },
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = Color("#29bf12".toColorInt())
                             ),
@@ -217,6 +218,6 @@ fun DetailScreen(
 @Composable
 private fun DetailScreenPreview() {
     VibeStoreTheme {
-        DetailScreen(2, onBackClick = {})
+        DetailScreen(2, onBackClick = {}, navigateToCart = {})
     }
 }
