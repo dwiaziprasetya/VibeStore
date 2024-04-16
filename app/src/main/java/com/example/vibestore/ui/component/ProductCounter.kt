@@ -58,7 +58,7 @@ fun ProductCounter(
         }
         Text(
             fontFamily = poppinsFontFamily,
-            text = "1",
+            text = "5",
             modifier = Modifier
                 .weight(1f)
                 .testTag("count"),
