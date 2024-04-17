@@ -28,7 +28,7 @@ fun SectionInProgress() {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
-                .padding(70.dp)
+                .padding(80.dp)
         ) {
             Image(
                 painter = painterResource(R.drawable.errordata),
