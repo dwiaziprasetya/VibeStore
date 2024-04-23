@@ -1,7 +1,9 @@
 package com.example.vibestore.ui.screen.home
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -16,18 +18,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.core.graphics.toColorInt
 import com.example.vibestore.R
 import com.example.vibestore.ui.component.HomeSection
 import com.example.vibestore.ui.component.ImageSlider
 import com.example.vibestore.ui.component.TabCategory
 import com.example.vibestore.ui.screen.foryou.ForYouScreen
 import com.example.vibestore.ui.theme.VibeStoreTheme
-import com.example.vibestore.ui.theme.poppinsFontFamily
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -35,19 +33,14 @@ fun HomeScreen(
     navigateToSeeAll: () -> Unit,
     navigateToDetail: (Int) -> Unit
 ) {
-    Scaffold (
+    Scaffold(
         modifier = Modifier,
         topBar = {
             CenterAlignedTopAppBar(
                 modifier = Modifier.padding(horizontal = 16.dp),
                 title = {
                     Text(
-                        text = "Vibe Store",
-                        fontFamily = poppinsFontFamily,
-                        fontWeight = FontWeight.SemiBold,
-                        fontSize = 20.sp,
-                        color = Color("#29bf12".toColorInt()),
-                        modifier = Modifier.padding(start = 8.dp)
+                        text = "",
                     )
                 },
                 navigationIcon = {
@@ -60,6 +53,11 @@ fun HomeScreen(
                     Icon(
                         painter = painterResource(R.drawable.cartoutlined),
                         contentDescription = "Cart"
+                    )
+                    Spacer(modifier = Modifier.width(16.dp))
+                    Icon(
+                        painter = painterResource(R.drawable.notificationoutlined),
+                        contentDescription = null
                     )
                 },
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
@@ -81,11 +79,11 @@ fun HomeScreen(
             HomeSection(
                 title = "Categories",
                 content = {
-                      TabCategory(
-                          gridHeight = 548.dp,
-                          limit = 4,
-                          navigateToDetail = navigateToDetail
-                      )
+                    TabCategory(
+                        gridHeight = 548.dp,
+                        limit = 4,
+                        navigateToDetail = navigateToDetail
+                    )
                 },
                 navigateToSeeAll = navigateToSeeAll
             )
