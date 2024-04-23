@@ -3,6 +3,7 @@ accompanistPagerIndicators = "0.30.1"
 agp = "8.3.0"
 coilCompose = "2.6.0"
 converterGson = "2.9.0"
+coreSplashscreen = "1.0.1"
 foundation = "1.6.5"
 kotlin = "1.9.0"
 coreKtx = "1.12.0"
@@ -22,6 +23,7 @@ runtimeLivedata = "1.6.5"
 [libraries]
 accompanist-pager-indicators = { module = "com.google.accompanist:accompanist-pager-indicators", version.ref = "accompanistPagerIndicators" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
 androidx-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "foundation" }
 androidx-lifecycle-livedata-ktx = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "lifecycleRuntimeKtx" }
 androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleRuntimeKtx" }
