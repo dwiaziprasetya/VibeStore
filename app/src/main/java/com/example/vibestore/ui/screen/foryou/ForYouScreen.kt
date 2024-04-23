@@ -53,7 +53,6 @@ fun ForYouScreen(
                 ProductCard(
                     image = product.image,
                     title = product.title,
-                    price = product.price,
                     modifier = Modifier.clickable {
                         navigateToDetail(product.id)
                     }

@@ -60,7 +60,6 @@ fun AllProductScreen(
                 ProductCard(
                     image = it.image,
                     title = it.title,
-                    price = it.price,
                     modifier = Modifier.clickable {
                         navigateToDetail(it.id)
                     }
@@ -88,7 +87,6 @@ fun ProductContent() {
             ProductCard(
                 image = "MU Jersey",
                 title = "MU Jersey",
-                price = 245.6
             )
         }
     }
@@ -105,7 +103,6 @@ fun ProductContent2() {
             ProductCard(
                 image = "",
                 title = "Mu Jersey",
-                price = 456.5
             )
         }
     }

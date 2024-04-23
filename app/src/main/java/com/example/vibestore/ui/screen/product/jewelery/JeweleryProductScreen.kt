@@ -61,7 +61,6 @@ fun JeweleryProductScreen(
                 ProductCard(
                     image = it.image,
                     title = it.title,
-                    price = it.price,
                     modifier = Modifier.clickable {
                         navigateToDetail(it.id)
                     }

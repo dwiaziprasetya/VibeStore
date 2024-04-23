@@ -15,12 +15,12 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.graphics.toColorInt
 import com.example.vibestore.R
 import com.example.vibestore.ui.component.HomeSection
 import com.example.vibestore.ui.component.ImageSlider
@@ -35,19 +35,19 @@ fun HomeScreen(
     navigateToSeeAll: () -> Unit,
     navigateToDetail: (Int) -> Unit
 ) {
-    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     Scaffold (
-        modifier = Modifier
-            .nestedScroll(scrollBehavior.nestedScrollConnection),
+        modifier = Modifier,
         topBar = {
             CenterAlignedTopAppBar(
                 modifier = Modifier.padding(horizontal = 16.dp),
                 title = {
                     Text(
-                        text = "Home",
+                        text = "Vibe Store",
                         fontFamily = poppinsFontFamily,
                         fontWeight = FontWeight.SemiBold,
-                        fontSize = 20.sp
+                        fontSize = 20.sp,
+                        color = Color("#29bf12".toColorInt()),
+                        modifier = Modifier.padding(start = 8.dp)
                     )
                 },
                 navigationIcon = {
@@ -62,7 +62,6 @@ fun HomeScreen(
                         contentDescription = "Cart"
                     )
                 },
-                scrollBehavior = scrollBehavior,
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                     scrolledContainerColor = Color.White
                 )

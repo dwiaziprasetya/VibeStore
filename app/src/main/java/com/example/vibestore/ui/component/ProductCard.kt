@@ -25,7 +25,6 @@ fun ProductCard(
     modifier: Modifier = Modifier,
     image: String,
     title: String,
-    price: Any
 ) {
     Column(
         modifier = modifier
@@ -34,14 +33,41 @@ fun ProductCard(
             .wrapContentHeight(),
         horizontalAlignment = Alignment.Start
     ) {
+//        Box(
+//            modifier = Modifier.padding(bottom = 16.dp)
+//        ) {
+//            AsyncImage(
+//                model = image,
+//                contentDescription = null,
+//                contentScale = ContentScale.FillHeight,
+//                modifier = Modifier
+//                    .width(196.dp)
+//                    .height(196.dp)
+//                    .clip(RoundedCornerShape(10.dp))
+//            )
+//            Surface(
+//                shape = RoundedCornerShape(50.dp),
+//                color = Color.White,
+//                modifier = Modifier.align(Alignment.TopEnd)
+//            ) {
+//                Icon(
+//                    imageVector = Icons.Default.FavoriteBorder,
+//                    tint = MaterialTheme.colorScheme.outline,
+//                    contentDescription = "Favourite",
+//                    modifier = Modifier
+//                        .align(Alignment.TopEnd)
+//                        .padding(8.dp)
+//                )
+//            }
+//        }
         AsyncImage(
             model = image,
             contentDescription = null,
             contentScale = ContentScale.FillHeight,
             modifier = Modifier
+                .padding(16.dp)
                 .width(196.dp)
                 .height(196.dp)
-                .padding(bottom = 8.dp)
                 .clip(RoundedCornerShape(10.dp))
         )
         Text(
@@ -50,12 +76,6 @@ fun ProductCard(
             fontSize = 12.sp,
             fontFamily = poppinsFontFamily,
             fontWeight = FontWeight.Medium,
-        )
-        Text(
-            text = "$$price",
-            fontSize = 14.sp,
-            fontFamily = poppinsFontFamily,
-            fontWeight = FontWeight.Bold,
         )
     }
 }
@@ -67,7 +87,6 @@ private fun ProductCardPreview() {
         ProductCard(
             image = "https://cdn.rri.co.id/berita/1/images/1689391542821-images_(22)/1689391542821-images_(22).jpeg",
             title = "Nasi Padang",
-            price = 184
         )
     }
 }
