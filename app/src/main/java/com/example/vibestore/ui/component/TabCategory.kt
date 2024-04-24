@@ -42,6 +42,8 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun TabCategory(
+    modifier: Modifier = Modifier,
+    count: Int = 4,
     limit: Int = 20,
     gridHeight: Dp = Dp.Unspecified,
     navigateToDetail: (Int) -> Unit
@@ -127,7 +129,8 @@ fun TabCategory(
                     0 -> {
                         AllProductScreen(
                             gridHeight, limit,
-                            navigateToDetail = navigateToDetail
+                            navigateToDetail = navigateToDetail,
+                            count = count
                         )
                     } 1 -> {
                         MenProductScreen(
@@ -137,17 +140,22 @@ fun TabCategory(
                     } 2 -> {
                         WomenProductScreen(
                             gridHeight, limit,
-                            navigateToDetail = navigateToDetail
+                            navigateToDetail = navigateToDetail,
+                            count = count
+
                         )
                     } 3 -> {
                         ElectronicProductScreen(
                             gridHeight, limit,
-                            navigateToDetail = navigateToDetail
+                            navigateToDetail = navigateToDetail,
+                            count = count
+
                         )
                     } 4 -> {
                         JeweleryProductScreen(
                             gridHeight, limit,
-                            navigateToDetail = navigateToDetail
+                            navigateToDetail = navigateToDetail,
+                            count = count
                         )
                     }
                 }

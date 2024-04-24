@@ -55,8 +55,14 @@ fun CategoriesScreen(
             )
         }
     ) { innerPadding ->
-        Column(modifier = Modifier.padding(innerPadding)) {
-            TabCategory(navigateToDetail = navigateToDetail)
+        Column(modifier = Modifier
+            .padding(innerPadding)
+        ) {
+            TabCategory(
+                navigateToDetail = navigateToDetail,
+                count = 10,
+                gridHeight = 1000.dp
+            )
         }
     }
 }
