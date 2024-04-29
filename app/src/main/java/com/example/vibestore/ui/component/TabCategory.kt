@@ -44,6 +44,7 @@ import kotlinx.coroutines.launch
 fun TabCategory(
     modifier: Modifier = Modifier,
     count: Int = 4,
+    heightContent: Dp = Dp.Unspecified,
     limit: Int = 20,
     gridHeight: Dp = Dp.Unspecified,
     navigateToDetail: (Int) -> Unit
@@ -130,32 +131,35 @@ fun TabCategory(
                         AllProductScreen(
                             gridHeight, limit,
                             navigateToDetail = navigateToDetail,
-                            count = count
+                            count = count,
+                            height = heightContent
                         )
                     } 1 -> {
                         MenProductScreen(
                             gridHeight, limit,
-                            navigateToDetail = navigateToDetail
+                            navigateToDetail = navigateToDetail,
+                            height = heightContent
                         )
                     } 2 -> {
                         WomenProductScreen(
                             gridHeight, limit,
                             navigateToDetail = navigateToDetail,
-                            count = count
-
+                            count = count,
+                            height = heightContent
                         )
                     } 3 -> {
                         ElectronicProductScreen(
                             gridHeight, limit,
                             navigateToDetail = navigateToDetail,
-                            count = count
-
+                            count = count,
+                            height = heightContent
                         )
                     } 4 -> {
                         JeweleryProductScreen(
                             gridHeight, limit,
                             navigateToDetail = navigateToDetail,
-                            count = count
+                            count = count,
+                            height = heightContent
                         )
                     }
                 }

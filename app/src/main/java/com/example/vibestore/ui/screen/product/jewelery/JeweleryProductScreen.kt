@@ -13,20 +13,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.vibestore.helper.ViewModelFactory
-import com.example.vibestore.ui.component.AnimatedShimmer
+import com.example.vibestore.ui.component.AnimatedShimmerProduct
 import com.example.vibestore.ui.component.ProductCard
-import com.example.vibestore.ui.screen.product.all.AllProductScreen
-import com.example.vibestore.ui.theme.VibeStoreTheme
 
 @Composable
 fun JeweleryProductScreen(
     gridHeight: Dp = Dp.Unspecified,
     limit: Int,
+    height: Dp,
     count: Int = 4,
     navigateToDetail: (Int) -> Unit
 ) {
@@ -40,14 +38,14 @@ fun JeweleryProductScreen(
     if (product.isEmpty()){
         Box(modifier = Modifier
             .fillMaxWidth()
-            .height(548.dp)
+            .height(height)
         ){
             LazyVerticalGrid(
                 columns = GridCells.Adaptive(196.dp),
                 modifier = Modifier.heightIn(min = gridHeight, max = gridHeight)
             ) {
                 items(count){
-                    AnimatedShimmer()
+                    AnimatedShimmerProduct()
                 }
             }
         }
@@ -66,14 +64,6 @@ fun JeweleryProductScreen(
                 )
             }
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun JeweleryProductScreenPreview() {
-    VibeStoreTheme {
-        AllProductScreen(limit = 20, navigateToDetail = {})
     }
 }
 

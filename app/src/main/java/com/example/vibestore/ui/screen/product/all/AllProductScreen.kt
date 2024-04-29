@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.vibestore.helper.ViewModelFactory
-import com.example.vibestore.ui.component.AnimatedShimmer
+import com.example.vibestore.ui.component.AnimatedShimmerProduct
 import com.example.vibestore.ui.component.ProductCard
 import com.example.vibestore.ui.theme.VibeStoreTheme
 
@@ -27,6 +27,7 @@ import com.example.vibestore.ui.theme.VibeStoreTheme
 fun AllProductScreen(
     gridHeight: Dp = Dp.Unspecified,
     limit: Int,
+    height: Dp,
     count: Int = 4,
     navigateToDetail: (Int) -> Unit
 ) {
@@ -39,14 +40,14 @@ fun AllProductScreen(
     if (product.isEmpty()){
         Box(modifier = Modifier
             .fillMaxWidth()
-            .height(548.dp)
+            .height(height)
         ){
             LazyVerticalGrid(
                 columns = GridCells.Adaptive(196.dp),
                 modifier = Modifier.heightIn(min = gridHeight, max = gridHeight)
             ) {
                 items(count){
-                    AnimatedShimmer()
+                    AnimatedShimmerProduct()
                 }
             }
         }
@@ -72,7 +73,8 @@ fun AllProductScreen(
 @Composable
 private fun AllProductScreenPreview() {
     VibeStoreTheme {
-        AllProductScreen(limit = 20, navigateToDetail = {})
+        AllProductScreen(limit = 20, navigateToDetail = {},
+            height = 548.dp)
     }
 }
 

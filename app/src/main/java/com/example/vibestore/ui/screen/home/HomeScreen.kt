@@ -82,7 +82,7 @@ fun HomeScreen(
                     TabCategory(
                         gridHeight = 548.dp,
                         limit = 4,
-                        navigateToDetail = navigateToDetail
+                        navigateToDetail = navigateToDetail,
                     )
                 },
                 navigateToSeeAll = navigateToSeeAll

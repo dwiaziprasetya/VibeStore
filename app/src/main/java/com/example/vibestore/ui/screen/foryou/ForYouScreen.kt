@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.vibestore.helper.ViewModelFactory
 import com.example.vibestore.model.ProductResponseItem
-import com.example.vibestore.ui.component.AnimatedShimmer
+import com.example.vibestore.ui.component.AnimatedShimmerProduct
 import com.example.vibestore.ui.component.ProductCard
 import com.example.vibestore.ui.theme.VibeStoreTheme
 
@@ -38,7 +38,7 @@ fun ForYouScreen(
         ){
             LazyRow {
                 items(4){
-                    AnimatedShimmer()
+                    AnimatedShimmerProduct()
                 }
             }
         }

@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBackIos
 import androidx.compose.material.icons.filled.Star
@@ -44,6 +43,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.vibestore.R
 import com.example.vibestore.helper.ViewModelFactory
+import com.example.vibestore.ui.component.AnimatedShimmerDetailProduct
 import com.example.vibestore.ui.component.ExpandingText
 import com.example.vibestore.ui.theme.VibeStoreTheme
 import com.example.vibestore.ui.theme.poppinsFontFamily
@@ -99,12 +99,7 @@ fun DetailScreen(
                 .padding(innerPadding)
         ) {
             if (product == null) {
-                CircularProgressIndicator(
-                    modifier = Modifier
-                        .width(64.dp)
-                        .align(Alignment.Center),
-                    color = Color("#29bf12".toColorInt()),
-                )
+                AnimatedShimmerDetailProduct()
             } else {
                 Column(
                     Modifier
