@@ -26,6 +26,7 @@ import com.example.vibestore.ui.screen.home.HomeScreen
 import com.example.vibestore.ui.screen.mycart.MyCartScreen
 import com.example.vibestore.ui.screen.ourproduct.OurProductScreen
 import com.example.vibestore.ui.screen.profile.ProfileScreen
+import com.example.vibestore.ui.screen.welcome.WelcomeScreen
 import com.example.vibestore.ui.theme.VibeStoreTheme
 
 @Composable
@@ -34,12 +35,14 @@ fun VibeStoreApp(
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
+
     Scaffold(
         bottomBar = {
             if (currentRoute !in listOf(
                     Screen.Categories.route,
                     Screen.DetailProduct.route,
-                    Screen.MyCart.route
+                    Screen.MyCart.route,
+                    Screen.Welcome.route
             )
                 ){
                 BottomNavigation(navController)
@@ -53,6 +56,9 @@ fun VibeStoreApp(
             enterTransition = { fadeIn(tween(500)) },
             exitTransition = { fadeOut(tween(500)) }
         ) {
+            composable(Screen.Welcome.route){
+                WelcomeScreen(navController)
+            }
             composable(
                 route = Screen.Home.route,
             ){
@@ -66,9 +72,7 @@ fun VibeStoreApp(
                 )
             }
             composable(Screen.MyCart.route) {
-                MyCartScreen(onBackClick = {
-                    navController.navigateUp()
-                })
+                MyCartScreen(navController)
             }
             composable(Screen.Coupon.route){
                 CouponScreen()

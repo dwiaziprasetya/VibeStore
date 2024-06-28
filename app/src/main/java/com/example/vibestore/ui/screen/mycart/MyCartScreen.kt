@@ -30,6 +30,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.graphics.toColorInt
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.vibestore.ui.component.CartItem
 import com.example.vibestore.ui.theme.VibeStoreTheme
 import com.example.vibestore.ui.theme.poppinsFontFamily
@@ -37,7 +39,7 @@ import com.example.vibestore.ui.theme.poppinsFontFamily
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MyCartScreen(
-    onBackClick: () -> Unit
+    navHostController: NavHostController
 ) {
     Scaffold(
         topBar = {
@@ -57,7 +59,7 @@ fun MyCartScreen(
                         contentDescription = "back",
                         modifier = Modifier
                             .clickable {
-                                onBackClick()
+                                navHostController.navigateUp()
                             }
                     )
                 }
@@ -124,6 +126,8 @@ fun MyCartScreen(
 @Composable
 private fun MyCartScreenPreview() {
     VibeStoreTheme {
-        MyCartScreen( onBackClick = {} )
+        MyCartScreen(
+            rememberNavController()
+        )
     }
 }
