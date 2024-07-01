@@ -14,7 +14,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBackIos
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -40,11 +40,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.graphics.toColorInt
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import com.example.vibestore.R
 import com.example.vibestore.helper.ViewModelFactory
 import com.example.vibestore.ui.component.AnimatedShimmerDetailProduct
 import com.example.vibestore.ui.component.ExpandingText
+import com.example.vibestore.ui.navigation.Screen
 import com.example.vibestore.ui.theme.VibeStoreTheme
 import com.example.vibestore.ui.theme.poppinsFontFamily
 
@@ -52,8 +55,7 @@ import com.example.vibestore.ui.theme.poppinsFontFamily
 @Composable
 fun DetailScreen(
     productId: Int,
-    onBackClick: () -> Unit,
-    navigateToCart: () -> Unit
+    navcontroller: NavHostController
 ) {
     val viewModel: DetailViewModel = viewModel(
         factory = ViewModelFactory(id = productId)
@@ -75,12 +77,10 @@ fun DetailScreen(
                 },
                 navigationIcon = {
                     Icon(
-                        imageVector = Icons.AutoMirrored.Filled.ArrowBackIos,
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                         tint = Color.Black,
                         contentDescription = "back",
-                        modifier = Modifier.clickable {
-                            onBackClick()
-                        }
+                        modifier = Modifier.clickable { navcontroller.navigateUp() }
                     )
                 },
                 actions = {
@@ -205,7 +205,7 @@ fun DetailScreen(
                                 fontSize = 16.sp,
                                 modifier = Modifier
                                     .clickable {
-                                        navigateToCart()
+                                        navcontroller.navigate(Screen.MyCart.route)
                                     }
                             )
                         }
@@ -220,6 +220,6 @@ fun DetailScreen(
 @Composable
 private fun DetailScreenPreview() {
     VibeStoreTheme {
-        DetailScreen(2, onBackClick = {}, navigateToCart = {})
+        DetailScreen(2, rememberNavController())
     }
 }

@@ -20,14 +20,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.toColorInt
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.vibestore.ui.component.ProductCard
 import com.example.vibestore.ui.component.Search
+import com.example.vibestore.ui.navigation.Screen
 import com.example.vibestore.ui.theme.VibeStoreTheme
 
 
 @Composable
 fun OurProductScreen(
-    navigateToDetail: (Int) -> Unit
+    navcontroller: NavHostController
 ) {
     val viewModel: OurProductViewModel = viewModel()
     val products by viewModel.product.observeAsState(emptyList())
@@ -62,7 +65,7 @@ fun OurProductScreen(
                         title = product.title,
                         modifier = Modifier
                             .clickable {
-                                navigateToDetail(product.id)
+                                navcontroller.navigate(Screen.DetailProduct.createRoute(product.id))
                             }
                     )
                 }
@@ -75,6 +78,6 @@ fun OurProductScreen(
 @Composable
 private fun MyProductPreview() {
     VibeStoreTheme {
-        OurProductScreen(navigateToDetail = {})
+        OurProductScreen(rememberNavController())
     }
 }

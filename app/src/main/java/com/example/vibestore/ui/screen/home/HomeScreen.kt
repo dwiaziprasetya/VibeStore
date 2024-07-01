@@ -3,11 +3,10 @@ package com.example.vibestore.ui.screen.home
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -20,18 +19,20 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.vibestore.R
 import com.example.vibestore.ui.component.HomeSection
 import com.example.vibestore.ui.component.ImageSlider
 import com.example.vibestore.ui.component.TabCategory
+import com.example.vibestore.ui.navigation.Screen
 import com.example.vibestore.ui.screen.foryou.ForYouScreen
 import com.example.vibestore.ui.theme.VibeStoreTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    navigateToSeeAll: () -> Unit,
-    navigateToDetail: (Int) -> Unit
+    navcontroller: NavHostController,
 ) {
     Scaffold(
         modifier = Modifier,
@@ -45,7 +46,9 @@ fun HomeScreen(
                 },
                 navigationIcon = {
                     Icon(
-                        imageVector = Icons.Default.Menu,
+                        painter = painterResource(R.drawable.hamburger_menu),
+                        modifier = Modifier
+                            .size(32.dp),
                         contentDescription = "Menu"
                     )
                 },
@@ -82,16 +85,22 @@ fun HomeScreen(
                     TabCategory(
                         gridHeight = 548.dp,
                         limit = 4,
-                        navigateToDetail = navigateToDetail,
+                        navigateToDetail = { productId ->
+                            navcontroller.navigate(Screen.DetailProduct.createRoute(productId))
+                        },
                     )
                 },
-                navigateToSeeAll = navigateToSeeAll
+                navigateToSeeAll = {
+                    navcontroller.navigate(Screen.Categories.route)
+                }
             )
             HomeSection(
                 title = "For You",
                 content = {
                     ForYouScreen(
-                        navigateToDetail = navigateToDetail
+                        navigateToDetail = { productId ->
+                            navcontroller.navigate(Screen.DetailProduct.createRoute(productId))
+                        }
                     )
                 },
                 navigateToSeeAll = {}
@@ -104,6 +113,6 @@ fun HomeScreen(
 @Composable
 private fun HomeScreenPreview() {
     VibeStoreTheme {
-        HomeScreen(navigateToDetail = {}, navigateToSeeAll = {})
+        HomeScreen(navcontroller = rememberNavController())
     }
 }

@@ -56,48 +56,14 @@ fun VibeStoreApp(
             enterTransition = { fadeIn(tween(500)) },
             exitTransition = { fadeOut(tween(500)) }
         ) {
-            composable(Screen.Welcome.route){
-                WelcomeScreen(navController)
-            }
-            composable(
-                route = Screen.Home.route,
-            ){
-                HomeScreen(
-                    navigateToSeeAll = {
-                        navController.navigate(Screen.Categories.route)
-                    },
-                    navigateToDetail = { productId ->
-                        navController.navigate(Screen.DetailProduct.createRoute(productId))
-                    }
-                )
-            }
-            composable(Screen.MyCart.route) {
-                MyCartScreen(navController)
-            }
-            composable(Screen.Coupon.route){
-                CouponScreen()
-            }
-            composable(Screen.Favourite.route){
-                FavouriteScreen()
-            }
-            composable(Screen.Profile.route){
-                ProfileScreen()
-            }
-            composable(Screen.OurProduct.route){
-                OurProductScreen(
-                    navigateToDetail = { productId ->
-                        navController.navigate(Screen.DetailProduct.createRoute(productId))
-                    }
-                )
-            }
-            composable(Screen.Categories.route){
-                CategoriesScreen(
-                    onBackClick = { navController.navigateUp() },
-                    navigateToDetail = { productId ->
-                        navController.navigate(Screen.DetailProduct.createRoute(productId))
-                    }
-                )
-            }
+            composable(Screen.Welcome.route){ WelcomeScreen(navController) }
+            composable(Screen.Home.route,){ HomeScreen(navController) }
+            composable(Screen.MyCart.route) { MyCartScreen(navController) }
+            composable(Screen.Coupon.route){ CouponScreen() }
+            composable(Screen.Favourite.route){ FavouriteScreen() }
+            composable(Screen.Profile.route){ ProfileScreen() }
+            composable(Screen.OurProduct.route){ OurProductScreen(navController) }
+            composable(Screen.Categories.route){ CategoriesScreen(navController) }
             composable(
                 route = Screen.DetailProduct.route,
                 arguments = listOf(navArgument("productId") { type = NavType.IntType }),
@@ -105,12 +71,7 @@ fun VibeStoreApp(
                 val id = it.arguments?.getInt("productId") ?: -2
                 DetailScreen(
                     productId = id,
-                    onBackClick = {
-                        navController.navigateUp()
-                    },
-                    navigateToCart = {
-                        navController.navigate(Screen.MyCart.route)
-                    }
+                    navController
                 )
             }
         }
