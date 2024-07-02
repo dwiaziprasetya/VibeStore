@@ -2,10 +2,12 @@ package com.example.vibestore.ui.screen.foryou
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
@@ -59,7 +61,11 @@ fun ForYouScreen(
                     }
                 }
             }
-            is UiState.Error -> {}
+            is UiState.Error -> {
+                Box(modifier = Modifier.fillMaxSize()){
+                    Text(text = uiState.errorMessage)
+                }
+            }
         }
     }
 }
