@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.vibestore.di.Injection
 import com.example.vibestore.repository.ProductRepository
 import com.example.vibestore.ui.screen.detail.DetailViewModel
-import com.example.vibestore.ui.screen.foryou.ForYouProductViewModel
+import com.example.vibestore.ui.screen.foryou.ForYouViewModel
 import com.example.vibestore.ui.screen.product.all.AllProductViewModel
 import com.example.vibestore.ui.screen.product.electronic.ElectronicProductViewModel
 import com.example.vibestore.ui.screen.product.jewelery.JeweleryProductViewModel
@@ -30,8 +30,8 @@ class ViewModelFactory(
             ElectronicProductViewModel(repository, limit) as T
         } else if (modelClass.isAssignableFrom(JeweleryProductViewModel::class.java)){
             JeweleryProductViewModel(repository, limit) as T
-        } else if (modelClass.isAssignableFrom(ForYouProductViewModel::class.java)){
-            ForYouProductViewModel(repository, limit) as T
+        } else if (modelClass.isAssignableFrom(ForYouViewModel::class.java)){
+            ForYouViewModel(repository, limit) as T
         } else {
             DetailViewModel(repository) as T
         }

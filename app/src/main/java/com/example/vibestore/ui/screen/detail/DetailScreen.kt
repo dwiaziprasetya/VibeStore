@@ -27,8 +27,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -66,7 +66,7 @@ fun DetailScreen(
             id = productId
         )
     )
-    val uiState by viewModel.uiState.collectAsState(initial = UiState.Loading)
+    val uiState by viewModel.uiState.observeAsState(initial = UiState.Loading)
 
     Scaffold(
         topBar = {
@@ -111,7 +111,11 @@ fun DetailScreen(
                     paddingValues = innerPading
                 )
             }
-            is UiState.Error -> {}
+            is UiState.Error -> {
+                Box(modifier = Modifier.fillMaxSize()){
+                    Text(text = (uiState as UiState.Error).errorMessage)
+                }
+            }
         }
     }
 }
