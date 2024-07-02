@@ -22,15 +22,15 @@ class ViewModelFactory(
         return if (modelClass.isAssignableFrom(AllProductViewModel::class.java)){
             AllProductViewModel(repository) as T
         } else if (modelClass.isAssignableFrom(MenProductViewModel::class.java)) {
-            MenProductViewModel(repository, limit) as T
+            MenProductViewModel(repository) as T
         } else if (modelClass.isAssignableFrom(WomenProductViewModel::class.java)){
-            WomenProductViewModel(repository, limit) as T
+            WomenProductViewModel(repository) as T
         } else if (modelClass.isAssignableFrom(ElectronicProductViewModel::class.java)) {
-            ElectronicProductViewModel(repository, limit) as T
+            ElectronicProductViewModel(repository) as T
         } else if (modelClass.isAssignableFrom(JeweleryProductViewModel::class.java)){
-            JeweleryProductViewModel(repository, limit) as T
+            JeweleryProductViewModel(repository) as T
         } else if (modelClass.isAssignableFrom(ForYouViewModel::class.java)){
-            ForYouViewModel(repository, limit) as T
+            ForYouViewModel(repository) as T
         } else {
             DetailViewModel(repository) as T
         }

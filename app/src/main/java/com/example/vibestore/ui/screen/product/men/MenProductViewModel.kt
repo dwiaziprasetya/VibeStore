@@ -11,7 +11,6 @@ import kotlinx.coroutines.launch
 
 class MenProductViewModel(
     private val repository: ProductRepository,
-    limit: Int
 ): ViewModel() {
 
     private val _uiState: MutableLiveData<UiState<List<ProductResponseItem>>> = MutableLiveData(UiState.Loading)
