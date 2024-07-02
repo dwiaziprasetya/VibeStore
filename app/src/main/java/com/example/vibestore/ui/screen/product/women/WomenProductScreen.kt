@@ -27,15 +27,14 @@ fun WomenProductScreen(
     limit: Int,
     height: Dp,
     count: Int = 4,
-    navigateToDetail: (Int) -> Unit
-) {
-    val viewmodel: WomenProductViewModel = viewModel(
+    navigateToDetail: (Int) -> Unit,
+    viewmodel: WomenProductViewModel = viewModel(
         factory = ViewModelFactory.getInstance(
             context = LocalContext.current,
             limit = limit
         )
     )
-
+) {
     viewmodel.uiState.observeAsState(initial = UiState.Loading).value.let { uiState ->
         when (uiState) {
             is UiState.Loading -> {

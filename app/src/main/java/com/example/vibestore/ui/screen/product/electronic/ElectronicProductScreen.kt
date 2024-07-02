@@ -27,13 +27,13 @@ fun ElectronicProductScreen(
     limit: Int,
     height: Dp,
     count: Int = 4,
-    navigateToDetail: (Int) -> Unit
-) {
-    val viewModel: ElectronicProductViewModel = viewModel(
+    navigateToDetail: (Int) -> Unit,
+    viewModel: ElectronicProductViewModel = viewModel(
         factory = ViewModelFactory.getInstance(
             context = LocalContext.current
         )
     )
+) {
     viewModel.uiState.observeAsState(initial = UiState.Loading).value.let { uiState ->
         when (uiState) {
             is UiState.Loading -> {

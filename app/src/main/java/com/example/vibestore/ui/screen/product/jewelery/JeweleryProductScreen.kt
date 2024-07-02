@@ -27,14 +27,13 @@ fun JeweleryProductScreen(
     limit: Int,
     height: Dp,
     count: Int = 4,
-    navigateToDetail: (Int) -> Unit
-) {
-    val viewModel: JeweleryProductViewModel = viewModel(
+    navigateToDetail: (Int) -> Unit,
+    viewModel: JeweleryProductViewModel = viewModel(
         factory = ViewModelFactory.getInstance(
             context = LocalContext.current
         )
     )
-
+) {
     viewModel.uiState.observeAsState(initial = UiState.Loading).value.let { uiState ->
         when (uiState) {
             is UiState.Loading -> {

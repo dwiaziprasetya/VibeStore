@@ -23,16 +23,13 @@ import com.example.vibestore.ui.theme.VibeStoreTheme
 
 @Composable
 fun ForYouScreen(
-    navigateToDetail: (Int) -> Unit
-) {
-
-    val viewModel: ForYouViewModel = viewModel(
+    navigateToDetail: (Int) -> Unit,
+    viewModel: ForYouViewModel = viewModel(
         factory = ViewModelFactory.getInstance(
             context = LocalContext.current,
-            limit = 6
         )
     )
-
+) {
     viewModel.uiState.observeAsState(initial = UiState.Loading).value.let { uiState ->
         when (uiState) {
             is UiState.Loading -> {

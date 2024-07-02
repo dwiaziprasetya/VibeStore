@@ -27,19 +27,18 @@ fun MenProductScreen(
     limit: Int,
     count: Int = 4,
     height: Dp,
-    navigateToDetail: (Int) -> Unit
-) {
-
-    val viewmo: MenProductViewModel = viewModel(
+    navigateToDetail: (Int) -> Unit,
+    viewModel: MenProductViewModel = viewModel(
         factory = ViewModelFactory.getInstance(
             context = LocalContext.current,
             limit = limit
         )
     )
-    viewmo.uiState.observeAsState(initial = UiState.Loading).value.let { uiState ->
+) {
+    viewModel.uiState.observeAsState(initial = UiState.Loading).value.let { uiState ->
         when (uiState) {
             is UiState.Loading -> {
-                viewmo.getProductByCategory("men's clothing", limit)
+                viewModel.getProductByCategory("men's clothing", limit)
                 Box(modifier = Modifier
                     .fillMaxWidth()
                     .height(height)

@@ -57,16 +57,13 @@ import com.example.vibestore.ui.theme.poppinsFontFamily
 fun DetailScreen(
     productId: Int,
     navcontroller: NavHostController,
-) {
-
-    val context = LocalContext.current
-    val viewModel: DetailViewModel = viewModel(
+    viewModel: DetailViewModel = viewModel(
         factory = ViewModelFactory.getInstance(
-            context = context,
+            context = LocalContext.current,
         )
     )
+) {
     val uiState by viewModel.uiState.observeAsState(initial = UiState.Loading)
-
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(

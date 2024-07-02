@@ -31,14 +31,13 @@ fun AllProductScreen(
     limit: Int,
     height: Dp,
     count: Int = 4,
-    navigateToDetail: (Int) -> Unit
-) {
-    val viewModel: AllProductViewModel = viewModel(
+    navigateToDetail: (Int) -> Unit,
+    viewModel: AllProductViewModel = viewModel(
         factory = ViewModelFactory.getInstance(
             context = LocalContext.current
         )
     )
-
+) {
     viewModel.uiState.observeAsState(initial = UiState.Loading).value.let { uiState ->
         when(uiState) {
             is UiState.Loading -> {
