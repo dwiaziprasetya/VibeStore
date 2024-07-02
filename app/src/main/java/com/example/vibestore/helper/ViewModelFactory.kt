@@ -16,12 +16,11 @@ import com.example.vibestore.ui.screen.product.women.WomenProductViewModel
 @Suppress("UNCHECKED_CAST", "UNREACHABLE_CODE")
 class ViewModelFactory(
     private val limit: Int = 20,
-    private val id: Int = 1,
     private val repository: ProductRepository
 ) : ViewModelProvider.NewInstanceFactory(){
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return if (modelClass.isAssignableFrom(AllProductViewModel::class.java)){
-            AllProductViewModel(repository, limit) as T
+            AllProductViewModel(repository) as T
         } else if (modelClass.isAssignableFrom(MenProductViewModel::class.java)) {
             MenProductViewModel(repository, limit) as T
         } else if (modelClass.isAssignableFrom(WomenProductViewModel::class.java)){
@@ -42,10 +41,8 @@ class ViewModelFactory(
         fun getInstance(
             context: Context,
             limit: Int = 20,
-            id: Int = 1
         ) = ViewModelFactory(
             limit,
-            id,
             Injection.provideRepository(context)
         )
     }

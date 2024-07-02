@@ -6,28 +6,24 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.vibestore.model.ProductResponseItem
 import com.example.vibestore.repository.ProductRepository
+import com.example.vibestore.ui.common.UiState
 import kotlinx.coroutines.launch
 
 class AllProductViewModel(
     private val repository: ProductRepository,
-    limit: Int
 ): ViewModel() {
 
-    private val _products = MutableLiveData<List<ProductResponseItem>>()
-    val products: LiveData<List<ProductResponseItem>> = _products
+    private val _uiState: MutableLiveData<UiState<List<ProductResponseItem>>> = MutableLiveData(UiState.Loading)
+    val uiState: LiveData<UiState<List<ProductResponseItem>>> get() =  _uiState
 
-
-    init {
-        getAllProduct(limit)
-    }
-
-    private fun getAllProduct(limit: Int){
+    fun getAllProduct(limit: Int){
         viewModelScope.launch {
+            _uiState.value = UiState.Loading
             try {
                 val product = repository.getAllProducts(limit)
-                _products.value = product
-            } catch (_: Exception) {
-
+                _uiState.value = UiState.Success(product)
+            } catch (e: Exception) {
+                _uiState.value = UiState.Error(e.message ?: "Unknown Error")
             }
         }
     }

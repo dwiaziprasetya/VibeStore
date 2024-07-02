@@ -63,7 +63,6 @@ fun DetailScreen(
     val viewModel: DetailViewModel = viewModel(
         factory = ViewModelFactory.getInstance(
             context = context,
-            id = productId
         )
     )
     val uiState by viewModel.uiState.observeAsState(initial = UiState.Loading)
