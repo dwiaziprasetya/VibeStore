@@ -1,26 +1,27 @@
 package com.example.vibestore.repository
 
-import com.example.vibestore.data.remote.retrofit.ApiConfig
+import com.example.vibestore.data.remote.retrofit.ApiService
 import com.example.vibestore.model.ProductResponseItem
 
-class ProductRepository {
-    private val productService = ApiConfig.getApiService()
+class ProductRepository private constructor(
+    private val apiService : ApiService
+){
 
     suspend fun getAllProducts(limit: Int): List<ProductResponseItem> {
-        return productService.getAllProduct(limit)
+        return apiService.getAllProduct(limit)
     }
 
     suspend fun getProductByCategory(category: String, limit: Int): List<ProductResponseItem> {
-        return productService.getProductByCategory(category, limit)
+        return apiService.getProductByCategory(category, limit)
     }
 
     suspend fun getSingleProduct(id: Int): ProductResponseItem {
-        return productService.getSingleProduct(id)
+        return apiService.getSingleProduct(id)
     }
 
-//    companion object {
-//        fun getInstance(
-//            api
-//        )
-//    }
+    companion object {
+        fun getInstance(
+            apiService: ApiService
+        ) = ProductRepository(apiService)
+    }
 }

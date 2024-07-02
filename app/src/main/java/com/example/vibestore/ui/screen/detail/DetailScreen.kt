@@ -33,6 +33,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -53,10 +54,15 @@ import com.example.vibestore.ui.theme.poppinsFontFamily
 fun DetailScreen(
     productId: Int,
     navcontroller: NavHostController,
-    viewModel: DetailViewModel = viewModel(
-        factory = ViewModelFactory(id = productId)
-    )
 ) {
+
+    val context = LocalContext.current
+    val viewModel: DetailViewModel = viewModel(
+        factory = ViewModelFactory.getInstance(
+            context = context,
+            id = productId
+        )
+    )
     val product by viewModel.product.observeAsState()
 
     DetailContent(

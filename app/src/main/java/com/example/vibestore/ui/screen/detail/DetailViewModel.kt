@@ -8,8 +8,10 @@ import com.example.vibestore.model.ProductResponseItem
 import com.example.vibestore.repository.ProductRepository
 import kotlinx.coroutines.launch
 
-class DetailViewModel(id: Int): ViewModel(){
-    private val repository = ProductRepository()
+class DetailViewModel(
+    private val repository: ProductRepository,
+    id: Int
+): ViewModel(){
 
     private val _product = MutableLiveData<ProductResponseItem>()
     val product: LiveData<ProductResponseItem> = _product

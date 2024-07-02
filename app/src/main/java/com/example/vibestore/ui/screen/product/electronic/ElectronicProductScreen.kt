@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -28,9 +29,12 @@ fun ElectronicProductScreen(
     count: Int = 4,
     navigateToDetail: (Int) -> Unit
 ) {
-
+    val context = LocalContext.current
     val viewModel2: ElectronicProductViewModel = viewModel(
-        factory = ViewModelFactory(limit)
+        factory = ViewModelFactory.getInstance(
+            context = context,
+            limit = limit
+        )
     )
     val product by viewModel2.products.observeAsState(emptyList())
 
