@@ -1,6 +1,5 @@
 package com.example.vibestore.ui.screen.product.women
 
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -38,7 +37,6 @@ fun WomenProductScreen(
     )
     val product by viewModel2.products.observeAsState(emptyList())
 
-    Log.d("Product Content", "Ini dipanggil")
     if (product.isEmpty()){
         Box(modifier = Modifier
             .fillMaxWidth()

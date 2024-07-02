@@ -36,6 +36,7 @@ fun ForYouScreen(
     viewModel.uiState.observeAsState(initial = UiState.Loading).value.let { uiState ->
         when (uiState) {
             is UiState.Loading -> {
+                viewModel.getProductByCategory("women's clothing", 6)
                 Box(modifier = Modifier
                     .fillMaxWidth()
                     .height(275.dp)

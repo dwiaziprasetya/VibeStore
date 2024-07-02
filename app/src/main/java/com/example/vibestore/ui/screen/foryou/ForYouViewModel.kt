@@ -14,7 +14,7 @@ class ForYouViewModel(private val repository: ProductRepository, limit: Int): Vi
     private val _uiState: MutableLiveData<UiState<List<ProductResponseItem>>> = MutableLiveData(UiState.Loading)
     val uiState: LiveData<UiState<List<ProductResponseItem>>> get() =  _uiState
 
-    private fun getProductByCategory(category: String, limit: Int){
+    fun getProductByCategory(category: String, limit: Int){
         viewModelScope.launch {
             _uiState.value = UiState.Loading
             try {
