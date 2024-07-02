@@ -57,7 +57,7 @@ fun VibeStoreApp(
             exitTransition = { fadeOut(tween(500)) }
         ) {
             composable(Screen.Welcome.route){ WelcomeScreen(navController) }
-            composable(Screen.Home.route,){ HomeScreen(navController) }
+            composable(Screen.Home.route){ HomeScreen(navController) }
             composable(Screen.MyCart.route) { MyCartScreen(navController) }
             composable(Screen.Coupon.route){ CouponScreen() }
             composable(Screen.Favourite.route){ FavouriteScreen() }
@@ -66,9 +66,13 @@ fun VibeStoreApp(
             composable(Screen.Categories.route){ CategoriesScreen(navController) }
             composable(
                 route = Screen.DetailProduct.route,
-                arguments = listOf(navArgument("productId") { type = NavType.IntType }),
-            ){
-                val id = it.arguments?.getInt("productId") ?: -2
+                arguments = listOf(
+                    navArgument("productId") {
+                        type = NavType.IntType
+                    }
+                ),
+            ){ backStackEntry ->
+                val id = backStackEntry.arguments?.getInt("productId") ?: -2
                 DetailScreen(
                     productId = id,
                     navController

@@ -17,4 +17,10 @@ class ProductRepository {
     suspend fun getSingleProduct(id: Int): ProductResponseItem {
         return productService.getSingleProduct(id)
     }
+
+//    companion object {
+//        fun getInstance(
+//            api
+//        )
+//    }
 }

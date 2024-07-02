@@ -68,7 +68,7 @@ fun TabCategory(
 
     val coroutineScope = rememberCoroutineScope()
 
-    Column {
+    Column(modifier = modifier) {
         ScrollableTabRow(
             edgePadding = 0.dp,
             backgroundColor = Color.Transparent,

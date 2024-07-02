@@ -35,34 +35,42 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.graphics.toColorInt
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import com.example.vibestore.R
 import com.example.vibestore.helper.ViewModelFactory
+import com.example.vibestore.model.ProductResponseItem
 import com.example.vibestore.ui.component.AnimatedShimmerDetailProduct
 import com.example.vibestore.ui.component.ExpandingText
 import com.example.vibestore.ui.navigation.Screen
-import com.example.vibestore.ui.theme.VibeStoreTheme
 import com.example.vibestore.ui.theme.poppinsFontFamily
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailScreen(
     productId: Int,
-    navcontroller: NavHostController
-) {
-    val viewModel: DetailViewModel = viewModel(
+    navcontroller: NavHostController,
+    viewModel: DetailViewModel = viewModel(
         factory = ViewModelFactory(id = productId)
     )
-
+) {
     val product by viewModel.product.observeAsState()
 
+    DetailContent(
+        product = product,
+        navcontroller = navcontroller
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun DetailContent(
+    product: ProductResponseItem?,
+    navcontroller: NavHostController
+) {
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -108,7 +116,7 @@ fun DetailScreen(
                         .verticalScroll(rememberScrollState())
                 ) {
                     AsyncImage(
-                        model = product?.image,
+                        model = product.image,
                         contentScale = ContentScale.FillHeight,
                         modifier = Modifier
                             .fillMaxWidth()
@@ -123,7 +131,7 @@ fun DetailScreen(
                         modifier = Modifier.padding(
                             top = 16.dp,
                         ),
-                        text = product?.title.toString(),
+                        text = product.title,
                         fontFamily = poppinsFontFamily,
                         fontWeight = FontWeight.SemiBold,
                         fontSize = 22.sp
@@ -138,13 +146,13 @@ fun DetailScreen(
                         )
                         Text(
                             modifier = Modifier.padding(start = 8.dp),
-                            text = product?.rating?.rate.toString(),
+                            text = product.rating.rate.toString(),
                             fontFamily = poppinsFontFamily,
                             fontWeight = FontWeight.SemiBold
                         )
                         Text(
                             modifier = Modifier.padding(start = 4.dp),
-                            text = "(${product?.rating?.count.toString()})",
+                            text = "(${product.rating.count})",
                             color = MaterialTheme.colorScheme.outline,
                             fontFamily = poppinsFontFamily,
                             fontWeight = FontWeight.Light
@@ -156,13 +164,11 @@ fun DetailScreen(
                         text = "Description Product",
                         fontFamily = poppinsFontFamily
                     )
-                    product?.description?.let {
-                        ExpandingText(
-                            modifier = Modifier.padding(top = 8.dp),
-                            text = it,
-                            fontSize = (13.5).sp
-                        )
-                    }
+                    ExpandingText(
+                        modifier = Modifier.padding(top = 8.dp),
+                        text = product.description,
+                        fontSize = (13.5).sp
+                    )
                 }
                 Box(
                     modifier = Modifier
@@ -187,7 +193,7 @@ fun DetailScreen(
                             fontFamily = poppinsFontFamily,
                             fontWeight = FontWeight.SemiBold,
                             fontSize = 40.sp,
-                            text = "$${product?.price?.toString()}"
+                            text = "$${product.price}"
                         )
                         Button(
                             modifier = Modifier
@@ -216,10 +222,16 @@ fun DetailScreen(
     }
 }
 
-@Preview
-@Composable
-private fun DetailScreenPreview() {
-    VibeStoreTheme {
-        DetailScreen(2, rememberNavController())
-    }
-}
+//@Preview
+//@Composable
+//private fun DetailScreenPreview() {
+//    VibeStoreTheme {
+//        DetailContent(
+//            product = ProductResponseItem(
+//                image =
+//            ),
+//            productId = ,
+//            navcontroller =
+//        )
+//    }
+//}
