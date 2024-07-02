@@ -1,33 +1,38 @@
 package com.example.vibestore.ui.screen.detail
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.vibestore.model.ProductResponseItem
 import com.example.vibestore.repository.ProductRepository
+import com.example.vibestore.ui.common.UiState
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class DetailViewModel(
     private val repository: ProductRepository,
-    id: Int
 ): ViewModel(){
 
-    private val _product = MutableLiveData<ProductResponseItem>()
-    val product: LiveData<ProductResponseItem> = _product
+    private val _uiState: MutableStateFlow<UiState<ProductResponseItem>> = MutableStateFlow(UiState.Loading)
+    val uiState: StateFlow<UiState<ProductResponseItem>> get() =  _uiState
 
-    init {
-        getSingleProduct(id)
-    }
+//    private val _product = MutableLiveData<ProductResponseItem>()
+//    val product: LiveData<ProductResponseItem> = _product
 
-    private fun getSingleProduct(id: Int) {
+//    init {
+//        getSingleProduct(id)
+//    }
+
+    fun getSingleProduct(id: Int) {
         viewModelScope.launch {
-            try {
-                val product = repository.getSingleProduct(id)
-                _product.value = product
-            } catch (_: Exception) {
-
-            }
+            _uiState.value = UiState.Loading
+            _uiState.value = UiState.Success(repository.getSingleProduct(id))
+//            try {
+//                val product = repository.getSingleProduct(id)
+//                _product.value = product
+//            } catch (_: Exception) {
+//
+//            }
         }
     }
 }

@@ -33,9 +33,9 @@ class ViewModelFactory(
         } else if (modelClass.isAssignableFrom(ForYouProductViewModel::class.java)){
             ForYouProductViewModel(repository, limit) as T
         } else {
-            DetailViewModel(repository, id) as T
+            DetailViewModel(repository) as T
         }
-        throw IllegalArgumentException("")
+        throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
     }
 
     companion object {
