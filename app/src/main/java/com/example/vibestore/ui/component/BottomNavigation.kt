@@ -30,11 +30,12 @@ import com.example.vibestore.ui.theme.poppinsFontFamily
 
 @Composable
 fun BottomNavigation(
-    navController: NavHostController
+    navController: NavHostController,
+    modifier: Modifier = Modifier
 ) {
     NavigationBar(
         containerColor = MaterialTheme.colorScheme.onPrimary,
-        modifier = Modifier
+        modifier = modifier
             .height(75.dp)
             .drawWithContent {
                 drawContent()

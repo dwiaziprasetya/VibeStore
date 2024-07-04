@@ -1,9 +1,12 @@
 package com.example.vibestore
 
+import android.annotation.SuppressLint
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -29,6 +32,7 @@ import com.example.vibestore.ui.screen.profile.ProfileScreen
 import com.example.vibestore.ui.screen.welcome.WelcomeScreen
 import com.example.vibestore.ui.theme.VibeStoreTheme
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun VibeStoreApp(
     navController: NavHostController = rememberNavController(),
@@ -36,7 +40,11 @@ fun VibeStoreApp(
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 
+
     Scaffold(
+        contentWindowInsets = WindowInsets(0, 0, 0, 0),
+        modifier = Modifier
+            .fillMaxSize(),
         bottomBar = {
             if (currentRoute !in listOf(
                     Screen.Categories.route,
@@ -45,18 +53,23 @@ fun VibeStoreApp(
                     Screen.Welcome.route
             )
                 ){
-                BottomNavigation(navController)
+                BottomNavigation(
+                    navController = navController,
+                    modifier = Modifier
+                        .systemBarsPadding()
+                )
             }
         }
-    ) { innerPadding ->
+    ) { _ ->
         NavHost(
             navController = navController,
-            startDestination = Screen.Home.route,
-            modifier = Modifier.padding(innerPadding),
+            startDestination = Screen.Welcome.route,
             enterTransition = { fadeIn(tween(500)) },
             exitTransition = { fadeOut(tween(500)) }
         ) {
-            composable(Screen.Welcome.route){ WelcomeScreen(navController) }
+            composable(Screen.Welcome.route){
+                WelcomeScreen(navController)
+            }
             composable(Screen.Home.route){ HomeScreen(navController) }
             composable(Screen.MyCart.route) { MyCartScreen(navController) }
             composable(Screen.Coupon.route){ CouponScreen() }
