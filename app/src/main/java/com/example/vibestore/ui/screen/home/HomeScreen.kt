@@ -1,5 +1,6 @@
 package com.example.vibestore.ui.screen.home
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
@@ -55,7 +56,11 @@ fun HomeScreen(
                 actions = {
                     Icon(
                         painter = painterResource(R.drawable.cartoutlined),
-                        contentDescription = "Cart"
+                        contentDescription = "Cart",
+                        modifier = Modifier
+                            .clickable {
+                                navcontroller.navigate(Screen.MyCart.route)
+                            }
                     )
                     Spacer(modifier = Modifier.width(16.dp))
                     Icon(
