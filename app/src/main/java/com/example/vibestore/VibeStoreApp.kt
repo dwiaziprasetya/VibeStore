@@ -30,7 +30,7 @@ import com.example.vibestore.ui.screen.home.HomeScreen
 import com.example.vibestore.ui.screen.mycart.MyCartScreen
 import com.example.vibestore.ui.screen.ourproduct.OurProductScreen
 import com.example.vibestore.ui.screen.profile.ProfileScreen
-import com.example.vibestore.ui.screen.welcome.WelcomeScreen
+import com.example.vibestore.ui.screen.registration.welcome.WelcomeScreen
 import com.example.vibestore.ui.theme.VibeStoreTheme
 
 @Composable
