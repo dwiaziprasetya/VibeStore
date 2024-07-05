@@ -2,7 +2,6 @@
 
 package com.example.vibestore.ui.screen.registration.welcome
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -31,6 +30,7 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -50,13 +50,15 @@ import com.example.vibestore.R
 import com.example.vibestore.ui.navigation.Screen
 import com.example.vibestore.ui.theme.VibeStoreTheme
 import com.example.vibestore.ui.theme.poppinsFontFamily
+import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun WelcomeScreen(navController: NavHostController) {
 
     var isSheetOpen by rememberSaveable { mutableStateOf(false) }
     val modalBottomSheetState = rememberModalBottomSheetState()
+    val scope = rememberCoroutineScope()
 
     if (isSheetOpen) {
         BottomSheetRegister(
@@ -64,7 +66,12 @@ fun WelcomeScreen(navController: NavHostController) {
                 isSheetOpen = false
             },
             sheetState = modalBottomSheetState,
-            navController = navController
+            onLoginClick = {
+                scope.launch {
+                    navController.navigate(Screen.Login.route)
+                    isSheetOpen = false
+                }
+            }
         )
     }
 
@@ -147,21 +154,28 @@ fun WelcomeScreen(navController: NavHostController) {
 fun BottomSheetRegister(
     onDismiss: () -> Unit,
     sheetState: SheetState,
-    navController: NavHostController
+    onLoginClick: () -> Unit
 ) {
+
     ModalBottomSheet(
         onDismissRequest = onDismiss,
         sheetState = sheetState,
         windowInsets = WindowInsets(0, 0, 0, 0)
     ) {
-        BottomSheetWelcomeContent(navController = navController)
+        BottomSheetWelcomeContent(
+            modifier = Modifier
+                .navigationBarsPadding(),
+            onLoginClick = {
+                onLoginClick()
+            }
+        )
     }
 }
 
 @Composable
 fun BottomSheetWelcomeContent(
     modifier: Modifier = Modifier,
-    navController: NavHostController
+    onLoginClick: () -> Unit
 ) {
     Box(
         modifier = modifier
@@ -213,9 +227,7 @@ fun BottomSheetWelcomeContent(
                         shape = RoundedCornerShape(40.dp)
                     ),
                 shape = RoundedCornerShape(40.dp),
-                onClick = {
-                    navController.navigate(Screen.Home.route)
-                },
+                onClick = onLoginClick,
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.White
                 )
@@ -308,7 +320,7 @@ fun BottomSheetWelcomeContent(
 private fun BottomSheetRegisterPreview() {
     VibeStoreTheme {
         BottomSheetWelcomeContent(
-            navController = rememberNavController()
+            onLoginClick = {}
         )
     }
 }

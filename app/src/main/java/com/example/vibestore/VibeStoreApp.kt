@@ -30,6 +30,7 @@ import com.example.vibestore.ui.screen.home.HomeScreen
 import com.example.vibestore.ui.screen.mycart.MyCartScreen
 import com.example.vibestore.ui.screen.ourproduct.OurProductScreen
 import com.example.vibestore.ui.screen.profile.ProfileScreen
+import com.example.vibestore.ui.screen.registration.login.LoginScreen
 import com.example.vibestore.ui.screen.registration.welcome.WelcomeScreen
 import com.example.vibestore.ui.theme.VibeStoreTheme
 
@@ -48,7 +49,8 @@ fun VibeStoreApp(
                     Screen.Categories.route,
                     Screen.DetailProduct.route,
                     Screen.MyCart.route,
-                    Screen.Welcome.route
+                    Screen.Welcome.route,
+                    Screen.Login.route,
             )
                 ){
                 BottomNavigation(
@@ -68,9 +70,8 @@ fun VibeStoreApp(
             enterTransition = { fadeIn(tween(500)) },
             exitTransition = { fadeOut(tween(500)) },
         ) {
-            composable(Screen.Welcome.route){
-                WelcomeScreen(navController)
-            }
+            composable(Screen.Welcome.route){ WelcomeScreen(navController) }
+            composable(Screen.Login.route){ LoginScreen() }
             composable(Screen.Home.route){ HomeScreen(navController) }
             composable(Screen.MyCart.route) { MyCartScreen(navController) }
             composable(Screen.Coupon.route){ CouponScreen() }
