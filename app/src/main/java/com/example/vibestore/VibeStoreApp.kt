@@ -1,12 +1,13 @@
 package com.example.vibestore
 
-import android.annotation.SuppressLint
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -32,7 +33,6 @@ import com.example.vibestore.ui.screen.profile.ProfileScreen
 import com.example.vibestore.ui.screen.welcome.WelcomeScreen
 import com.example.vibestore.ui.theme.VibeStoreTheme
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun VibeStoreApp(
     navController: NavHostController = rememberNavController(),
@@ -40,11 +40,9 @@ fun VibeStoreApp(
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 
-
     Scaffold(
         contentWindowInsets = WindowInsets(0, 0, 0, 0),
-        modifier = Modifier
-            .fillMaxSize(),
+        modifier = Modifier.fillMaxSize(),
         bottomBar = {
             if (currentRoute !in listOf(
                     Screen.Categories.route,
@@ -56,16 +54,19 @@ fun VibeStoreApp(
                 BottomNavigation(
                     navController = navController,
                     modifier = Modifier
-                        .systemBarsPadding()
+                        .navigationBarsPadding()
                 )
             }
         }
-    ) { _ ->
+    ) { innerPadding ->
         NavHost(
+            modifier = Modifier
+                .padding(innerPadding)
+                .fillMaxHeight(),
             navController = navController,
             startDestination = Screen.Welcome.route,
             enterTransition = { fadeIn(tween(500)) },
-            exitTransition = { fadeOut(tween(500)) }
+            exitTransition = { fadeOut(tween(500)) },
         ) {
             composable(Screen.Welcome.route){
                 WelcomeScreen(navController)

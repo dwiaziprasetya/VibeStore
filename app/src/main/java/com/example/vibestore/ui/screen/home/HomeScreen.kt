@@ -3,6 +3,8 @@ package com.example.vibestore.ui.screen.home
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
@@ -37,8 +39,8 @@ fun HomeScreen(
     navcontroller: NavHostController,
 ) {
     Scaffold(
-        modifier = Modifier
-            .statusBarsPadding(),
+        contentWindowInsets = WindowInsets(0, 0, 0, 0),
+        modifier = Modifier.statusBarsPadding(),
         topBar = {
             CenterAlignedTopAppBar(
                 modifier = Modifier.padding(horizontal = 16.dp),
@@ -78,6 +80,7 @@ fun HomeScreen(
     ) { innerPadding ->
         Column(
             modifier = Modifier
+                .fillMaxSize()
                 .padding(innerPadding)
                 .verticalScroll(rememberScrollState())
         ) {

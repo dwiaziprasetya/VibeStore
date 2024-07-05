@@ -16,10 +16,6 @@ class MainActivity : ComponentActivity() {
             ),
         )
         super.onCreate(savedInstanceState)
-
-
-
-//        installSplashScreen()
         setContent {
             VibeStoreTheme(dynamicColor = false) {
                 VibeStoreApp()

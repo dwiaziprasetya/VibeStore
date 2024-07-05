@@ -34,7 +34,7 @@ fun BottomNavigation(
     modifier: Modifier = Modifier
 ) {
     NavigationBar(
-        containerColor = MaterialTheme.colorScheme.onPrimary,
+        containerColor = Color.White,
         modifier = modifier
             .height(75.dp)
             .drawWithContent {
