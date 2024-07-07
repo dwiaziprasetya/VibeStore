@@ -2,6 +2,7 @@ package com.example.vibestore.ui.navigation
 
 sealed class Screen(val route: String) {
     object Welcome : Screen("welcome")
+    object SignUp : Screen("signup")
     object Login : Screen("login")
     object Home : Screen("home")
     object Categories : Screen("categories")

@@ -18,6 +18,8 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
@@ -69,6 +71,12 @@ fun WelcomeScreen(navController: NavHostController) {
             onLoginClick = {
                 scope.launch {
                     navController.navigate(Screen.Login.route)
+                    isSheetOpen = false
+                }
+            },
+            onSignUpClick = {
+                scope.launch {
+                    navController.navigate(Screen.SignUp.route)
                     isSheetOpen = false
                 }
             }
@@ -154,7 +162,8 @@ fun WelcomeScreen(navController: NavHostController) {
 fun BottomSheetRegister(
     onDismiss: () -> Unit,
     sheetState: SheetState,
-    onLoginClick: () -> Unit
+    onLoginClick: () -> Unit,
+    onSignUpClick: () -> Unit,
 ) {
 
     ModalBottomSheet(
@@ -165,9 +174,8 @@ fun BottomSheetRegister(
         BottomSheetWelcomeContent(
             modifier = Modifier
                 .navigationBarsPadding(),
-            onLoginClick = {
-                onLoginClick()
-            }
+            onLoginClick = onLoginClick,
+            onSignUpClick = onSignUpClick
         )
     }
 }
@@ -175,7 +183,8 @@ fun BottomSheetRegister(
 @Composable
 fun BottomSheetWelcomeContent(
     modifier: Modifier = Modifier,
-    onLoginClick: () -> Unit
+    onLoginClick: () -> Unit,
+    onSignUpClick: () -> Unit,
 ) {
     Box(
         modifier = modifier
@@ -199,8 +208,7 @@ fun BottomSheetWelcomeContent(
                     .height(55.dp)
                     .fillMaxWidth(),
                 shape = RoundedCornerShape(40.dp),
-                onClick = {
-                },
+                onClick = onSignUpClick,
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color("#29bf12".toColorInt())
                 )
@@ -297,18 +305,18 @@ fun BottomSheetWelcomeContent(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Icon(
-                        painter = painterResource(R.drawable.icon_google),
+                        imageVector = Icons.Default.AccountCircle,
                         contentDescription = "",
                         tint = Color.Unspecified
                     )
                     Text(
                         fontFamily = poppinsFontFamily,
-                        text = "Continue with Google",
+                        text = "Continue as guest",
                         fontSize = 16.sp,
                         color = Color.Black,
                         modifier = Modifier
                     )
-                    Spacer(modifier = Modifier.width(1.dp))
+                    Spacer(modifier = Modifier.width(0.1.dp))
                 }
             }
         }
@@ -320,7 +328,8 @@ fun BottomSheetWelcomeContent(
 private fun BottomSheetRegisterPreview() {
     VibeStoreTheme {
         BottomSheetWelcomeContent(
-            onLoginClick = {}
+            onLoginClick = {},
+            onSignUpClick = {}
         )
     }
 }
