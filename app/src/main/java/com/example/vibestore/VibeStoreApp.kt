@@ -1,5 +1,6 @@
 package com.example.vibestore
 
+import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -72,10 +73,68 @@ fun VibeStoreApp(
             enterTransition = { fadeIn(tween(500)) },
             exitTransition = { fadeOut(tween(500)) },
         ) {
-            composable(Screen.Welcome.route){ WelcomeScreen(navController) }
-            composable(Screen.SignUp.route){ SignUpScreen() }
-            composable(Screen.Login.route){ LoginScreen() }
-            composable(Screen.Home.route){ HomeScreen(navController) }
+            composable(
+                route = Screen.Welcome.route,
+                exitTransition = {
+                    slideOutOfContainer(
+                        AnimatedContentTransitionScope.SlideDirection.Left,
+                        tween(500)
+                    )
+                },
+                popEnterTransition = {
+                    slideIntoContainer(
+                        AnimatedContentTransitionScope.SlideDirection.Right,
+                        tween(500)
+                    )
+                }
+            ){
+                WelcomeScreen(navController)
+            }
+            composable(
+                route = Screen.SignUp.route,
+                enterTransition = {
+                    slideIntoContainer(
+                        AnimatedContentTransitionScope.SlideDirection.Left,
+                        tween(500)
+                    )
+                },
+                popExitTransition = {
+                    slideOutOfContainer(
+                        AnimatedContentTransitionScope.SlideDirection.Right,
+                        tween(500)
+                    )
+                }
+            ){
+                SignUpScreen(navController = navController)
+            }
+            composable(
+                route = Screen.Login.route,
+                enterTransition = {
+                    slideIntoContainer(
+                        AnimatedContentTransitionScope.SlideDirection.Left,
+                        tween(500)
+                    )
+                },
+                popExitTransition = {
+                    slideOutOfContainer(
+                        AnimatedContentTransitionScope.SlideDirection.Right,
+                        tween(500)
+                    )
+                }
+            ){
+                LoginScreen()
+            }
+            composable(
+                route = Screen.Home.route,
+                enterTransition = {
+                    slideIntoContainer(
+                        AnimatedContentTransitionScope.SlideDirection.Left,
+                        tween(500)
+                    )
+                },
+            ){
+                HomeScreen(navController)
+            }
             composable(Screen.MyCart.route) { MyCartScreen(navController) }
             composable(Screen.Coupon.route){ CouponScreen() }
             composable(Screen.Favourite.route){ FavouriteScreen() }

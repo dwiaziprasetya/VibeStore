@@ -79,6 +79,12 @@ fun WelcomeScreen(navController: NavHostController) {
                     navController.navigate(Screen.SignUp.route)
                     isSheetOpen = false
                 }
+            },
+            onGuestClick = {
+                scope.launch {
+                    navController.navigate(Screen.Home.route)
+                    isSheetOpen = false
+                }
             }
         )
     }
@@ -164,6 +170,7 @@ fun BottomSheetRegister(
     sheetState: SheetState,
     onLoginClick: () -> Unit,
     onSignUpClick: () -> Unit,
+    onGuestClick: () -> Unit
 ) {
 
     ModalBottomSheet(
@@ -175,7 +182,8 @@ fun BottomSheetRegister(
             modifier = Modifier
                 .navigationBarsPadding(),
             onLoginClick = onLoginClick,
-            onSignUpClick = onSignUpClick
+            onSignUpClick = onSignUpClick,
+            onGuestClick = onGuestClick
         )
     }
 }
@@ -183,6 +191,7 @@ fun BottomSheetRegister(
 @Composable
 fun BottomSheetWelcomeContent(
     modifier: Modifier = Modifier,
+    onGuestClick: () -> Unit,
     onLoginClick: () -> Unit,
     onSignUpClick: () -> Unit,
 ) {
@@ -293,8 +302,7 @@ fun BottomSheetWelcomeContent(
                         shape = RoundedCornerShape(40.dp)
                     ),
                 shape = RoundedCornerShape(40.dp),
-                onClick = {
-                },
+                onClick = onGuestClick,
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.White
                 )
@@ -329,7 +337,8 @@ private fun BottomSheetRegisterPreview() {
     VibeStoreTheme {
         BottomSheetWelcomeContent(
             onLoginClick = {},
-            onSignUpClick = {}
+            onSignUpClick = {},
+            onGuestClick = {}
         )
     }
 }

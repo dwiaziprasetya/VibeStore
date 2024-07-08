@@ -60,9 +60,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.graphics.toColorInt
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.example.vibestore.R
 import com.example.vibestore.helper.ViewModelFactory
 import com.example.vibestore.ui.common.UiState
+import com.example.vibestore.ui.navigation.Screen
 import com.example.vibestore.ui.theme.VibeStoreTheme
 import com.example.vibestore.ui.theme.poppinsFontFamily
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -74,13 +76,16 @@ fun SignUpScreen(
         factory = ViewModelFactory.getInstance(
             context = LocalContext.current
         )
-    )
+    ),
+    navController: NavController
 ) {
 
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
     val systemUiController = rememberSystemUiController()
     var passwordVisibility by remember { mutableStateOf(false) }
+    var passwordError by remember { mutableStateOf(false) }
+    var emailError by remember { mutableStateOf(false) }
     var checked by remember { mutableStateOf(false) }
     var email by rememberSaveable { mutableStateOf("") }
     var username by rememberSaveable { mutableStateOf("") }
@@ -130,22 +135,46 @@ fun SignUpScreen(
         username = username,
         password = password,
         checked = checked,
-        onEmailChange = { email = it },
+        onEmailChange = {
+            email = it
+            emailError = !android
+                .util
+                .Patterns
+                .EMAIL_ADDRESS
+                .matcher(email)
+                .matches()
+        },
         onUsernameChange = { username = it },
-        onPasswordChange = { password = it },
+        onPasswordChange = {
+            password = it
+            passwordError = password.length < 8
+       },
         icon = icon,
         passwordVisibility = passwordVisibility,
         onPasswordVisibilityChange = { passwordVisibility = !passwordVisibility },
         onCheckedChange = { checked = it },
         onSignUpClick = {
-            scope.launch {
-                viewModel.register(
-                    username.trim(),
-                    email.trim(),
-                    password.trim()
-                )
+            if (
+                username.isEmpty() ||
+                email.isEmpty() ||
+                password.isEmpty()
+                ) {
+                Toast.makeText(context, "Please fill all fields", Toast.LENGTH_SHORT).show()
+            } else {
+                scope.launch {
+                    viewModel.register(
+                        username.trim(),
+                        email.trim(),
+                        password.trim()
+                    )
+                }
             }
-        }
+        },
+        onLoginClick = {
+            navController.navigate(Screen.Login.route)
+        },
+        passwordError = passwordError,
+        emailError = emailError
     )
 
 }
@@ -163,7 +192,10 @@ fun SignUpContent(
     passwordVisibility: Boolean,
     onPasswordVisibilityChange: () -> Unit,
     onCheckedChange: (Boolean) -> Unit,
-    onSignUpClick: () -> Unit
+    onSignUpClick: () -> Unit,
+    onLoginClick: () -> Unit,
+    passwordError: Boolean,
+    emailError: Boolean
 ) {
     Column(
         modifier = Modifier
@@ -198,8 +230,8 @@ fun SignUpContent(
                 hint = "Enter your email address",
                 onValueChange = onEmailChange,
                 trailingIcon = {},
-                isError = false,
-                errorMessage = ""
+                isError = emailError,
+                errorMessage = "Invalid email address"
             )
             CustomOutlinedTextField(
                 value = username,
@@ -223,8 +255,8 @@ fun SignUpContent(
                             }
                     )
                 },
-                isError = false,
-                errorMessage = "",
+                isError = passwordError,
+                errorMessage = "Password must be at least 8 characters",
                 visualTransformation = if (passwordVisibility) VisualTransformation.None
                 else PasswordVisualTransformation()
             )
@@ -234,7 +266,7 @@ fun SignUpContent(
             modifier = Modifier.align(Alignment.End)
         ) {
             RoundedCornerCheckbox(
-                label = "Remember me",
+                label = "remember me",
                 isChecked = checked,
                 onValueChange = onCheckedChange,
             )
@@ -272,7 +304,11 @@ fun SignUpContent(
                 text = " Login",
                 fontFamily = poppinsFontFamily,
                 fontSize = 14.sp,
-                color = Color("#29bf12".toColorInt())
+                color = Color("#29bf12".toColorInt()),
+                modifier = Modifier
+                    .clickable {
+                        onLoginClick()
+                    }
             )
         }
     }
@@ -341,6 +377,7 @@ fun RoundedCornerCheckbox(
 
 @Composable
 fun CustomOutlinedTextField(
+    modifier: Modifier = Modifier,
     value: String,
     onValueChange: (String) -> Unit,
     trailingIcon: @Composable () -> Unit,
@@ -366,14 +403,15 @@ fun CustomOutlinedTextField(
                 text = hint,
                 color = MaterialTheme.colorScheme.outline,
                 fontFamily = poppinsFontFamily,
-                fontSize = 15.sp
+                fontSize = 15.sp,
             )
         },
         keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
         keyboardActions = KeyboardActions(onDone = {
             keyboardController?.hide()
         }),
-        modifier = Modifier
+        modifier = modifier
+            .padding(vertical = 8.dp)
             .fillMaxWidth(),
         trailingIcon = {
             trailingIcon()
@@ -382,7 +420,7 @@ fun CustomOutlinedTextField(
         textStyle = TextStyle(
             color = Color.Black,
             fontFamily = poppinsFontFamily,
-            fontSize = 14.sp
+            fontSize = 14.sp,
         ),
         isError = isError,
         supportingText = {
@@ -393,7 +431,7 @@ fun CustomOutlinedTextField(
                     color = MaterialTheme.colorScheme.error
                 )
             }
-        }
+        },
     )
 }
 
@@ -415,7 +453,10 @@ private fun SignUpContentPreview() {
             passwordVisibility = false,
             onPasswordVisibilityChange = {},
             onSignUpClick = {},
-            onCheckedChange = {}
+            onCheckedChange = {},
+            onLoginClick = {},
+            passwordError = true,
+            emailError = true
         )
     }
 }
