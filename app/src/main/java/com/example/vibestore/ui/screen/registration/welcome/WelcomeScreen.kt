@@ -17,17 +17,22 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.SheetState
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
@@ -57,11 +62,14 @@ import kotlinx.coroutines.launch
 fun WelcomeScreen(navController: NavHostController) {
 
     var isSheetOpen by rememberSaveable { mutableStateOf(false) }
-    val modalBottomSheetState = rememberModalBottomSheetState()
+    val modalBottomSheetState = rememberModalBottomSheetState(
+        skipPartiallyExpanded = true
+    )
     val scope = rememberCoroutineScope()
 
     if (isSheetOpen) {
         BottomSheetRegister(
+            modifier = Modifier.wrapContentHeight(),
             onDismiss = {
                 isSheetOpen = false
             },
@@ -85,6 +93,12 @@ fun WelcomeScreen(navController: NavHostController) {
                 }
             }
         )
+    }
+
+    LaunchedEffect(isSheetOpen) {
+        if (isSheetOpen) {
+            modalBottomSheetState.expand()
+        } 
     }
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -168,17 +182,20 @@ fun BottomSheetRegister(
     sheetState: SheetState,
     onLoginClick: () -> Unit,
     onSignUpClick: () -> Unit,
-    onGuestClick: () -> Unit
+    onGuestClick: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
 
     ModalBottomSheet(
+        modifier = modifier,
         onDismissRequest = onDismiss,
         sheetState = sheetState,
         windowInsets = WindowInsets(0, 0, 0, 0)
     ) {
         BottomSheetWelcomeContent(
             modifier = Modifier
-                .navigationBarsPadding(),
+                .navigationBarsPadding()
+                .wrapContentHeight(),
             onLoginClick = onLoginClick,
             onSignUpClick = onSignUpClick,
             onGuestClick = onGuestClick
@@ -196,7 +213,6 @@ fun BottomSheetWelcomeContent(
     Box(
         modifier = modifier
             .background(color = Color.White)
-            .height(288.dp)
     ) {
         Column(
             modifier = Modifier
@@ -237,8 +253,8 @@ fun BottomSheetWelcomeContent(
                     .height(55.dp)
                     .fillMaxWidth()
                     .border(
-                        color = Color.Black,
-                        width = 0.5.dp,
+                        color = MaterialTheme.colorScheme.outline,
+                        width = 1.dp,
                         shape = RoundedCornerShape(40.dp)
                     ),
                 shape = RoundedCornerShape(40.dp),
@@ -295,8 +311,8 @@ fun BottomSheetWelcomeContent(
                     .height(60.dp)
                     .fillMaxWidth()
                     .border(
-                        color = Color.Black,
-                        width = 0.5.dp,
+                        color = MaterialTheme.colorScheme.outline,
+                        width = 1.dp,
                         shape = RoundedCornerShape(40.dp)
                     ),
                 shape = RoundedCornerShape(40.dp),
@@ -318,6 +334,86 @@ fun BottomSheetWelcomeContent(
                     Text(
                         fontFamily = poppinsFontFamily,
                         text = "Continue with google",
+                        fontSize = 16.sp,
+                        color = Color.Black,
+                        modifier = Modifier
+                    )
+                    Spacer(modifier = Modifier.width(0.1.dp))
+                }
+            }
+            Button(
+                modifier = Modifier
+                    .padding(
+                        top = 16.dp,
+                        start = 16.dp,
+                        end = 16.dp
+                    )
+                    .height(60.dp)
+                    .fillMaxWidth()
+                    .border(
+                        color = MaterialTheme.colorScheme.outline,
+                        width = 1.dp,
+                        shape = RoundedCornerShape(40.dp)
+                    ),
+                shape = RoundedCornerShape(40.dp),
+                onClick = onGuestClick,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.White
+                )
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.icon_facebook),
+                        contentDescription = "",
+                        tint = Color.Unspecified
+                    )
+                    Text(
+                        fontFamily = poppinsFontFamily,
+                        text = "Continue with facebook",
+                        fontSize = 16.sp,
+                        color = Color.Black,
+                        modifier = Modifier
+                    )
+                    Spacer(modifier = Modifier.width(0.1.dp))
+                }
+            }
+            Button(
+                modifier = Modifier
+                    .padding(
+                        top = 16.dp,
+                        start = 16.dp,
+                        end = 16.dp
+                    )
+                    .height(60.dp)
+                    .fillMaxWidth()
+                    .border(
+                        color = MaterialTheme.colorScheme.outline,
+                        width = 1.dp,
+                        shape = RoundedCornerShape(40.dp)
+                    ),
+                shape = RoundedCornerShape(40.dp),
+                onClick = onGuestClick,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.White
+                )
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.AccountCircle,
+                        contentDescription = "",
+                        tint = Color.Unspecified
+                    )
+                    Text(
+                        fontFamily = poppinsFontFamily,
+                        text = "Continue as Guest",
                         fontSize = 16.sp,
                         color = Color.Black,
                         modifier = Modifier

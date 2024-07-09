@@ -356,8 +356,15 @@ fun RoundedCornerCheckbox(
         Box(
             modifier = Modifier
                 .size(size.dp)
-                .background(color = checkboxColor, shape = RoundedCornerShape(4.dp))
-                .border(width = 1.5.dp, color = checkedColor, shape = RoundedCornerShape(4.dp)),
+                .background(
+                    color = checkboxColor,
+                    shape = RoundedCornerShape(4.dp)
+                )
+                .border(
+                    width = 1.5.dp,
+                    color = checkedColor,
+                    shape = RoundedCornerShape(4.dp)
+                ),
             contentAlignment = Alignment.Center
         ) {
             androidx.compose.animation.AnimatedVisibility(
