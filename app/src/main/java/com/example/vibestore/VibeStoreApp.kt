@@ -92,6 +92,12 @@ fun VibeStoreApp(
             }
             composable(
                 route = Screen.SignUp.route,
+                exitTransition = {
+                    slideOutOfContainer(
+                        AnimatedContentTransitionScope.SlideDirection.Left,
+                        tween(500)
+                    )
+                },
                 enterTransition = {
                     slideIntoContainer(
                         AnimatedContentTransitionScope.SlideDirection.Left,
@@ -100,6 +106,12 @@ fun VibeStoreApp(
                 },
                 popExitTransition = {
                     slideOutOfContainer(
+                        AnimatedContentTransitionScope.SlideDirection.Right,
+                        tween(500)
+                    )
+                },
+                popEnterTransition = {
+                    slideIntoContainer(
                         AnimatedContentTransitionScope.SlideDirection.Right,
                         tween(500)
                     )
@@ -109,6 +121,12 @@ fun VibeStoreApp(
             }
             composable(
                 route = Screen.Login.route,
+                exitTransition = {
+                    slideOutOfContainer(
+                        AnimatedContentTransitionScope.SlideDirection.Left,
+                        tween(500)
+                    )
+                },
                 enterTransition = {
                     slideIntoContainer(
                         AnimatedContentTransitionScope.SlideDirection.Left,
@@ -120,9 +138,15 @@ fun VibeStoreApp(
                         AnimatedContentTransitionScope.SlideDirection.Right,
                         tween(500)
                     )
+                },
+                popEnterTransition = {
+                    slideIntoContainer(
+                        AnimatedContentTransitionScope.SlideDirection.Right,
+                        tween(500)
+                    )
                 }
             ){
-                LoginScreen()
+                LoginScreen(navController = navController)
             }
             composable(
                 route = Screen.Home.route,

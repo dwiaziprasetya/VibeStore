@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.selection.toggleable
@@ -147,7 +148,7 @@ fun SignUpScreen(
         onUsernameChange = { username = it },
         onPasswordChange = {
             password = it
-            passwordError = password.length < 8
+            passwordError = password.contains(" ")
        },
         icon = icon,
         passwordVisibility = passwordVisibility,
@@ -207,12 +208,22 @@ fun SignUpContent(
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(
-            text = "Vibe Store",
-            fontFamily = poppinsFontFamily,
-            fontWeight = FontWeight.Bold,
-            fontSize = 35.sp
-        )
+        Row(verticalAlignment = Alignment.Bottom) {
+            Text(
+                text = "Vibe Store",
+                fontFamily = poppinsFontFamily,
+                fontWeight = FontWeight.Bold,
+                fontSize = 35.sp
+            )
+            Icon(
+                painter = painterResource(R.drawable.coba),
+                contentDescription = null,
+                tint = Color.Unspecified,
+                modifier = Modifier
+                    .size(60.dp)
+                    .offset(x = (-10).dp)
+            )
+        }
         Text(
             text = "Register or sign up and we'll get started",
             fontFamily = poppinsFontFamily,
@@ -256,17 +267,19 @@ fun SignUpContent(
                     )
                 },
                 isError = passwordError,
-                errorMessage = "Password must be at least 8 characters",
+                errorMessage = "Passwords must not contain spaces",
                 visualTransformation = if (passwordVisibility) VisualTransformation.None
                 else PasswordVisualTransformation()
             )
         }
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.align(Alignment.End)
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.Start)
         ) {
             RoundedCornerCheckbox(
-                label = "remember me",
+                label = "I agree to the Terms & Conditions and Privacy Policy",
                 isChecked = checked,
                 onValueChange = onCheckedChange,
             )
@@ -365,7 +378,8 @@ fun RoundedCornerCheckbox(
             }
         }
         Text(
-            modifier = Modifier.padding(start = 8.dp),
+            modifier = Modifier
+                .padding(start = 16.dp),
             text = label,
             fontFamily = poppinsFontFamily,
             fontSize = 14.sp,

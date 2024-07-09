@@ -5,7 +5,7 @@ import com.example.vibestore.model.LoginResponse
 import com.example.vibestore.model.ProductResponseItem
 import com.example.vibestore.model.UserResponse
 
-class ProductRepository private constructor(
+class VibeStoreRepository private constructor(
     private val apiService : ApiService
 ){
     suspend fun login(
@@ -41,6 +41,6 @@ class ProductRepository private constructor(
     companion object {
         fun getInstance(
             apiService: ApiService
-        ) = ProductRepository(apiService)
+        ) = VibeStoreRepository(apiService)
     }
 }

@@ -18,8 +18,6 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
@@ -313,13 +311,13 @@ fun BottomSheetWelcomeContent(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Icon(
-                        imageVector = Icons.Default.AccountCircle,
+                        painter = painterResource(R.drawable.icon_google),
                         contentDescription = "",
                         tint = Color.Unspecified
                     )
                     Text(
                         fontFamily = poppinsFontFamily,
-                        text = "Continue as guest",
+                        text = "Continue with google",
                         fontSize = 16.sp,
                         color = Color.Black,
                         modifier = Modifier
