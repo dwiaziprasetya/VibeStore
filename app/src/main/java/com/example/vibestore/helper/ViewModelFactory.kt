@@ -16,7 +16,6 @@ import com.example.vibestore.ui.screen.product.women.WomenProductViewModel
 
 @Suppress("UNCHECKED_CAST", "UNREACHABLE_CODE")
 class ViewModelFactory(
-    private val limit: Int = 20,
     private val repository: ProductRepository
 ) : ViewModelProvider.NewInstanceFactory(){
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -45,7 +44,6 @@ class ViewModelFactory(
             context: Context,
             limit: Int = 20,
         ) = ViewModelFactory(
-            limit,
             Injection.provideRepository(context)
         )
     }
