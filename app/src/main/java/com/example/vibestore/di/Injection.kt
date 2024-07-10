@@ -2,11 +2,11 @@ package com.example.vibestore.di
 
 import android.content.Context
 import com.example.vibestore.data.remote.retrofit.ApiConfig
-import com.example.vibestore.repository.ProductRepository
+import com.example.vibestore.repository.VibeStoreRepository
 
 object Injection {
-    fun provideRepository(context: Context): ProductRepository {
+    fun provideRepository(context: Context): VibeStoreRepository {
         val apiService = ApiConfig.getApiService()
-        return ProductRepository.getInstance(apiService)
+        return VibeStoreRepository.getInstance(apiService)
     }
 }

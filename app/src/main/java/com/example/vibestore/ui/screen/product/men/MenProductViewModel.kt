@@ -5,12 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.vibestore.model.ProductResponseItem
-import com.example.vibestore.repository.ProductRepository
+import com.example.vibestore.repository.VibeStoreRepository
 import com.example.vibestore.ui.common.UiState
 import kotlinx.coroutines.launch
 
 class MenProductViewModel(
-    private val repository: ProductRepository,
+    private val repository: VibeStoreRepository,
 ): ViewModel() {
 
     private val _uiState: MutableLiveData<UiState<List<ProductResponseItem>>> = MutableLiveData(UiState.Loading)
