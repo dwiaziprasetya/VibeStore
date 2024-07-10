@@ -1,9 +1,13 @@
 package com.example.vibestore.ui.screen.home
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -35,7 +39,8 @@ fun HomeScreen(
     navcontroller: NavHostController,
 ) {
     Scaffold(
-        modifier = Modifier,
+        contentWindowInsets = WindowInsets(0, 0, 0, 0),
+        modifier = Modifier.statusBarsPadding(),
         topBar = {
             CenterAlignedTopAppBar(
                 modifier = Modifier.padding(horizontal = 16.dp),
@@ -55,7 +60,11 @@ fun HomeScreen(
                 actions = {
                     Icon(
                         painter = painterResource(R.drawable.cartoutlined),
-                        contentDescription = "Cart"
+                        contentDescription = "Cart",
+                        modifier = Modifier
+                            .clickable {
+                                navcontroller.navigate(Screen.MyCart.route)
+                            }
                     )
                     Spacer(modifier = Modifier.width(16.dp))
                     Icon(
@@ -71,6 +80,7 @@ fun HomeScreen(
     ) { innerPadding ->
         Column(
             modifier = Modifier
+                .fillMaxSize()
                 .padding(innerPadding)
                 .verticalScroll(rememberScrollState())
         ) {
