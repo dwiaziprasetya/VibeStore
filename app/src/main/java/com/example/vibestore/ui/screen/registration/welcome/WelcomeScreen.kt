@@ -103,7 +103,7 @@ fun WelcomeScreen(navController: NavHostController) {
 
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
-            painter = painterResource(R.drawable.ahahah),
+            painter = painterResource(R.drawable.woi),
             contentDescription = null,
             modifier = Modifier
                 .fillMaxSize(),

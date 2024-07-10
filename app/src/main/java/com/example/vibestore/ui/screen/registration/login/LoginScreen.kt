@@ -28,7 +28,6 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -86,12 +85,12 @@ fun LoginScreen(
     else
         painterResource(R.drawable.ic_visibility_off)
 
-    SideEffect {
-        systemUiController.setStatusBarColor(
-            color = Color.Transparent,
-            darkIcons = true
-        )
-    }
+//    SideEffect {
+//        systemUiController.setStatusBarColor(
+//            color = Color.Transparent,
+//            darkIcons = true
+//        )
+//    }
 
     val uiState by viewModel.uiState.observeAsState(initial = UiState.Loading)
 

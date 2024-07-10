@@ -34,7 +34,6 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -68,7 +67,6 @@ import com.example.vibestore.ui.common.UiState
 import com.example.vibestore.ui.navigation.Screen
 import com.example.vibestore.ui.theme.VibeStoreTheme
 import com.example.vibestore.ui.theme.poppinsFontFamily
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import kotlinx.coroutines.launch
 
 @Composable
@@ -83,7 +81,6 @@ fun SignUpScreen(
 
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
-    val systemUiController = rememberSystemUiController()
     var passwordVisibility by remember { mutableStateOf(false) }
     var passwordError by remember { mutableStateOf(false) }
     var emailError by remember { mutableStateOf(false) }
@@ -96,12 +93,6 @@ fun SignUpScreen(
     else
         painterResource(R.drawable.ic_visibility_off)
 
-    SideEffect {
-        systemUiController.setStatusBarColor(
-            color = Color.Transparent,
-            darkIcons = true
-        )
-    }
 
     val uiState by viewModel.uiState.observeAsState(initial = UiState.Loading)
 
