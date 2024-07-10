@@ -31,6 +31,11 @@ interface ApiService {
         @Query("limit") limit: Int
     ): List<ProductResponseItem>
 
+    @GET("products")
+    suspend fun sortProduct(
+        @Query("sort") sort: String
+    ): List<ProductResponseItem>
+
     @GET("products/category/{category}")
     suspend fun getProductByCategory(
         @Path("category")

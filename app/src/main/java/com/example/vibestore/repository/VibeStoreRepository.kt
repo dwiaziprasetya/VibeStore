@@ -38,6 +38,17 @@ class VibeStoreRepository private constructor(
         return apiService.getSingleProduct(id)
     }
 
+    suspend fun sortProduct(sort: String): List<ProductResponseItem> {
+        return apiService.sortProduct(sort)
+    }
+
+    suspend fun searchProduct(query: String): List<ProductResponseItem> {
+        val allproduct = apiService.getAllProduct(Int.MAX_VALUE)
+        return allproduct.filter {
+            it.title.contains(query, ignoreCase = true)
+        }
+    }
+
     companion object {
         fun getInstance(
             apiService: ApiService
