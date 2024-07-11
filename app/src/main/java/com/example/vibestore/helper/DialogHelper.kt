@@ -12,7 +12,7 @@ import com.example.vibestore.R
 object DialogHelper {
 
     private fun getCustomFont(context: Context): Typeface? {
-        return ResourcesCompat.getFont(context, R.font.poppinsregular)
+        return ResourcesCompat.getFont(context, R.font.poppinsmedium)
     }
 
     private fun showDialog(
@@ -60,6 +60,20 @@ object DialogHelper {
             title = null,
             textContent = textContent,
             alertType = SweetAlertDialog.PROGRESS_TYPE
+        )
+    }
+
+    fun showDialogError(
+        context: Context,
+        title: String?,
+        textContent: String?,
+        onConfirm: () -> Unit = {}
+    ) : SweetAlertDialog {
+        return showDialog(
+            context = context,
+            title = title,
+            textContent = textContent,
+            alertType = SweetAlertDialog.ERROR_TYPE,
         )
     }
 

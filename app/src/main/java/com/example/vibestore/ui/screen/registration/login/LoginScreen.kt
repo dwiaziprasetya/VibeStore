@@ -1,6 +1,5 @@
 package com.example.vibestore.ui.screen.registration.login
 
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -107,16 +106,14 @@ fun LoginScreen(
                 viewModel.resetUiState()
             }
             is UiState.Error -> {
-                Log.d("LoginScreenAhhhhhh", (uiState as UiState.Error).errorMessage)
-                Toast.makeText(
-                    context,
-                    (uiState as UiState.Error).errorMessage,
-                    Toast.LENGTH_SHORT
-                ).show()
+                loadingDialog?.dismissWithAnimation()
+                loadingDialog = DialogHelper.showDialogError(
+                    context = context,
+                    title = "Error",
+                    textContent = (uiState as UiState.Error).errorMessage
+                )
             }
-            null -> {
-
-            }
+            null -> {}
         }
     }
 
@@ -141,7 +138,11 @@ fun LoginScreen(
                 username.isEmpty() ||
                 password.isEmpty()
             ) {
-                Toast.makeText(context, "Please fill all fields", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context,
+                    "Please fill all fields",
+                    Toast.LENGTH_SHORT
+                ).show()
             } else {
                 scope.launch {
                     viewModel.login(
