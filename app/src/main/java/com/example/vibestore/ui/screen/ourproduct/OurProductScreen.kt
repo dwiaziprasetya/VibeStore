@@ -1,12 +1,13 @@
 package com.example.vibestore.ui.screen.ourproduct
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -23,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.vibestore.helper.ViewModelFactory
@@ -36,11 +38,10 @@ import com.example.vibestore.ui.theme.VibeStoreTheme
 import com.example.vibestore.ui.theme.poppinsFontFamily
 
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun OurProductScreen(
     navcontroller: NavHostController,
-    viewModel: OurProductViewModel = androidx.lifecycle.viewmodel.compose.viewModel(
+    viewModel: OurProductViewModel = viewModel(
         factory = ViewModelFactory
             .getInstance(LocalContext.current))
 ) {
@@ -48,6 +49,8 @@ fun OurProductScreen(
     val uiState by viewModel.uiState.observeAsState(initial = UiState.Loading)
 
     Scaffold(
+        contentWindowInsets = WindowInsets(0, 0, 0, 0),
+        modifier = Modifier.statusBarsPadding(),
         topBar = {
             SearchBar(
                 onSearch = { query ->
@@ -58,7 +61,7 @@ fun OurProductScreen(
                     }
                 },
                 onSortChange = { sort ->
-                    if (sort == "asc") sortValue = "asc" else sortValue = "desc"
+                    sortValue = if (sort == "asc") "asc" else "desc"
                     viewModel.sortProduct(sort)
                 }
             )

@@ -18,6 +18,7 @@ import com.example.vibestore.ui.screen.registration.signup.SignUpViewModel
 
 @Suppress("UNCHECKED_CAST", "UNREACHABLE_CODE")
 class ViewModelFactory(
+    private val limit: Int = 20,
     private val repository: VibeStoreRepository,
 ) : ViewModelProvider.NewInstanceFactory(){
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -35,7 +36,7 @@ class ViewModelFactory(
             ForYouViewModel(repository) as T
         } else if (modelClass.isAssignableFrom(DetailViewModel::class.java)) {
             DetailViewModel(repository) as T
-        } else if (modelClass.isAssignableFrom(SignUpViewModel::class.java)) {
+        } else if (modelClass.isAssignableFrom(OurProductViewModel::class.java)) {
             OurProductViewModel(repository) as T
         } else if (modelClass.isAssignableFrom(DetailViewModel::class.java)){
             DetailViewModel(repository) as T
@@ -50,7 +51,9 @@ class ViewModelFactory(
     companion object {
         fun getInstance(
             context: Context,
+            limit: Int = 20,
         ) = ViewModelFactory(
+            limit,
             Injection.provideRepository(context)
         )
     }
