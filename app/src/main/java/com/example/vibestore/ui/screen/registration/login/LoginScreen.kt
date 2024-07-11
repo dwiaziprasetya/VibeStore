@@ -75,7 +75,7 @@ fun LoginScreen(
 
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
-    var loadingDialog by remember { mutableStateOf<SweetAlertDialog?>(null) }
+    var dialog by remember { mutableStateOf<SweetAlertDialog?>(null) }
     var passwordVisibility by remember { mutableStateOf(false) }
     var passwordError by remember { mutableStateOf(false) }
     var username by rememberSaveable { mutableStateOf("") }
@@ -90,15 +90,15 @@ fun LoginScreen(
     LaunchedEffect(uiState) {
         when (uiState) {
             is UiState.Loading -> {
-                loadingDialog?.dismissWithAnimation()
-                loadingDialog = DialogHelper.showDialogLoading(
+                dialog?.dismissWithAnimation()
+                dialog = DialogHelper.showDialogLoading(
                     context = context,
                     textContent = "Please wait"
                 )
             }
             is UiState.Success -> {
-                loadingDialog?.dismissWithAnimation()
-                loadingDialog = DialogHelper.showDialogSuccess(
+                dialog?.dismissWithAnimation()
+                dialog = DialogHelper.showDialogSuccess(
                     context = context,
                     title = "Success",
                     textContent = "Login Success"
@@ -106,8 +106,8 @@ fun LoginScreen(
                 viewModel.resetUiState()
             }
             is UiState.Error -> {
-                loadingDialog?.dismissWithAnimation()
-                loadingDialog = DialogHelper.showDialogError(
+                dialog?.dismissWithAnimation()
+                dialog = DialogHelper.showDialogError(
                     context = context,
                     title = "Failed",
                     textContent = (uiState as UiState.Error).errorMessage

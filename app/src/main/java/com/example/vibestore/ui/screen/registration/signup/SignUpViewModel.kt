@@ -13,8 +13,8 @@ class SignUpViewModel (
     private val repository: VibeStoreRepository
 ): ViewModel() {
 
-    private val _uiState: MutableLiveData<UiState<UserResponse>> = MutableLiveData(null)
-    val uiState: LiveData<UiState<UserResponse>> get() = _uiState
+    private val _uiState: MutableLiveData<UiState<UserResponse>?> = MutableLiveData(null)
+    val uiState: LiveData<UiState<UserResponse>?> get() = _uiState
 
     fun register(
         username: String,
@@ -30,5 +30,9 @@ class SignUpViewModel (
                 _uiState.value = UiState.Error(e.message ?: "Unknown Error")
             }
         }
+    }
+
+    fun resetUiState() {
+        _uiState.value = null
     }
 }

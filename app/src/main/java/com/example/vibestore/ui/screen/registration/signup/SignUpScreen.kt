@@ -61,7 +61,9 @@ import androidx.compose.ui.unit.sp
 import androidx.core.graphics.toColorInt
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import cn.pedant.SweetAlert.SweetAlertDialog
 import com.example.vibestore.R
+import com.example.vibestore.helper.DialogHelper
 import com.example.vibestore.helper.ViewModelFactory
 import com.example.vibestore.ui.common.UiState
 import com.example.vibestore.ui.navigation.Screen
@@ -88,6 +90,7 @@ fun SignUpScreen(
     var email by rememberSaveable { mutableStateOf("") }
     var username by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
+    var dialog by remember { mutableStateOf<SweetAlertDialog?>(null) }
     val icon = if (passwordVisibility)
         painterResource(R.drawable.ic_visibility)
     else
@@ -99,26 +102,29 @@ fun SignUpScreen(
     LaunchedEffect(uiState) {
         when (uiState) {
             is UiState.Loading -> {
-                Toast.makeText(
-                    context,
-                    "Loading",
-                    Toast.LENGTH_SHORT
-                ).show()
+                dialog?.dismissWithAnimation()
+                dialog = DialogHelper.showDialogLoading(
+                    context = context,
+                    textContent = "Please wait"
+                )
             }
             is UiState.Success -> {
-                Toast.makeText(
-                    context,
-                    "Sign Success",
-                    Toast.LENGTH_SHORT
-                ).show()
+                dialog?.dismissWithAnimation()
+                dialog = DialogHelper.showDialogSuccess(
+                    context = context,
+                    title = "Success",
+                    textContent = "Register Success"
+                )
             }
             is UiState.Error -> {
-                Toast.makeText(
-                    context,
-                    (uiState as UiState.Error).errorMessage,
-                    Toast.LENGTH_SHORT
-                ).show()
+                dialog?.dismissWithAnimation()
+                dialog = DialogHelper.showDialogError(
+                    context = context,
+                    title = "Failed",
+                    textContent = (uiState as UiState.Error).errorMessage
+                )
             }
+            null -> {}
         }
     }
 
