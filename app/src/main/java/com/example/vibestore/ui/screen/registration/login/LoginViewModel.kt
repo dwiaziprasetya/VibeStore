@@ -12,8 +12,8 @@ import kotlinx.coroutines.launch
 class LoginViewModel (
     private val repository: VibeStoreRepository
 ) : ViewModel() {
-    private val _uiState: MutableLiveData<UiState<LoginResponse>> = MutableLiveData(null)
-    val uiState: LiveData<UiState<LoginResponse>> get() = _uiState
+    private val _uiState: MutableLiveData<UiState<LoginResponse>?> = MutableLiveData(null)
+    val uiState: LiveData<UiState<LoginResponse>?> get() = _uiState
 
     fun login(
         username: String,
@@ -28,5 +28,9 @@ class LoginViewModel (
                 _uiState.value = UiState.Error(e.message ?: "Unknown Error")
             }
         }
+    }
+
+    fun resetUiState() {
+        _uiState.value = null
     }
 }

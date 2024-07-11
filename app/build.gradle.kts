@@ -50,6 +50,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.library)
     implementation(libs.google.accompanist.systemuicontroller)
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.androidx.runtime.livedata)

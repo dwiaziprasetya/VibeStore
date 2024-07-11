@@ -54,13 +54,14 @@ import androidx.compose.ui.unit.sp
 import androidx.core.graphics.toColorInt
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import cn.pedant.SweetAlert.SweetAlertDialog
 import com.example.vibestore.R
+import com.example.vibestore.helper.DialogHelper
 import com.example.vibestore.helper.ViewModelFactory
 import com.example.vibestore.ui.common.UiState
 import com.example.vibestore.ui.navigation.Screen
 import com.example.vibestore.ui.theme.VibeStoreTheme
 import com.example.vibestore.ui.theme.poppinsFontFamily
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import kotlinx.coroutines.launch
 
 @Composable
@@ -75,7 +76,7 @@ fun LoginScreen(
 
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
-    val systemUiController = rememberSystemUiController()
+    var loadingDialog by remember { mutableStateOf<SweetAlertDialog?>(null) }
     var passwordVisibility by remember { mutableStateOf(false) }
     var passwordError by remember { mutableStateOf(false) }
     var username by rememberSaveable { mutableStateOf("") }
@@ -85,30 +86,25 @@ fun LoginScreen(
     else
         painterResource(R.drawable.ic_visibility_off)
 
-//    SideEffect {
-//        systemUiController.setStatusBarColor(
-//            color = Color.Transparent,
-//            darkIcons = true
-//        )
-//    }
-
     val uiState by viewModel.uiState.observeAsState(initial = UiState.Loading)
 
     LaunchedEffect(uiState) {
         when (uiState) {
             is UiState.Loading -> {
-                Toast.makeText(
-                    context,
-                    "Loading",
-                    Toast.LENGTH_SHORT
-                ).show()
+                loadingDialog?.dismissWithAnimation()
+                loadingDialog = DialogHelper.showDialogLoading(
+                    context = context,
+                    textContent = "Please wait"
+                )
             }
             is UiState.Success -> {
-                Toast.makeText(
-                    context,
-                    "Sign Success",
-                    Toast.LENGTH_SHORT
-                ).show()
+                loadingDialog?.dismissWithAnimation()
+                loadingDialog = DialogHelper.showDialogSuccess(
+                    context = context,
+                    title = "Success",
+                    textContent = "Login Success"
+                )
+                viewModel.resetUiState()
             }
             is UiState.Error -> {
                 Log.d("LoginScreenAhhhhhh", (uiState as UiState.Error).errorMessage)
@@ -117,6 +113,9 @@ fun LoginScreen(
                     (uiState as UiState.Error).errorMessage,
                     Toast.LENGTH_SHORT
                 ).show()
+            }
+            null -> {
+
             }
         }
     }
