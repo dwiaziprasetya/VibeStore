@@ -109,7 +109,7 @@ fun LoginScreen(
                 loadingDialog?.dismissWithAnimation()
                 loadingDialog = DialogHelper.showDialogError(
                     context = context,
-                    title = "Error",
+                    title = "Failed",
                     textContent = (uiState as UiState.Error).errorMessage
                 )
             }
@@ -152,7 +152,10 @@ fun LoginScreen(
                 }
             }
         },
-        passwordError = passwordError
+        passwordError = passwordError,
+        onGuestClick = {
+            navController.navigate(Screen.Home.route)
+        }
     )
 }
 
@@ -167,6 +170,7 @@ fun LoginContent(
     onPasswordVisibilityChange: () -> Unit,
     onSignUpClick: () -> Unit,
     onLoginClick: () -> Unit,
+    onGuestClick: () -> Unit,
     passwordError: Boolean,
 ) {
     Column(
@@ -368,7 +372,10 @@ fun LoginContent(
                     Icon(
                         modifier = Modifier
                             .padding()
-                            .scale(1.3f),
+                            .scale(1.3f)
+                            .clickable {
+                                onGuestClick()
+                            },
                         imageVector = Icons.Default.AccountCircle,
                         contentDescription = "",
                         tint = Color.Unspecified
@@ -473,7 +480,8 @@ private fun LoginContentPreview() {
             onPasswordVisibilityChange = {},
             onSignUpClick = {},
             onLoginClick = {},
-            passwordError = true
+            passwordError = true,
+            onGuestClick = {}
         )
     }
 }
