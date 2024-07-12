@@ -115,6 +115,7 @@ fun SignUpScreen(
                     title = "Success",
                     textContent = "Register Success"
                 )
+                viewModel.resetUiState()
             }
             is UiState.Error -> {
                 dialog?.dismissWithAnimation()
