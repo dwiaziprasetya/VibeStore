@@ -6,6 +6,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandHorizontally
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -16,7 +17,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.selection.toggleable
@@ -55,6 +55,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -206,27 +207,31 @@ fun SignUpContent(
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Row(verticalAlignment = Alignment.Bottom) {
+        Row(
+            verticalAlignment = Alignment.Bottom,
+            modifier = Modifier.padding(bottom = 8.dp)
+        ) {
             Text(
                 text = "Vibe Store",
                 fontFamily = poppinsFontFamily,
                 fontWeight = FontWeight.Bold,
                 fontSize = 35.sp
             )
-            Icon(
-                painter = painterResource(R.drawable.coba),
+            Image(
+                painter = painterResource(R.drawable.logo),
                 contentDescription = null,
-                tint = Color.Unspecified,
                 modifier = Modifier
                     .size(60.dp)
-                    .offset(x = (-10).dp)
             )
         }
         Text(
             text = "Register or sign up and we'll get started",
             fontFamily = poppinsFontFamily,
             fontWeight = FontWeight.Light,
-            fontSize = 14.sp
+            fontSize = 16.sp,
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .fillMaxWidth()
         )
         Column(
             modifier = Modifier

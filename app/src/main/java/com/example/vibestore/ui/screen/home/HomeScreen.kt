@@ -1,7 +1,9 @@
 package com.example.vibestore.ui.screen.home
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,11 +20,14 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.vibestore.R
@@ -32,6 +37,7 @@ import com.example.vibestore.ui.component.TabCategory
 import com.example.vibestore.ui.navigation.Screen
 import com.example.vibestore.ui.screen.foryou.ForYouScreen
 import com.example.vibestore.ui.theme.VibeStoreTheme
+import com.example.vibestore.ui.theme.poppinsFontFamily
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -50,12 +56,27 @@ fun HomeScreen(
                     )
                 },
                 navigationIcon = {
-                    Icon(
-                        painter = painterResource(R.drawable.hamburger_menu),
-                        modifier = Modifier
-                            .size(32.dp),
-                        contentDescription = "Menu"
-                    )
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Image(
+                            painter = painterResource(R.drawable.logo),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .size(30.dp)
+                        )
+                        Text(
+                            text = "Vibe Store",
+                            fontFamily = poppinsFontFamily,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 18.sp,
+                            modifier = Modifier
+                                .padding(
+                                    start = 8.dp,
+                                    top = 8.dp
+                                )
+                        )
+                    }
                 },
                 actions = {
                     Icon(
