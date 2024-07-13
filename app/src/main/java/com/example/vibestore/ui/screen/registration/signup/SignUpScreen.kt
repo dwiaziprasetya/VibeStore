@@ -1,11 +1,14 @@
 package com.example.vibestore.ui.screen.registration.signup
 
 import android.widget.Toast
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandHorizontally
+import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -197,6 +200,12 @@ fun SignUpContent(
     passwordError: Boolean,
     emailError: Boolean
 ) {
+    val isVisible = remember { mutableStateOf(false) }
+
+    LaunchedEffect(Unit) {
+        isVisible.value = true
+    }
+
     Column(
         modifier = Modifier
             .padding(
@@ -207,128 +216,177 @@ fun SignUpContent(
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Row(
-            verticalAlignment = Alignment.Bottom,
-            modifier = Modifier.padding(bottom = 8.dp)
+        AnimatedVisibility(
+            visible = isVisible.value,
+            enter = slideInVertically(
+                initialOffsetY = { -40 },
+                animationSpec = tween(1000)
+            ) + fadeIn(animationSpec = tween(1000)),
         ) {
-            Text(
-                text = "Vibe Store",
-                fontFamily = poppinsFontFamily,
-                fontWeight = FontWeight.Bold,
-                fontSize = 35.sp
-            )
-            Image(
-                painter = painterResource(R.drawable.logo),
-                contentDescription = null,
-                modifier = Modifier
-                    .size(60.dp)
-            )
-        }
-        Text(
-            text = "Register or sign up and we'll get started",
-            fontFamily = poppinsFontFamily,
-            fontWeight = FontWeight.Light,
-            fontSize = 16.sp,
-            textAlign = TextAlign.Center,
-            modifier = Modifier
-                .fillMaxWidth()
-        )
-        Column(
-            modifier = Modifier
-                .padding(
-                    top = 32.dp
+            Row(
+                verticalAlignment = Alignment.Bottom,
+                modifier = Modifier.padding(bottom = 8.dp)
+            ) {
+                Text(
+                    text = "Vibe Store",
+                    fontFamily = poppinsFontFamily,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 35.sp
                 )
+                Image(
+                    painter = painterResource(R.drawable.logo),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(60.dp)
+                )
+            }
+        }
+        AnimatedVisibility(
+            visible = isVisible.value,
+            enter = slideInVertically(
+                initialOffsetY = { -40 },
+                animationSpec = tween(1000)
+            ) + fadeIn(animationSpec = tween(1000)),
         ) {
-            CustomOutlinedTextField(
-                value = email,
-                hint = "Enter your email address",
-                onValueChange = onEmailChange,
-                trailingIcon = {},
-                isError = emailError,
-                errorMessage = "Invalid email address"
+            Text(
+                text = "Register or sign up and we'll get started",
+                fontFamily = poppinsFontFamily,
+                fontWeight = FontWeight.Light,
+                fontSize = 16.sp,
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
             )
-            CustomOutlinedTextField(
-                value = username,
-                hint = "Enter your username",
-                onValueChange = onUsernameChange,
-                trailingIcon = {},
-                isError = false,
-                errorMessage = ""
-            )
-            CustomOutlinedTextField(
-                value = password,
-                hint = "Enter your password",
-                onValueChange = onPasswordChange,
-                trailingIcon = {
-                    Icon(
-                        painter = icon,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .clickable {
-                                onPasswordVisibilityChange()
-                            }
+        }
+        AnimatedVisibility(
+            visible = isVisible.value,
+            enter = slideInVertically(
+                initialOffsetY = { -40 },
+                animationSpec = tween(1000)
+            ) + fadeIn(animationSpec = tween(1000)),
+        ) {
+            Column(
+                modifier = Modifier
+                    .padding(
+                        top = 32.dp
                     )
-                },
-                isError = passwordError,
-                errorMessage = "Passwords must not contain spaces",
-                visualTransformation = if (passwordVisibility) VisualTransformation.None
-                else PasswordVisualTransformation()
-            )
+            ) {
+                CustomOutlinedTextField(
+                    value = email,
+                    hint = "Enter your email address",
+                    onValueChange = onEmailChange,
+                    trailingIcon = {},
+                    isError = emailError,
+                    errorMessage = "Invalid email address"
+                )
+                CustomOutlinedTextField(
+                    value = username,
+                    hint = "Enter your username",
+                    onValueChange = onUsernameChange,
+                    trailingIcon = {},
+                    isError = false,
+                    errorMessage = ""
+                )
+                CustomOutlinedTextField(
+                    value = password,
+                    hint = "Enter your password",
+                    onValueChange = onPasswordChange,
+                    trailingIcon = {
+                        Icon(
+                            painter = icon,
+                            contentDescription = null,
+                            modifier = Modifier
+                                .clickable {
+                                    onPasswordVisibilityChange()
+                                }
+                        )
+                    },
+                    isError = passwordError,
+                    errorMessage = "Passwords must not contain spaces",
+                    visualTransformation = if (passwordVisibility) VisualTransformation.None
+                    else PasswordVisualTransformation()
+                )
+            }
         }
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .fillMaxWidth()
-                .align(Alignment.Start)
+        AnimatedVisibility(
+            visible = isVisible.value,
+            enter = slideInVertically(
+                initialOffsetY = { -40 },
+                animationSpec = tween(1000)
+            ) + fadeIn(animationSpec = tween(1000)),
         ) {
-            RoundedCornerCheckbox(
-                label = "I agree to the Terms & Conditions and Privacy Policy",
-                isChecked = checked,
-                onValueChange = onCheckedChange,
-            )
-        }
-        Button(
-            modifier = Modifier
-                .padding(top = 32.dp)
-                .height(55.dp)
-                .fillMaxWidth(),
-            shape = RoundedCornerShape(40.dp),
-            onClick = onSignUpClick,
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color("#29bf12".toColorInt())
-            )
-        ) {
-            Text(
-                fontFamily = poppinsFontFamily,
-                text = "Sign Up",
-                fontSize = 18.sp,
-                color = Color.White,
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
-            )
+                    .fillMaxWidth()
+                    .align(Alignment.Start)
+            ) {
+                RoundedCornerCheckbox(
+                    label = "I agree to the Terms & Conditions and Privacy Policy",
+                    isChecked = checked,
+                    onValueChange = onCheckedChange,
+                )
+            }
         }
-        Row(
-            modifier = Modifier
-                .padding(top = 32.dp)
+        AnimatedVisibility(
+            visible = isVisible.value,
+            enter = slideInVertically(
+                initialOffsetY = { -40 },
+                animationSpec = tween(1000)
+            ) + fadeIn(animationSpec = tween(1000)),
         ) {
-            Text(
-                text = "Already have an account?",
-                fontFamily = poppinsFontFamily,
-                fontSize = 14.sp,
-                color = Color.Black
-            )
-            Text(
-                text = " Login",
-                fontFamily = poppinsFontFamily,
-                fontSize = 14.sp,
-                color = Color("#29bf12".toColorInt()),
+            Button(
                 modifier = Modifier
-                    .clickable {
-                        onLoginClick()
-                    }
-            )
+                    .padding(top = 32.dp)
+                    .height(55.dp)
+                    .fillMaxWidth(),
+                shape = RoundedCornerShape(40.dp),
+                onClick = onSignUpClick,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color("#29bf12".toColorInt())
+                )
+            ) {
+                Text(
+                    fontFamily = poppinsFontFamily,
+                    text = "Sign Up",
+                    fontSize = 18.sp,
+                    color = Color.White,
+                    modifier = Modifier
+                )
+            }
+        }
+        AnimatedVisibility(
+            visible = isVisible.value,
+            enter = slideInVertically(
+                initialOffsetY = { -40 },
+                animationSpec = tween(1000)
+            ) + fadeIn(animationSpec = tween(1000)),
+        ) {
+            Row(
+                modifier = Modifier
+                    .padding(top = 32.dp)
+            ) {
+                Text(
+                    text = "Already have an account?",
+                    fontFamily = poppinsFontFamily,
+                    fontSize = 14.sp,
+                    color = Color.Black
+                )
+                Text(
+                    text = " Login",
+                    fontFamily = poppinsFontFamily,
+                    fontSize = 14.sp,
+                    color = Color("#29bf12".toColorInt()),
+                    modifier = Modifier
+                        .clickable {
+                            onLoginClick()
+                        }
+                )
+            }
         }
     }
 }
+
 
 @Composable
 fun RoundedCornerCheckbox(

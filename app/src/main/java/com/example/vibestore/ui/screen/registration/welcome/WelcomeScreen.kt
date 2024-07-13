@@ -2,6 +2,10 @@
 
 package com.example.vibestore.ui.screen.registration.welcome
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -35,6 +39,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -66,6 +71,7 @@ fun WelcomeScreen(navController: NavHostController) {
         skipPartiallyExpanded = true
     )
     val scope = rememberCoroutineScope()
+    val isVisible = remember { mutableStateOf(false) }
 
     if (isSheetOpen) {
         BottomSheetRegister(
@@ -101,6 +107,10 @@ fun WelcomeScreen(navController: NavHostController) {
         } 
     }
 
+    LaunchedEffect(Unit) {
+        isVisible.value = true
+    }
+
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
             painter = painterResource(R.drawable.woi),
@@ -132,44 +142,56 @@ fun WelcomeScreen(navController: NavHostController) {
                 .navigationBarsPadding()
                 .align(Alignment.BottomCenter)
         ) {
-            Text(
-                lineHeight = 45.sp,
-                text = "DISCOVERING YOUR " +
-                        "FASHION STYLE",
-                fontFamily = poppinsFontFamily,
-                fontWeight = FontWeight.Bold,
-                fontSize = 45.sp,
-                color = Color.White
-            )
-            Text(
-                text = "Find the perfect outfit for any occasion," +
-                        "from casual wear to formal attire",
-                color = Color("#bcbcbc".toColorInt()),
-                fontFamily = poppinsFontFamily,
-                fontSize = 14.sp
-            )
-            Button(
-                modifier = Modifier
-                    .padding(
-                        vertical = 32.dp
-                    )
-                    .height(55.dp)
-                    .fillMaxWidth(),
-                shape = RoundedCornerShape(40.dp),
-                onClick = {
-                    isSheetOpen = true
-                },
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color("#29bf12".toColorInt())
-                )
+            AnimatedVisibility(
+                visible = isVisible.value,
+                enter = slideInVertically(
+                    initialOffsetY = { -40 }, // start from above the screen
+                    animationSpec = tween(1000)
+                ) + fadeIn(animationSpec = tween(1000)),
             ) {
-                Text(
-                    fontFamily = poppinsFontFamily,
-                    text = "Get Started",
-                    fontSize = 18.sp,
-                    color = Color.White,
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(
+                        lineHeight = 45.sp,
+                        text = "DISCOVERING YOUR FASHION STYLE",
+                        fontFamily = poppinsFontFamily,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 45.sp,
+                        color = Color.White
+                    )
+                    Text(
+                        text = "Find the perfect outfit for any occasion, from casual wear to formal attire",
+                        color = Color("#bcbcbc".toColorInt()),
+                        fontFamily = poppinsFontFamily,
+                        fontSize = 14.sp
+                    )
+                }
+            }
+            AnimatedVisibility(
+                visible = isVisible.value,
+                enter = slideInVertically(
+                    initialOffsetY = { -40 },
+                    animationSpec = tween(1000)
+                ) + fadeIn(animationSpec = tween(1000)),
+            ) {
+                Button(
                     modifier = Modifier
-                )
+                        .padding(vertical = 32.dp)
+                        .height(55.dp)
+                        .fillMaxWidth(),
+                    shape = RoundedCornerShape(40.dp),
+                    onClick = { isSheetOpen = true },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color("#29bf12".toColorInt())
+                    )
+                ) {
+                    Text(
+                        fontFamily = poppinsFontFamily,
+                        text = "Get Started",
+                        fontSize = 18.sp,
+                        color = Color.White,
+                        modifier = Modifier
+                    )
+                }
             }
         }
     }

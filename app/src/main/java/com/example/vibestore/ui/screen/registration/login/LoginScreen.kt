@@ -1,6 +1,10 @@
 package com.example.vibestore.ui.screen.registration.login
 
 import android.widget.Toast
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -173,6 +177,12 @@ fun LoginContent(
     onGuestClick: () -> Unit,
     passwordError: Boolean,
 ) {
+    val isVisible = remember { mutableStateOf(false) }
+
+    LaunchedEffect(Unit) {
+        isVisible.value = true
+    }
+
     Column(
         modifier = Modifier
             .padding(
@@ -183,226 +193,287 @@ fun LoginContent(
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(
-            text = "Welcome Back!",
-            fontFamily = poppinsFontFamily,
-            fontWeight = FontWeight.Bold,
-            fontSize = 35.sp
-        )
-        Text(
-            text = "Find Your Style Now",
-            fontFamily = poppinsFontFamily,
-            fontWeight = FontWeight.Light,
-            fontSize = 20.sp
-        )
-        Column(
-            modifier = Modifier
-                .padding(
-                    top = 32.dp
-                )
+        AnimatedVisibility(
+            visible = isVisible.value,
+            enter = slideInVertically(
+                initialOffsetY = { -40 },
+                animationSpec = tween(1000)
+            ) + fadeIn(animationSpec = tween(1000)),
         ) {
-            CustomOutlinedTextField(
-                value = username,
-                hint = "Enter your username",
-                onValueChange = onUsernameChange,
-                trailingIcon = {},
-                isError = false,
-                errorMessage = ""
-            )
-            CustomOutlinedTextField(
-                value = password,
-                hint = "Enter your password",
-                onValueChange = onPasswordChange,
-                trailingIcon = {
-                    Icon(
-                        painter = icon,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .clickable {
-                                onPasswordVisibilityChange()
-                            }
-                    )
-                },
-                isError = passwordError,
-                errorMessage = "Passwords must not contain spaces",
-                visualTransformation = if (passwordVisibility) VisualTransformation.None
-                else PasswordVisualTransformation()
-            )
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = "Welcome Back!",
+                    fontFamily = poppinsFontFamily,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 35.sp
+                )
+                Text(
+                    text = "Find Your Style Now",
+                    fontFamily = poppinsFontFamily,
+                    fontWeight = FontWeight.Light,
+                    fontSize = 20.sp
+                )
+            }
         }
-        Text(
-            text = "Forgot Password ?",
-            fontFamily = poppinsFontFamily,
-            fontSize = 14.sp,
-            color = Color("#29bf12".toColorInt()),
+        AnimatedVisibility(
+            visible = isVisible.value,
+            enter = slideInVertically(
+                initialOffsetY = { -40 },
+                animationSpec = tween(1000)
+            ) + fadeIn(animationSpec = tween(1000)),
+        ) {
+            Column(
+                modifier = Modifier
+                    .padding(
+                        top = 32.dp
+                    )
+            ) {
+                CustomOutlinedTextField(
+                    value = username,
+                    hint = "Enter your username",
+                    onValueChange = onUsernameChange,
+                    trailingIcon = {},
+                    isError = false,
+                    errorMessage = ""
+                )
+                CustomOutlinedTextField(
+                    value = password,
+                    hint = "Enter your password",
+                    onValueChange = onPasswordChange,
+                    trailingIcon = {
+                        Icon(
+                            painter = icon,
+                            contentDescription = null,
+                            modifier = Modifier
+                                .clickable {
+                                    onPasswordVisibilityChange()
+                                }
+                        )
+                    },
+                    isError = passwordError,
+                    errorMessage = "Passwords must not contain spaces",
+                    visualTransformation = if (passwordVisibility) VisualTransformation.None
+                    else PasswordVisualTransformation()
+                )
+            }
+        }
+        AnimatedVisibility(
+            visible = isVisible.value,
+            enter = slideInVertically(
+                initialOffsetY = { -40 },
+                animationSpec = tween(1000)
+            ) + fadeIn(animationSpec = tween(1000)),
             modifier = Modifier
+                .padding(top = 8.dp)
                 .align(Alignment.End)
-        )
-        Button(
-            modifier = Modifier
-                .padding(top = 32.dp)
-                .height(55.dp)
-                .fillMaxWidth(),
-            shape = RoundedCornerShape(40.dp),
-            onClick = onLoginClick,
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color("#29bf12".toColorInt())
-            )
         ) {
             Text(
-                fontFamily = poppinsFontFamily,
-                text = "Login",
-                fontSize = 18.sp,
-                color = Color.White,
-                modifier = Modifier
-            )
-        }
-        Row (
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .padding(
-                    top = 48.dp,
-                )
-                .fillMaxWidth()
-        ){
-            Divider(
-                thickness = 1.dp,
-                color = Color(0xFFE3E3E3),
-                modifier = Modifier
-                    .weight(2f)
-                    .background(color = Color.White)
-                    .padding(end = 20.dp)
-            )
-
-            androidx.compose.material3.Text(text = "Or continue with")
-
-            Divider(
-                thickness = 1.dp,
-                color = Color(0xFFE3E3E3),
-                modifier = Modifier
-                    .weight(2f)
-                    .background(color = Color.White)
-                    .padding(start = 20.dp)
-            )
-        }
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(
-                    horizontal = 32.dp,
-                    vertical = 32.dp
-                ),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Button(
-                modifier = Modifier
-                    .height(60.dp)
-                    .border(
-                        color = MaterialTheme.colorScheme.outline,
-                        width = 1.dp,
-                        shape = RoundedCornerShape(40.dp)
-                    ),
-                shape = RoundedCornerShape(40.dp),
-                onClick = {},
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.White
-                )
-            ) {
-                Row(
-                    modifier = Modifier.wrapContentWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Icon(
-                        modifier = Modifier.padding(),
-                        painter = painterResource(R.drawable.icon_google),
-                        contentDescription = "",
-                        tint = Color.Unspecified
-                    )
-                }
-            }
-            Button(
-                modifier = Modifier
-                    .height(60.dp)
-                    .border(
-                        color = MaterialTheme.colorScheme.outline,
-                        width = 1.dp,
-                        shape = RoundedCornerShape(40.dp)
-                    ),
-                shape = RoundedCornerShape(40.dp),
-                onClick = {},
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.White
-                )
-            ) {
-                Row(
-                    modifier = Modifier.wrapContentWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Icon(
-                        modifier = Modifier
-                            .padding()
-                            .scale(1.3f),
-                        painter = painterResource(R.drawable.icon_facebook),
-                        contentDescription = "",
-                        tint = Color.Unspecified
-                    )
-                }
-            }
-            Button(
-                modifier = Modifier
-                    .height(60.dp)
-                    .border(
-                        color = MaterialTheme.colorScheme.outline,
-                        width = 1.dp,
-                        shape = RoundedCornerShape(40.dp)
-                    ),
-                shape = RoundedCornerShape(40.dp),
-                onClick = {},
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.White
-                )
-            ) {
-                Row(
-                    modifier = Modifier.wrapContentWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Icon(
-                        modifier = Modifier
-                            .padding()
-                            .scale(1.3f)
-                            .clickable {
-                                onGuestClick()
-                            },
-                        imageVector = Icons.Default.AccountCircle,
-                        contentDescription = "",
-                        tint = Color.Unspecified
-                    )
-                }
-            }
-        }
-        Row(
-            modifier = Modifier
-                .padding(top = 70.dp)
-        ) {
-            Text(
-                text = "Don't have an account?",
-                fontFamily = poppinsFontFamily,
-                fontSize = 14.sp,
-                color = Color.Black
-            )
-            Text(
-                text = " Sign Up",
+                text = "Forgot Password ?",
                 fontFamily = poppinsFontFamily,
                 fontSize = 14.sp,
                 color = Color("#29bf12".toColorInt()),
-                modifier = Modifier
-                    .clickable {
-                        onSignUpClick()
-                    }
             )
+        }
+        AnimatedVisibility(
+            visible = isVisible.value,
+            enter = slideInVertically(
+                initialOffsetY = { -40 },
+                animationSpec = tween(1000)
+            ) + fadeIn(animationSpec = tween(1000)),
+        ) {
+            Button(
+                modifier = Modifier
+                    .padding(top = 32.dp)
+                    .height(55.dp)
+                    .fillMaxWidth(),
+                shape = RoundedCornerShape(40.dp),
+                onClick = onLoginClick,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color("#29bf12".toColorInt())
+                )
+            ) {
+                Text(
+                    fontFamily = poppinsFontFamily,
+                    text = "Login",
+                    fontSize = 18.sp,
+                    color = Color.White,
+                    modifier = Modifier
+                )
+            }
+        }
+        AnimatedVisibility(
+            visible = isVisible.value,
+            enter = slideInVertically(
+                initialOffsetY = { -40 },
+                animationSpec = tween(1000)
+            ) + fadeIn(animationSpec = tween(1000)),
+        ) {
+            Row (
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .padding(
+                        top = 48.dp,
+                    )
+                    .fillMaxWidth()
+            ){
+                Divider(
+                    thickness = 1.dp,
+                    color = Color(0xFFE3E3E3),
+                    modifier = Modifier
+                        .weight(2f)
+                        .background(color = Color.White)
+                        .padding(end = 20.dp)
+                )
+
+                Text(text = "Or continue with")
+
+                Divider(
+                    thickness = 1.dp,
+                    color = Color(0xFFE3E3E3),
+                    modifier = Modifier
+                        .weight(2f)
+                        .background(color = Color.White)
+                        .padding(start = 20.dp)
+                )
+            }
+        }
+        AnimatedVisibility(
+            visible = isVisible.value,
+            enter = slideInVertically(
+                initialOffsetY = { -40 },
+                animationSpec = tween(1000)
+            ) + fadeIn(animationSpec = tween(1000)),
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        horizontal = 32.dp,
+                        vertical = 32.dp
+                    ),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Button(
+                    modifier = Modifier
+                        .height(60.dp)
+                        .border(
+                            color = MaterialTheme.colorScheme.outline,
+                            width = 1.dp,
+                            shape = RoundedCornerShape(40.dp)
+                        ),
+                    shape = RoundedCornerShape(40.dp),
+                    onClick = {},
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.White
+                    )
+                ) {
+                    Row(
+                        modifier = Modifier.wrapContentWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            modifier = Modifier.padding(),
+                            painter = painterResource(R.drawable.icon_google),
+                            contentDescription = "",
+                            tint = Color.Unspecified
+                        )
+                    }
+                }
+                Button(
+                    modifier = Modifier
+                        .height(60.dp)
+                        .border(
+                            color = MaterialTheme.colorScheme.outline,
+                            width = 1.dp,
+                            shape = RoundedCornerShape(40.dp)
+                        ),
+                    shape = RoundedCornerShape(40.dp),
+                    onClick = {},
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.White
+                    )
+                ) {
+                    Row(
+                        modifier = Modifier.wrapContentWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            modifier = Modifier
+                                .padding()
+                                .scale(1.3f),
+                            painter = painterResource(R.drawable.icon_facebook),
+                            contentDescription = "",
+                            tint = Color.Unspecified
+                        )
+                    }
+                }
+                Button(
+                    modifier = Modifier
+                        .height(60.dp)
+                        .border(
+                            color = MaterialTheme.colorScheme.outline,
+                            width = 1.dp,
+                            shape = RoundedCornerShape(40.dp)
+                        ),
+                    shape = RoundedCornerShape(40.dp),
+                    onClick = {},
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.White
+                    )
+                ) {
+                    Row(
+                        modifier = Modifier.wrapContentWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            modifier = Modifier
+                                .padding()
+                                .scale(1.3f)
+                                .clickable {
+                                    onGuestClick()
+                                },
+                            imageVector = Icons.Default.AccountCircle,
+                            contentDescription = "",
+                            tint = Color.Unspecified
+                        )
+                    }
+                }
+            }
+        }
+        AnimatedVisibility(
+            visible = isVisible.value,
+            enter = slideInVertically(
+                initialOffsetY = { -40 },
+                animationSpec = tween(1000)
+            ) + fadeIn(animationSpec = tween(1000)),
+        ) {
+            Row(
+                modifier = Modifier
+                    .padding(top = 70.dp)
+            ) {
+                Text(
+                    text = "Don't have an account?",
+                    fontFamily = poppinsFontFamily,
+                    fontSize = 14.sp,
+                    color = Color.Black
+                )
+                Text(
+                    text = " Sign Up",
+                    fontFamily = poppinsFontFamily,
+                    fontSize = 14.sp,
+                    color = Color("#29bf12".toColorInt()),
+                    modifier = Modifier
+                        .clickable {
+                            onSignUpClick()
+                        }
+                )
+            }
         }
     }
 }
