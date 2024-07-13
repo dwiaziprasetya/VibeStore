@@ -32,7 +32,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.SheetState
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -49,6 +48,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -62,14 +62,10 @@ import com.example.vibestore.ui.theme.VibeStoreTheme
 import com.example.vibestore.ui.theme.poppinsFontFamily
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun WelcomeScreen(navController: NavHostController) {
 
     var isSheetOpen by rememberSaveable { mutableStateOf(false) }
-    val modalBottomSheetState = rememberModalBottomSheetState(
-        skipPartiallyExpanded = true
-    )
     val scope = rememberCoroutineScope()
     val isVisible = remember { mutableStateOf(false) }
 
@@ -79,7 +75,6 @@ fun WelcomeScreen(navController: NavHostController) {
             onDismiss = {
                 isSheetOpen = false
             },
-            sheetState = modalBottomSheetState,
             onLoginClick = {
                 scope.launch {
                     navController.navigate(Screen.Login.route)
@@ -99,12 +94,6 @@ fun WelcomeScreen(navController: NavHostController) {
                 }
             }
         )
-    }
-
-    LaunchedEffect(isSheetOpen) {
-        if (isSheetOpen) {
-            modalBottomSheetState.expand()
-        } 
     }
 
     LaunchedEffect(Unit) {
@@ -145,21 +134,21 @@ fun WelcomeScreen(navController: NavHostController) {
             AnimatedVisibility(
                 visible = isVisible.value,
                 enter = slideInVertically(
-                    initialOffsetY = { -40 }, // start from above the screen
+                    initialOffsetY = { -40 },
                     animationSpec = tween(1000)
                 ) + fadeIn(animationSpec = tween(1000)),
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(
                         lineHeight = 45.sp,
-                        text = "DISCOVERING YOUR FASHION STYLE",
+                        text = stringResource(R.string.welcome_1),
                         fontFamily = poppinsFontFamily,
                         fontWeight = FontWeight.Bold,
                         fontSize = 45.sp,
                         color = Color.White
                     )
                     Text(
-                        text = "Find the perfect outfit for any occasion, from casual wear to formal attire",
+                        text = stringResource(R.string.welcome_2),
                         color = Color("#bcbcbc".toColorInt()),
                         fontFamily = poppinsFontFamily,
                         fontSize = 14.sp
@@ -186,7 +175,7 @@ fun WelcomeScreen(navController: NavHostController) {
                 ) {
                     Text(
                         fontFamily = poppinsFontFamily,
-                        text = "Get Started",
+                        text = stringResource(R.string.get_started),
                         fontSize = 18.sp,
                         color = Color.White,
                         modifier = Modifier
@@ -201,17 +190,20 @@ fun WelcomeScreen(navController: NavHostController) {
 @Composable
 fun BottomSheetRegister(
     onDismiss: () -> Unit,
-    sheetState: SheetState,
     onLoginClick: () -> Unit,
     onSignUpClick: () -> Unit,
     onGuestClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
 
+    val modalBottomSheetState = rememberModalBottomSheetState(
+        skipPartiallyExpanded = true,
+    )
+
     ModalBottomSheet(
         modifier = modifier,
         onDismissRequest = onDismiss,
-        sheetState = sheetState,
+        sheetState = modalBottomSheetState,
         windowInsets = WindowInsets(0, 0, 0, 0)
     ) {
         BottomSheetWelcomeContent(
@@ -260,7 +252,7 @@ fun BottomSheetWelcomeContent(
             ) {
                 Text(
                     fontFamily = poppinsFontFamily,
-                    text = "Sign Up",
+                    text = stringResource(R.string.sign_up),
                     fontSize = 16.sp,
                     modifier = Modifier
                 )
@@ -287,7 +279,7 @@ fun BottomSheetWelcomeContent(
             ) {
                 Text(
                     fontFamily = poppinsFontFamily,
-                    text = "Login to Vibe Store",
+                    text = stringResource(R.string.login) + " to Vibe Store",
                     fontSize = 16.sp,
                     color = Color.Black,
                     modifier = Modifier
@@ -355,7 +347,7 @@ fun BottomSheetWelcomeContent(
                     )
                     Text(
                         fontFamily = poppinsFontFamily,
-                        text = "Continue with google",
+                        text = stringResource(R.string.continue_with_google),
                         fontSize = 16.sp,
                         color = Color.Black,
                         modifier = Modifier
@@ -395,7 +387,7 @@ fun BottomSheetWelcomeContent(
                     )
                     Text(
                         fontFamily = poppinsFontFamily,
-                        text = "Continue with facebook",
+                        text = stringResource(R.string.continue_with_facebook),
                         fontSize = 16.sp,
                         color = Color.Black,
                         modifier = Modifier
@@ -435,7 +427,7 @@ fun BottomSheetWelcomeContent(
                     )
                     Text(
                         fontFamily = poppinsFontFamily,
-                        text = "Continue as Guest",
+                        text = stringResource(R.string.continue_as_guest),
                         fontSize = 16.sp,
                         color = Color.Black,
                         modifier = Modifier

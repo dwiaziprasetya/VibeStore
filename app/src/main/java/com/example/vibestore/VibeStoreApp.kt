@@ -2,8 +2,6 @@ package com.example.vibestore
 
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -70,8 +68,6 @@ fun VibeStoreApp(
                 .fillMaxHeight(),
             navController = navController,
             startDestination = Screen.Welcome.route,
-            enterTransition = { fadeIn(tween(500)) },
-            exitTransition = { fadeOut(tween(500)) },
         ) {
             composable(
                 route = Screen.Welcome.route,

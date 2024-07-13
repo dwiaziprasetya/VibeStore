@@ -46,6 +46,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -84,12 +85,17 @@ fun LoginScreen(
     var passwordError by remember { mutableStateOf(false) }
     var username by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
-    val icon = if (passwordVisibility) 
+    val icon = if (passwordVisibility)
         painterResource(R.drawable.ic_visibility)
     else
         painterResource(R.drawable.ic_visibility_off)
 
     val uiState by viewModel.uiState.observeAsState(initial = UiState.Loading)
+    var isVisible by remember { mutableStateOf(false) }
+
+    LaunchedEffect(Unit) {
+        isVisible = true
+    }
 
     LaunchedEffect(uiState) {
         when (uiState) {
@@ -122,6 +128,7 @@ fun LoginScreen(
     }
 
     LoginContent(
+        isVisible = isVisible,
         username = username,
         password = password,
         onUsernameChange = { username = it },
@@ -165,6 +172,7 @@ fun LoginScreen(
 
 @Composable
 fun LoginContent(
+    isVisible: Boolean,
     username: String,
     password: String,
     onUsernameChange: (String) -> Unit,
@@ -177,12 +185,6 @@ fun LoginContent(
     onGuestClick: () -> Unit,
     passwordError: Boolean,
 ) {
-    val isVisible = remember { mutableStateOf(false) }
-
-    LaunchedEffect(Unit) {
-        isVisible.value = true
-    }
-
     Column(
         modifier = Modifier
             .padding(
@@ -194,7 +196,7 @@ fun LoginContent(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         AnimatedVisibility(
-            visible = isVisible.value,
+            visible = isVisible,
             enter = slideInVertically(
                 initialOffsetY = { -40 },
                 animationSpec = tween(1000)
@@ -204,13 +206,13 @@ fun LoginContent(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "Welcome Back!",
+                    text = stringResource(R.string.welcome_back_1),
                     fontFamily = poppinsFontFamily,
                     fontWeight = FontWeight.Bold,
                     fontSize = 35.sp
                 )
                 Text(
-                    text = "Find Your Style Now",
+                    text = stringResource(R.string.welcome_back_2),
                     fontFamily = poppinsFontFamily,
                     fontWeight = FontWeight.Light,
                     fontSize = 20.sp
@@ -218,7 +220,7 @@ fun LoginContent(
             }
         }
         AnimatedVisibility(
-            visible = isVisible.value,
+            visible = isVisible,
             enter = slideInVertically(
                 initialOffsetY = { -40 },
                 animationSpec = tween(1000)
@@ -232,7 +234,7 @@ fun LoginContent(
             ) {
                 CustomOutlinedTextField(
                     value = username,
-                    hint = "Enter your username",
+                    hint = stringResource(R.string.enter_your_username),
                     onValueChange = onUsernameChange,
                     trailingIcon = {},
                     isError = false,
@@ -240,7 +242,7 @@ fun LoginContent(
                 )
                 CustomOutlinedTextField(
                     value = password,
-                    hint = "Enter your password",
+                    hint = stringResource(R.string.enter_your_password),
                     onValueChange = onPasswordChange,
                     trailingIcon = {
                         Icon(
@@ -253,14 +255,14 @@ fun LoginContent(
                         )
                     },
                     isError = passwordError,
-                    errorMessage = "Passwords must not contain spaces",
+                    errorMessage = stringResource(R.string.error_password),
                     visualTransformation = if (passwordVisibility) VisualTransformation.None
                     else PasswordVisualTransformation()
                 )
             }
         }
         AnimatedVisibility(
-            visible = isVisible.value,
+            visible = isVisible,
             enter = slideInVertically(
                 initialOffsetY = { -40 },
                 animationSpec = tween(1000)
@@ -270,14 +272,14 @@ fun LoginContent(
                 .align(Alignment.End)
         ) {
             Text(
-                text = "Forgot Password ?",
+                text = stringResource(R.string.forgot_password),
                 fontFamily = poppinsFontFamily,
                 fontSize = 14.sp,
                 color = Color("#29bf12".toColorInt()),
             )
         }
         AnimatedVisibility(
-            visible = isVisible.value,
+            visible = isVisible,
             enter = slideInVertically(
                 initialOffsetY = { -40 },
                 animationSpec = tween(1000)
@@ -296,7 +298,7 @@ fun LoginContent(
             ) {
                 Text(
                     fontFamily = poppinsFontFamily,
-                    text = "Login",
+                    text = stringResource(R.string.login),
                     fontSize = 18.sp,
                     color = Color.White,
                     modifier = Modifier
@@ -304,7 +306,7 @@ fun LoginContent(
             }
         }
         AnimatedVisibility(
-            visible = isVisible.value,
+            visible = isVisible,
             enter = slideInVertically(
                 initialOffsetY = { -40 },
                 animationSpec = tween(1000)
@@ -328,7 +330,7 @@ fun LoginContent(
                         .padding(end = 20.dp)
                 )
 
-                Text(text = "Or continue with")
+                Text(text = stringResource(R.string.or_continue_with))
 
                 Divider(
                     thickness = 1.dp,
@@ -341,7 +343,7 @@ fun LoginContent(
             }
         }
         AnimatedVisibility(
-            visible = isVisible.value,
+            visible = isVisible,
             enter = slideInVertically(
                 initialOffsetY = { -40 },
                 animationSpec = tween(1000)
@@ -447,7 +449,7 @@ fun LoginContent(
             }
         }
         AnimatedVisibility(
-            visible = isVisible.value,
+            visible = isVisible,
             enter = slideInVertically(
                 initialOffsetY = { -40 },
                 animationSpec = tween(1000)
@@ -458,13 +460,13 @@ fun LoginContent(
                     .padding(top = 70.dp)
             ) {
                 Text(
-                    text = "Don't have an account?",
+                    text = stringResource(R.string.dont_have_account),
                     fontFamily = poppinsFontFamily,
                     fontSize = 14.sp,
                     color = Color.Black
                 )
                 Text(
-                    text = " Sign Up",
+                    text = " " + stringResource(R.string.sign_up),
                     fontFamily = poppinsFontFamily,
                     fontSize = 14.sp,
                     color = Color("#29bf12".toColorInt()),
@@ -552,7 +554,8 @@ private fun LoginContentPreview() {
             onSignUpClick = {},
             onLoginClick = {},
             passwordError = true,
-            onGuestClick = {}
+            onGuestClick = {},
+            isVisible = false
         )
     }
 }

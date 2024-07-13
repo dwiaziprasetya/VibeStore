@@ -1,3 +1,24 @@
 <resources>
     <string name="app_name">VibeStore</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="login">Login</string>
+    <string name="welcome_back_1">Welcome Back!</string>
+    <string name="welcome_back_2">Find Your Style Now</string>
+    <string name="get_started">Get Started</string>
+    <string name="welcome_1">DISCOVERING YOUR FASHION STYLE</string>
+    <string name="welcome_2">Find the perfect outfit for any occasion, from casual wear to formal attire</string>
+    <string name="continue_with_google">Continue with google</string>
+    <string name="continue_with_facebook">Continue with facebook</string>
+    <string name="continue_as_guest">Continue as guest</string>
+    <string name="intro_sign_up">Register or sign up and we\'ll get started</string>
+    <string name="enter_your_email">Enter your email address</string>
+    <string name="error_email">Invalid email address</string>
+    <string name="error_password">Passwords must not contain spaces</string>
+    <string name="enter_your_username">Enter your username</string>
+    <string name="enter_your_password">Enter your password</string>
+    <string name="term_and_condition">I agree to the Terms &amp; Conditions and Privacy Policy</string>
+    <string name="already_have_account">Already have an account?</string>
+    <string name="dont_have_account">Don\'t have an account?</string>
+    <string name="forgot_password">Forgot Password ?</string>
+    <string name="or_continue_with">Or continue with</string>
 </resources>

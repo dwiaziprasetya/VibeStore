@@ -52,6 +52,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -228,7 +229,7 @@ fun SignUpContent(
                 modifier = Modifier.padding(bottom = 8.dp)
             ) {
                 Text(
-                    text = "Vibe Store",
+                    text = stringResource(R.string.app_name),
                     fontFamily = poppinsFontFamily,
                     fontWeight = FontWeight.Bold,
                     fontSize = 35.sp
@@ -249,7 +250,7 @@ fun SignUpContent(
             ) + fadeIn(animationSpec = tween(1000)),
         ) {
             Text(
-                text = "Register or sign up and we'll get started",
+                text = stringResource(R.string.intro_sign_up),
                 fontFamily = poppinsFontFamily,
                 fontWeight = FontWeight.Light,
                 fontSize = 16.sp,
@@ -273,23 +274,23 @@ fun SignUpContent(
             ) {
                 CustomOutlinedTextField(
                     value = email,
-                    hint = "Enter your email address",
+                    hint = stringResource(R.string.enter_your_email),
                     onValueChange = onEmailChange,
                     trailingIcon = {},
                     isError = emailError,
-                    errorMessage = "Invalid email address"
+                    errorMessage = stringResource(R.string.error_email)
                 )
                 CustomOutlinedTextField(
                     value = username,
-                    hint = "Enter your username",
+                    hint = stringResource(R.string.enter_your_username),
                     onValueChange = onUsernameChange,
                     trailingIcon = {},
                     isError = false,
-                    errorMessage = ""
+                    errorMessage = null
                 )
                 CustomOutlinedTextField(
                     value = password,
-                    hint = "Enter your password",
+                    hint = stringResource(R.string.enter_your_password),
                     onValueChange = onPasswordChange,
                     trailingIcon = {
                         Icon(
@@ -302,7 +303,7 @@ fun SignUpContent(
                         )
                     },
                     isError = passwordError,
-                    errorMessage = "Passwords must not contain spaces",
+                    errorMessage = stringResource(R.string.error_password),
                     visualTransformation = if (passwordVisibility) VisualTransformation.None
                     else PasswordVisualTransformation()
                 )
@@ -322,7 +323,7 @@ fun SignUpContent(
                     .align(Alignment.Start)
             ) {
                 RoundedCornerCheckbox(
-                    label = "I agree to the Terms & Conditions and Privacy Policy",
+                    label = stringResource(R.string.term_and_condition),
                     isChecked = checked,
                     onValueChange = onCheckedChange,
                 )
@@ -348,7 +349,7 @@ fun SignUpContent(
             ) {
                 Text(
                     fontFamily = poppinsFontFamily,
-                    text = "Sign Up",
+                    text = stringResource(R.string.sign_up),
                     fontSize = 18.sp,
                     color = Color.White,
                     modifier = Modifier
@@ -367,13 +368,13 @@ fun SignUpContent(
                     .padding(top = 32.dp)
             ) {
                 Text(
-                    text = "Already have an account?",
+                    text = stringResource(R.string.already_have_account),
                     fontFamily = poppinsFontFamily,
                     fontSize = 14.sp,
                     color = Color.Black
                 )
                 Text(
-                    text = " Login",
+                    text = " "+ stringResource(R.string.login),
                     fontFamily = poppinsFontFamily,
                     fontSize = 14.sp,
                     color = Color("#29bf12".toColorInt()),
@@ -465,7 +466,7 @@ fun CustomOutlinedTextField(
     trailingIcon: @Composable () -> Unit,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     isError: Boolean,
-    errorMessage: String,
+    errorMessage: String?,
     hint: String = ""
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -507,11 +508,13 @@ fun CustomOutlinedTextField(
         isError = isError,
         supportingText = {
             if (isError) {
-                Text(
-                    modifier = Modifier.fillMaxWidth(),
-                    text = errorMessage,
-                    color = MaterialTheme.colorScheme.error
-                )
+                if (errorMessage != null) {
+                    Text(
+                        modifier = Modifier.fillMaxWidth(),
+                        text = errorMessage,
+                        color = MaterialTheme.colorScheme.error
+                    )
+                }
             }
         },
     )
