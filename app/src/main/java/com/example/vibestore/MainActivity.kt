@@ -6,7 +6,6 @@ import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.navigation.compose.rememberNavController
-import com.example.vibestore.ui.navigation.graph.RootNavigationGraph
 import com.example.vibestore.ui.theme.VibeStoreTheme
 
 class MainActivity : ComponentActivity() {

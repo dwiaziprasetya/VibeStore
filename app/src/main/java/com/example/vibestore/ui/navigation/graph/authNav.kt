@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.vibestore.ui.navigation.Screen
 import com.example.vibestore.ui.screen.registration.login.LoginScreen
+import com.example.vibestore.ui.screen.registration.signup.SignUpScreen
 import com.example.vibestore.ui.screen.registration.welcome.WelcomeScreen
 
 fun NavGraphBuilder.authNav(
@@ -62,6 +63,35 @@ fun NavGraphBuilder.authNav(
             }
         ) {
             LoginScreen(navController = navController)
+        }
+        composable(
+            route = Screen.SignUp.route,
+            exitTransition = {
+                slideOutOfContainer(
+                    AnimatedContentTransitionScope.SlideDirection.Left,
+                    tween(500)
+                )
+            },
+            enterTransition = {
+                slideIntoContainer(
+                    AnimatedContentTransitionScope.SlideDirection.Left,
+                    tween(500)
+                )
+            },
+            popExitTransition = {
+                slideOutOfContainer(
+                    AnimatedContentTransitionScope.SlideDirection.Right,
+                    tween(500)
+                )
+            },
+            popEnterTransition = {
+                slideIntoContainer(
+                    AnimatedContentTransitionScope.SlideDirection.Right,
+                    tween(500)
+                )
+            }
+        ){
+            SignUpScreen(navController = navController)
         }
     }
 }

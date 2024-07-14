@@ -1,13 +1,17 @@
-package com.example.vibestore.ui.navigation.graph
+package com.example.vibestore
 
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.vibestore.ui.navigation.Screen
-import com.example.vibestore.ui.screen.home.HomeScreenMain
+import com.example.vibestore.ui.navigation.graph.authNav
+import com.example.vibestore.ui.screen.home.MainScreen
+import com.example.vibestore.ui.theme.VibeStoreTheme
 
 @Composable
 fun RootNavigationGraph(navController: NavHostController) {
@@ -44,7 +48,15 @@ fun RootNavigationGraph(navController: NavHostController) {
                 )
             }
         ){
-            HomeScreenMain()
+            MainScreen()
         }
+    }
+}
+
+@Preview
+@Composable
+private fun RootNavigationGraphPreview() {
+    VibeStoreTheme {
+        RootNavigationGraph(navController = rememberNavController())
     }
 }
