@@ -10,17 +10,14 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBackIos
 import androidx.compose.material.icons.automirrored.filled.ArrowForwardIos
 import androidx.compose.material.icons.automirrored.filled.HelpOutline
 import androidx.compose.material.icons.automirrored.filled.Logout
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.LockOpen
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.ShoppingBag
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -33,6 +30,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -53,24 +51,21 @@ fun ProfileScreen() {
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
-                    Text(
-                        text = "Profile",
-                        fontFamily = poppinsFontFamily,
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.SemiBold
-                    )
-                },
-                navigationIcon = {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.ArrowBackIos,
-                        contentDescription = "back"
-                    )
-                },
-                actions = {
-                    Icon(
-                        imageVector = Icons.Default.Menu,
-                        contentDescription = "menu"
-                    )
+                    Row {
+                        Text(
+                            text = "Your Profile",
+                            fontFamily = poppinsFontFamily,
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.SemiBold
+                        )
+                        Image(
+                            painter = painterResource(R.drawable.logo),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .padding(start = 8.dp)
+                                .size(30.dp)
+                        )
+                    }
                 }
             )
         }
@@ -80,55 +75,53 @@ fun ProfileScreen() {
                 .fillMaxWidth()
                 .padding(innerPadding),
         ) {
-            Image(
-                painter = painterResource(R.drawable.dwiaziprasetya),
-                contentDescription = "profile",
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
-                    .padding(
-                        top = 32.dp,
-                        bottom = 8.dp
-                    )
-                    .align(Alignment.CenterHorizontally)
-                    .size(100.dp)
-                    .clip(RoundedCornerShape(100.dp))
-                    .border(
-                        width = 2.dp,
-                        color = Color("#29bf12".toColorInt()),
-                        shape = CircleShape
-                    ),
-                contentScale = ContentScale.Crop
-            )
-            Text(
-                letterSpacing = 0.001.sp,
-                text = "Dwi Azi Prasetya",
-                fontFamily = poppinsFontFamily,
-                fontWeight = FontWeight.SemiBold,
-                fontSize = 18.sp,
-                modifier = Modifier.align(Alignment.CenterHorizontally)
-
-            )
-            Text(
-                text = "dwiaziprasetya456@gmail.com",
-                fontFamily = poppinsFontFamily,
-                fontSize = 12.sp,
-                color = MaterialTheme.colorScheme.outline,
-                modifier = Modifier
-                    .padding(bottom = 24.dp)
-                    .align(Alignment.CenterHorizontally)
-            )
-            Button(
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .padding(bottom = 24.dp),
-                onClick = {},
-                shape = RoundedCornerShape(10.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color("#29bf12".toColorInt())
-                )
+                    .padding(bottom = 32.dp)
+                    .fillMaxWidth()
             ) {
-                Text(
-                    text = "Edit Profile",
-                    fontFamily = poppinsFontFamily
+                Image(
+                    imageVector = Icons.Default.AccountCircle,
+                    colorFilter = ColorFilter.tint(Color.Gray),
+                    contentDescription = "profile",
+                    modifier = Modifier
+                        .size(100.dp)
+                        .clip(RoundedCornerShape(100.dp))
+                        .border(
+                            width = 2.dp,
+                            color = Color("#29bf12".toColorInt()),
+                            shape = CircleShape
+                        ),
+                    contentScale = ContentScale.Crop
+                )
+                Column(
+                    modifier = Modifier
+                        .padding(start = 16.dp)
+                        .weight(1f)
+                ) {
+                    Text(
+                        letterSpacing = 0.001.sp,
+                        text = "Dwi Azi Prasetya",
+                        fontFamily = poppinsFontFamily,
+                        fontWeight = FontWeight.SemiBold,
+                        fontSize = 18.sp,
+
+                    )
+                    Text(
+                        text = "$ 2.341.000",
+                        fontFamily = poppinsFontFamily,
+                        fontSize = 14.sp,
+                        color = MaterialTheme.colorScheme.outline,
+                        modifier = Modifier
+                    )
+                }
+                Icon(
+                    imageVector = Icons.Default.Settings,
+                    contentDescription = "settings",
+                    tint = MaterialTheme.colorScheme.outline,
+                    modifier = Modifier
+                        .size(20.dp)
                 )
             }
             Divider(color = Color(0xFFE3E3E3))
@@ -137,30 +130,12 @@ fun ProfileScreen() {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
-                    imageVector = Icons.Default.Settings,
-                    contentDescription = "settings",
-                    modifier = Modifier.padding(16.dp).size(20.dp)
-                )
-                Text(
-                    text = "Settings",
-                    fontFamily = poppinsFontFamily,
-                    modifier = Modifier.weight(1f),
-                    fontSize = 14.sp,
-                )
-                Icon(
-                    modifier = Modifier.size(20.dp),
-                    imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
-                    contentDescription = "forward"
-                )
-            }
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Icon(
+                    tint = MaterialTheme.colorScheme.outline,
                     imageVector = Icons.Default.ShoppingBag,
                     contentDescription = "bag",
-                    modifier = Modifier.padding(16.dp).size(20.dp)
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .size(20.dp)
                 )
                 Text(
                     text = "My Orders",
@@ -169,6 +144,7 @@ fun ProfileScreen() {
                     fontSize = 14.sp,
                 )
                 Icon(
+                    tint = MaterialTheme.colorScheme.outline,
                     modifier = Modifier.size(20.dp),
                     imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
                     contentDescription = "forward"
@@ -179,9 +155,12 @@ fun ProfileScreen() {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
+                    tint = MaterialTheme.colorScheme.outline,
                     imageVector = Icons.Default.LocationOn,
                     contentDescription = "location",
-                    modifier = Modifier.padding(16.dp).size(20.dp)
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .size(20.dp)
                 )
                 Text(
                     text = "Address",
@@ -190,6 +169,7 @@ fun ProfileScreen() {
                     fontSize = 14.sp,
                 )
                 Icon(
+                    tint = MaterialTheme.colorScheme.outline,
                     modifier = Modifier.size(20.dp),
                     imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
                     contentDescription = "forward"
@@ -200,9 +180,12 @@ fun ProfileScreen() {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
+                    tint = MaterialTheme.colorScheme.outline,
                     imageVector = Icons.Default.LockOpen,
                     contentDescription = "lock",
-                    modifier = Modifier.padding(16.dp).size(20.dp)
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .size(20.dp)
                 )
                 Text(
                     text = "Change Password",
@@ -211,20 +194,23 @@ fun ProfileScreen() {
                     fontSize = 14.sp,
                 )
                 Icon(
+                    tint = MaterialTheme.colorScheme.outline,
                     modifier = Modifier.size(20.dp),
                     imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
                     contentDescription = "forward"
                 )
             }
-            Divider(color = Color(0xFFE3E3E3))
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
+                    tint = MaterialTheme.colorScheme.outline,
                     imageVector = Icons.AutoMirrored.Filled.HelpOutline,
                     contentDescription = "help",
-                    modifier = Modifier.padding(16.dp).size(20.dp)
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .size(20.dp)
                 )
                 Text(
                     text = "Help & Support",
@@ -233,6 +219,7 @@ fun ProfileScreen() {
                     fontSize = 14.sp,
                 )
                 Icon(
+                    tint = MaterialTheme.colorScheme.outline,
                     modifier = Modifier.size(20.dp),
                     imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
                     contentDescription = "forward"
@@ -245,7 +232,9 @@ fun ProfileScreen() {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.Logout,
                     contentDescription = "log out",
-                    modifier = Modifier.padding(16.dp).size(20.dp),
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .size(20.dp),
                     tint = Color("#bf122f".toColorInt())
                 )
                 Text(
