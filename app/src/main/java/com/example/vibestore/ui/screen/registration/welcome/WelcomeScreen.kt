@@ -89,7 +89,7 @@ fun WelcomeScreen(navController: NavHostController) {
             },
             onGuestClick = {
                 scope.launch {
-                    navController.navigate(Screen.Home.route)
+                    navController.navigate(Screen.MainNav.route)
                     isSheetOpen = false
                 }
             }

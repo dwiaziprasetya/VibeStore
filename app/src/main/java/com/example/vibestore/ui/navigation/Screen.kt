@@ -20,5 +20,6 @@ sealed class Screen(val route: String) {
     // Graph Routes
     data object AuthNav : Screen("AUTH_NAV_GRAPH")
     data object MainNav : Screen("MAIN_NAV_GRAPH")
+    data object Root : Screen("ROOT")
 
 }

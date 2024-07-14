@@ -57,7 +57,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.graphics.toColorInt
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.example.vibestore.R
 import com.example.vibestore.helper.DialogHelper
@@ -75,7 +75,7 @@ fun LoginScreen(
             context = LocalContext.current
         )
     ),
-    navController: NavController
+    navController: NavHostController
 ) {
 
     val scope = rememberCoroutineScope()
