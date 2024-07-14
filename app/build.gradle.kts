@@ -51,6 +51,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.datastore.preferences)
     implementation(libs.library)
     implementation(libs.google.accompanist.systemuicontroller)
     implementation(libs.androidx.core.splashscreen)
