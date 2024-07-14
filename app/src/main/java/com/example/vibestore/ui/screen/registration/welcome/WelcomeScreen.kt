@@ -47,6 +47,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -56,18 +57,24 @@ import androidx.compose.ui.unit.sp
 import androidx.core.graphics.toColorInt
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import cn.pedant.SweetAlert.SweetAlertDialog
 import com.example.vibestore.R
+import com.example.vibestore.helper.DialogHelper
 import com.example.vibestore.ui.navigation.Screen
 import com.example.vibestore.ui.theme.VibeStoreTheme
 import com.example.vibestore.ui.theme.poppinsFontFamily
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
 fun WelcomeScreen(navController: NavHostController) {
 
+    val context = LocalContext.current
     var isSheetOpen by rememberSaveable { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
     val isVisible = remember { mutableStateOf(false) }
+    var dialog by remember { mutableStateOf<SweetAlertDialog?>(null) }
+
 
     if (isSheetOpen) {
         BottomSheetRegister(
@@ -89,7 +96,22 @@ fun WelcomeScreen(navController: NavHostController) {
             },
             onGuestClick = {
                 scope.launch {
-                    navController.navigate(Screen.MainNav.route)
+                    dialog?.dismissWithAnimation()
+                    dialog = DialogHelper.showDialogLoading(
+                        context = context,
+                        textContent = "Please wait"
+                    )
+                    delay(1000)
+                    dialog?.dismissWithAnimation()
+                    dialog = DialogHelper.showDialogSuccess(
+                        context = context,
+                        title = "Success",
+                        textContent = "Login Success",
+                        onConfirm = {
+                            navController.popBackStack()
+                            navController.navigate(Screen.MainNav.route)
+                        }
+                    )
                     isSheetOpen = false
                 }
             }
