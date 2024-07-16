@@ -1,9 +1,9 @@
 package com.example.vibestore.di
 
 import android.content.Context
-import com.example.vibestore.SessionPreferences
+import com.example.vibestore.util.SessionPreferences
 import com.example.vibestore.data.remote.retrofit.ApiConfig
-import com.example.vibestore.dataStore
+import com.example.vibestore.util.dataStore
 import com.example.vibestore.repository.VibeStoreRepository
 
 object Injection {

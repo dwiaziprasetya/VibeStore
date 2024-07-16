@@ -10,8 +10,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.vibestore.ui.component.BottomNavigation
-import com.example.vibestore.ui.navigation.Screen
 import com.example.vibestore.ui.navigation.graph.MainNavGraph
+import com.example.vibestore.ui.navigation.model.Screen
 
 @Composable
 fun MainScreen(

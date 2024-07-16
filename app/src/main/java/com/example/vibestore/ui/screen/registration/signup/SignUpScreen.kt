@@ -71,7 +71,7 @@ import com.example.vibestore.R
 import com.example.vibestore.helper.DialogHelper
 import com.example.vibestore.helper.ViewModelFactory
 import com.example.vibestore.ui.common.UiState
-import com.example.vibestore.ui.navigation.Screen
+import com.example.vibestore.ui.navigation.model.Screen
 import com.example.vibestore.ui.theme.VibeStoreTheme
 import com.example.vibestore.ui.theme.poppinsFontFamily
 import kotlinx.coroutines.launch

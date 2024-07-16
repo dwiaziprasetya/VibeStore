@@ -11,7 +11,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBackIos
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -24,6 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
@@ -32,6 +33,7 @@ import androidx.compose.ui.unit.sp
 import androidx.core.graphics.toColorInt
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.vibestore.R
 import com.example.vibestore.ui.component.CartItem
 import com.example.vibestore.ui.theme.VibeStoreTheme
 import com.example.vibestore.ui.theme.poppinsFontFamily
@@ -47,7 +49,7 @@ fun MyCartScreen(
                 modifier = Modifier.padding(horizontal = 16.dp),
                 title = {
                     Text(
-                        text = "My Cart",
+                        text = stringResource(R.string.my_cart),
                         fontFamily = poppinsFontFamily,
                         fontSize = 20.sp,
                         fontWeight = FontWeight.SemiBold
@@ -55,7 +57,7 @@ fun MyCartScreen(
                 },
                 navigationIcon = {
                     Icon(
-                        imageVector = Icons.AutoMirrored.Filled.ArrowBackIos,
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                         contentDescription = "back",
                         modifier = Modifier
                             .clickable {
@@ -109,7 +111,7 @@ fun MyCartScreen(
                     ) {
                         Text(
                             fontFamily = poppinsFontFamily,
-                            text = "Checkout",
+                            text = stringResource(R.string.checkout),
                             fontSize = 16.sp
                         )
                     }

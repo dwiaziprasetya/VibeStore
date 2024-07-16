@@ -36,6 +36,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -49,7 +50,7 @@ import com.example.vibestore.model.ProductResponseItem
 import com.example.vibestore.ui.common.UiState
 import com.example.vibestore.ui.component.AnimatedShimmerDetailProduct
 import com.example.vibestore.ui.component.ExpandingText
-import com.example.vibestore.ui.navigation.Screen
+import com.example.vibestore.ui.navigation.model.Screen
 import com.example.vibestore.ui.theme.poppinsFontFamily
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -71,7 +72,7 @@ fun DetailScreen(
                     .padding(horizontal = 16.dp),
                 title = {
                     Text(
-                        text = "Product Details",
+                        text = stringResource(R.string.product_detail),
                         fontFamily = poppinsFontFamily,
                         fontWeight = FontWeight.SemiBold,
                         fontSize = 18.sp
@@ -180,7 +181,7 @@ fun DetailContent(
             Text(
                 fontWeight = FontWeight.SemiBold,
                 modifier = Modifier.padding(top = 32.dp),
-                text = "Description Product",
+                text = stringResource(R.string.description_product),
                 fontFamily = poppinsFontFamily
             )
             ExpandingText(
@@ -226,7 +227,7 @@ fun DetailContent(
                 ) {
                     Text(
                         fontFamily = poppinsFontFamily,
-                        text = "Checkout",
+                        text = stringResource(R.string.checkout),
                         fontSize = 16.sp,
                         modifier = Modifier
                             .clickable {

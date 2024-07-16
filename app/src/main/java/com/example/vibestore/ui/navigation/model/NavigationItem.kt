@@ -1,4 +1,4 @@
-package com.example.vibestore.ui.navigation
+package com.example.vibestore.ui.navigation.model
 
 import androidx.compose.ui.graphics.painter.Painter
 

@@ -1,34 +1,28 @@
 package com.example.vibestore.ui.screen.splash
 
 import androidx.compose.animation.core.Animatable
-import androidx.compose.animation.core.LinearOutSlowInEasing
+import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.graphics.toColorInt
@@ -37,13 +31,10 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.vibestore.R
 import com.example.vibestore.helper.ViewModelFactory
-import com.example.vibestore.ui.navigation.Screen
+import com.example.vibestore.ui.navigation.model.Screen
 import com.example.vibestore.ui.screen.main.MainViewModel
 import com.example.vibestore.ui.theme.VibeStoreTheme
 import com.example.vibestore.ui.theme.poppinsFontFamily
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlin.math.roundToInt
 
 @Composable
 fun SplashScreen(
@@ -54,29 +45,27 @@ fun SplashScreen(
         )
     )
 ) {
-    val verticalOffset = remember { Animatable(-300f) }  // Start above the screen
-    val alpha = remember { Animatable(0f) }  // Start invisible
-    val scope = rememberCoroutineScope()
-    var showProgressBar by remember { mutableStateOf(false) }
+    val screenWidth = LocalConfiguration.current.screenWidthDp.dp
+    val imageOffsetX = remember { Animatable(screenWidth.value/4) }
+    val textOffsetX = remember { Animatable(screenWidth.value / 1.4f) }
 
     LaunchedEffect(Unit) {
-        scope.launch {
-            launch {
-                verticalOffset.animateTo(
-                    targetValue = 0f, // Move to the original position
-                    animationSpec = tween(durationMillis = 1000, easing = LinearOutSlowInEasing)
-                )
-            }
-            launch {
-                alpha.animateTo(
-                    targetValue = 1f, // Fade in
-                    animationSpec = tween(durationMillis = 1000)
-                )
-            }
-            delay(2000) // Delay for 1000 milliseconds
-            showProgressBar = true
-        }
-        delay(3000) // Delay for 3000 milliseconds
+        // Animate the image to move slightly to the left
+        imageOffsetX.animateTo(
+            targetValue = -5f,
+            animationSpec = tween(
+                durationMillis = 500,
+                easing = FastOutSlowInEasing
+            )
+        )
+        // Animate the text to move to the left
+        textOffsetX.animateTo(
+            targetValue = 0f,
+            animationSpec = tween(
+                durationMillis = 500,
+                easing = FastOutSlowInEasing
+            )
+        )
         viewModel.getSession().collect { session ->
             val startDestination = if (session.token.isNotEmpty()) {
                 Screen.MainNav.route
@@ -93,52 +82,33 @@ fun SplashScreen(
         modifier = Modifier
             .fillMaxSize()
     ) {
-        Column(
-            modifier = Modifier
-                .align(Alignment.Center)
-                .offset { IntOffset(0, verticalOffset.value.roundToInt()) }
-                .alpha(alpha.value),
-            horizontalAlignment = Alignment.CenterHorizontally
+        Row(
+            modifier = Modifier.align(Alignment.Center),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Image(
-                    painter = painterResource(R.drawable.logo),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .size(96.dp)
-                )
-                Column(
-                    horizontalAlignment = Alignment.Start,
-                    modifier = Modifier.padding(start = 8.dp)
-                ) {
-                    Text(
-                        text = "VIBE STORE",
-                        fontFamily = poppinsFontFamily,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 30.sp,
-                        color = Color("#29bf12".toColorInt())
-                    )
-                    Text(
-                        text = "choose your own",
-                        fontFamily = poppinsFontFamily,
-                        fontSize = 20.sp,
-                        color = Color("#29bf12".toColorInt())
-                    )
-                }
-            }
-
-            if (showProgressBar) {
-                CircularProgressIndicator(
-                    color = Color("#29bf12".toColorInt()),
-                    modifier = Modifier
-                        .padding(top = 32.dp)
-                )
-            }
+            Image(
+                painter = painterResource(R.drawable.logo),
+                contentDescription = null,
+                modifier = Modifier
+                    .offset(x = imageOffsetX.value.dp)
+                    .size(120.dp)
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            Text(
+                modifier = Modifier
+                    .offset(x = textOffsetX.value.dp),
+                text = "VIBE STORE",
+                fontFamily = poppinsFontFamily,
+                fontWeight = FontWeight.Bold,
+                fontSize = 30.sp,
+                color = Color("#29bf12".toColorInt())
+            )
         }
     }
 }
+
+
+
 
 @Preview(showBackground = true)
 @Composable

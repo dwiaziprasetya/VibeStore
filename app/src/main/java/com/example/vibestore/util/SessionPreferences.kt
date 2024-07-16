@@ -1,4 +1,4 @@
-package com.example.vibestore
+package com.example.vibestore.util
 
 import android.content.Context
 import androidx.datastore.core.DataStore

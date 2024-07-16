@@ -23,8 +23,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.vibestore.R
-import com.example.vibestore.ui.navigation.NavigationItem
-import com.example.vibestore.ui.navigation.Screen
+import com.example.vibestore.ui.navigation.model.NavigationItem
+import com.example.vibestore.ui.navigation.model.Screen
 import com.example.vibestore.ui.theme.VibeStoreTheme
 import com.example.vibestore.ui.theme.poppinsFontFamily
 

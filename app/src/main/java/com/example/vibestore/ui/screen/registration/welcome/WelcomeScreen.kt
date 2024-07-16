@@ -62,7 +62,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog
 import com.example.vibestore.R
 import com.example.vibestore.helper.DialogHelper
 import com.example.vibestore.helper.ViewModelFactory
-import com.example.vibestore.ui.navigation.Screen
+import com.example.vibestore.ui.navigation.model.Screen
 import com.example.vibestore.ui.screen.registration.login.LoginViewModel
 import com.example.vibestore.ui.theme.VibeStoreTheme
 import com.example.vibestore.ui.theme.poppinsFontFamily

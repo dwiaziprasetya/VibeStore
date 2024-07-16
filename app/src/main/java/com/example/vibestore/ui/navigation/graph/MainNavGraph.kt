@@ -11,7 +11,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.example.vibestore.ui.navigation.Screen
+import com.example.vibestore.ui.navigation.model.Screen
 import com.example.vibestore.ui.screen.categories.CategoriesScreen
 import com.example.vibestore.ui.screen.coupon.CouponScreen
 import com.example.vibestore.ui.screen.detail.DetailScreen

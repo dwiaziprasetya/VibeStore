@@ -1,6 +1,6 @@
 package com.example.vibestore.repository
 
-import com.example.vibestore.SessionPreferences
+import com.example.vibestore.util.SessionPreferences
 import com.example.vibestore.data.remote.retrofit.ApiService
 import com.example.vibestore.model.LoginResponse
 import com.example.vibestore.model.ProductResponseItem

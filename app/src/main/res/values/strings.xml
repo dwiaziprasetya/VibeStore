@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">VibeStore</string>
+    <string name="app_name">Vibe Store</string>
     <string name="sign_up">Sign Up</string>
     <string name="login">Login</string>
     <string name="welcome_back_1">Welcome Back!</string>
@@ -21,4 +21,16 @@
     <string name="dont_have_account">Don\'t have an account?</string>
     <string name="forgot_password">Forgot Password ?</string>
     <string name="or_continue_with">Or continue with</string>
+    <string name="categories">Categories</string>
+    <string name="product_detail">Product Detail</string>
+    <string name="description_product">Description Product</string>
+    <string name="checkout">Checkout</string>
+    <string name="for_you">For You</string>
+    <string name="my_cart">My Cart</string>
+    <string name="your_profile">Your Profile</string>
+    <string name="my_orders">My Orders</string>
+    <string name="address">Address</string>
+    <string name="change_password">Change Password</string>
+    <string name="help_and_support">Help &amp; Support</string>
+    <string name="logout">Logout</string>
 </resources>

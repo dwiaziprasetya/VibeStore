@@ -24,6 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -34,7 +35,7 @@ import com.example.vibestore.R
 import com.example.vibestore.ui.component.HomeSection
 import com.example.vibestore.ui.component.ImageSlider
 import com.example.vibestore.ui.component.TabCategory
-import com.example.vibestore.ui.navigation.Screen
+import com.example.vibestore.ui.navigation.model.Screen
 import com.example.vibestore.ui.screen.foryou.ForYouScreen
 import com.example.vibestore.ui.theme.VibeStoreTheme
 import com.example.vibestore.ui.theme.poppinsFontFamily
@@ -66,7 +67,7 @@ fun HomeScreen(
                                 .size(30.dp)
                         )
                         Text(
-                            text = "Vibe Store",
+                            text = stringResource(R.string.app_name),
                             fontFamily = poppinsFontFamily,
                             fontWeight = FontWeight.Bold,
                             fontSize = 18.sp,
@@ -115,7 +116,7 @@ fun HomeScreen(
                 navigateToSeeAll = {}
             )
             HomeSection(
-                title = "Categories",
+                title = stringResource(R.string.categories),
                 content = {
                     TabCategory(
                         gridHeight = 548.dp,
@@ -130,7 +131,7 @@ fun HomeScreen(
                 }
             )
             HomeSection(
-                title = "For You",
+                title = stringResource(R.string.for_you),
                 content = {
                     ForYouScreen(
                         navigateToDetail = { productId ->

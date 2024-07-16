@@ -40,6 +40,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
@@ -53,7 +54,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog
 import com.example.vibestore.R
 import com.example.vibestore.helper.DialogHelper
 import com.example.vibestore.helper.ViewModelFactory
-import com.example.vibestore.ui.navigation.Screen
+import com.example.vibestore.ui.navigation.model.Screen
 import com.example.vibestore.ui.theme.VibeStoreTheme
 import com.example.vibestore.ui.theme.poppinsFontFamily
 import kotlinx.coroutines.delay
@@ -81,7 +82,7 @@ fun ProfileScreen(
                 title = {
                     Row {
                         Text(
-                            text = "Your Profile",
+                            text = stringResource(R.string.your_profile),
                             fontFamily = poppinsFontFamily,
                             fontSize = 20.sp,
                             fontWeight = FontWeight.SemiBold
@@ -165,7 +166,7 @@ fun ProfileScreen(
                         .size(20.dp)
                 )
                 Text(
-                    text = "My Orders",
+                    text = stringResource(R.string.my_orders),
                     fontFamily = poppinsFontFamily,
                     modifier = Modifier
                         .padding(start = 16.dp)
@@ -192,7 +193,7 @@ fun ProfileScreen(
                         .size(20.dp)
                 )
                 Text(
-                    text = "Address",
+                    text = stringResource(R.string.address),
                     fontFamily = poppinsFontFamily,
                     modifier = Modifier
                         .padding(start = 16.dp)
@@ -219,7 +220,7 @@ fun ProfileScreen(
                         .size(20.dp)
                 )
                 Text(
-                    text = "Change Password",
+                    text = stringResource(R.string.change_password),
                     fontFamily = poppinsFontFamily,
                     modifier = Modifier
                         .padding(start = 16.dp)
@@ -246,7 +247,7 @@ fun ProfileScreen(
                         .size(20.dp)
                 )
                 Text(
-                    text = "Help & Support",
+                    text = stringResource(R.string.help_and_support),
                     fontFamily = poppinsFontFamily,
                     modifier = Modifier
                         .padding(start = 16.dp)
@@ -303,7 +304,7 @@ fun ProfileScreen(
                     tint = Color("#bf122f".toColorInt())
                 )
                 Text(
-                    text = "Log out",
+                    text = stringResource(R.string.logout),
                     fontFamily = poppinsFontFamily,
                     color = Color("#bf122f".toColorInt()),
                     fontSize = 14.sp,

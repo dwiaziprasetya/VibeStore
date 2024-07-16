@@ -1,4 +1,4 @@
-package com.example.vibestore.ui.navigation
+package com.example.vibestore.ui.navigation.model
 
 sealed class Screen(val route: String) {
 

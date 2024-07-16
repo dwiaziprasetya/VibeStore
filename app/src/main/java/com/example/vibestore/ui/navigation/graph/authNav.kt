@@ -6,7 +6,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.example.vibestore.ui.navigation.Screen
+import com.example.vibestore.ui.navigation.model.Screen
 import com.example.vibestore.ui.screen.registration.login.LoginScreen
 import com.example.vibestore.ui.screen.registration.signup.SignUpScreen
 import com.example.vibestore.ui.screen.registration.welcome.WelcomeScreen
