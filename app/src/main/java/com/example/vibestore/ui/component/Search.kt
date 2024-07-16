@@ -48,15 +48,15 @@ fun Search(
                 modifier = Modifier
                     .padding(start = 16.dp)
                     .scale(1f),
-                tint = Color.Black,
+                tint = MaterialTheme.colorScheme.onPrimary,
             )
         },
         shape = RoundedCornerShape(8.dp),
         colors = TextFieldDefaults.colors(
-            focusedContainerColor = Color.White,
-            unfocusedContainerColor = Color.White,
-            focusedIndicatorColor = Color.White,
-            unfocusedIndicatorColor = Color.White,
+            focusedContainerColor = MaterialTheme.colorScheme.background,
+            unfocusedContainerColor = MaterialTheme.colorScheme.background,
+            focusedIndicatorColor = MaterialTheme.colorScheme.background,
+            unfocusedIndicatorColor = MaterialTheme.colorScheme.background,
         ),
         placeholder = {
             Text(

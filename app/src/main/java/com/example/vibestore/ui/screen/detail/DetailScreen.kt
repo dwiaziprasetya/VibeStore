@@ -195,7 +195,7 @@ fun DetailContent(
                 .fillMaxWidth()
                 .align(Alignment.BottomCenter)
                 .height(85.dp)
-                .background(Color.White)
+                .background(MaterialTheme.colorScheme.background)
         ){
             Divider()
             Row(
@@ -222,12 +222,13 @@ fun DetailContent(
                     shape = RoundedCornerShape(10.dp),
                     onClick = {},
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color("#29bf12".toColorInt())
+                        containerColor = MaterialTheme.colorScheme.primary
                     )
                 ) {
                     Text(
                         fontFamily = poppinsFontFamily,
                         text = stringResource(R.string.checkout),
+                        color = Color.White,
                         fontSize = 16.sp,
                         modifier = Modifier
                             .clickable {

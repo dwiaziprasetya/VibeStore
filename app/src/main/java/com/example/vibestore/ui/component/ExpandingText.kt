@@ -4,6 +4,7 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -11,7 +12,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.buildAnnotatedString
@@ -20,7 +20,6 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
-import androidx.core.graphics.toColorInt
 import com.example.vibestore.ui.theme.VibeStoreTheme
 import com.example.vibestore.ui.theme.poppinsFontFamily
 
@@ -67,7 +66,7 @@ fun ExpandingText(
             val endIndex = startIndex + "...Show More".length
             append(finalText.substring(0, startIndex))
             withStyle(style = SpanStyle(
-                color = Color("#29bf12".toColorInt()),
+                color = MaterialTheme.colorScheme.primary,
                 fontWeight = FontWeight.SemiBold)
             ) {
                 append(finalText.substring(startIndex, endIndex))
@@ -81,7 +80,7 @@ fun ExpandingText(
     Text(
         fontSize = fontSize,
         fontFamily = poppinsFontFamily,
-        color = androidx.compose.material3.MaterialTheme.colorScheme.outline,
+        color = MaterialTheme.colorScheme.outline,
         text = annotatedString,
         maxLines = if (isExpanded) Int.MAX_VALUE else MINIMIZED_MAX_LINES,
         onTextLayout = { textLayoutResultState.value = it },

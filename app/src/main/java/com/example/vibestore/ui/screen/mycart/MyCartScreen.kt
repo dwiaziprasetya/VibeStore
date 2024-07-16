@@ -18,6 +18,7 @@ import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,7 +31,6 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.graphics.toColorInt
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.vibestore.R
@@ -79,7 +79,7 @@ fun MyCartScreen(
                     .fillMaxWidth()
                     .align(Alignment.BottomCenter)
                     .height(85.dp)
-                    .background(Color.White)
+                    .background(MaterialTheme.colorScheme.background)
             ){
                 Divider()
                 Row(
@@ -106,13 +106,14 @@ fun MyCartScreen(
                         shape = RoundedCornerShape(10.dp),
                         onClick = {},
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = Color("#29bf12".toColorInt())
+                            containerColor = MaterialTheme.colorScheme.primary
                         )
                     ) {
                         Text(
                             fontFamily = poppinsFontFamily,
                             text = stringResource(R.string.checkout),
-                            fontSize = 16.sp
+                            fontSize = 16.sp,
+                            color = Color.White
                         )
                     }
                 }
@@ -127,7 +128,7 @@ fun MyCartScreen(
 )
 @Composable
 private fun MyCartScreenPreview() {
-    VibeStoreTheme {
+    VibeStoreTheme(dynamicColor = false) {
         MyCartScreen(
             rememberNavController()
         )

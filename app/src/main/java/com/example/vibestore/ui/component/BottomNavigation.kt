@@ -17,7 +17,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.core.graphics.toColorInt
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -34,7 +33,7 @@ fun BottomNavigation(
     modifier: Modifier = Modifier
 ) {
     NavigationBar(
-        containerColor = Color.White,
+        containerColor = MaterialTheme.colorScheme.background,
         modifier = modifier
             .height(75.dp)
             .drawWithContent {
@@ -91,7 +90,7 @@ fun BottomNavigation(
                         Icon(
                             painter = item.iconActive,
                             contentDescription = item.title,
-                            tint = Color("#29bf12".toColorInt())
+                            tint = MaterialTheme.colorScheme.primary
                         )
                     } else {
                         Icon(
@@ -107,7 +106,7 @@ fun BottomNavigation(
                             text = item.title,
                             fontFamily = poppinsFontFamily,
                             fontWeight = FontWeight.Medium,
-                            color = Color("#29bf12".toColorInt())
+                            color = MaterialTheme.colorScheme.primary
                         )
                     } else {
                         Text(
@@ -119,7 +118,7 @@ fun BottomNavigation(
                     }
                 },
                 colors = NavigationBarItemDefaults.colors(
-                    indicatorColor = Color.White
+                    indicatorColor = MaterialTheme.colorScheme.background
                 ),
                 onClick = {
                     navController.navigate(item.screen.route) {

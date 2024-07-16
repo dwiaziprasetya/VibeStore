@@ -48,7 +48,6 @@ object DialogHelper {
         confirmButton?.typeface = customFont
         cancelButton?.typeface = customFont
 
-        if (alertType == SweetAlertDialog.WARNING_TYPE) contentText.textSize = 14f
 
         cancelButton.backgroundTintList = ContextCompat.getColorStateList(context, R.color.red)
         confirmButton.backgroundTintList = ContextCompat.getColorStateList(context, R.color.green)
@@ -76,30 +75,6 @@ object DialogHelper {
         context: Context,
         title: String?,
         textContent: String?,
-        onConfirm: () -> Unit,
-        onDismis: () -> Unit
-    ) : SweetAlertDialog {
-        val dialog = showDialog(
-            context = context,
-            title = title,
-            textContent = textContent,
-            alertType = SweetAlertDialog.WARNING_TYPE,
-            onConfirm = onConfirm
-        )
-
-        dialog.apply {
-            setCancelClickListener { onDismis() }
-            showCancelButton(true)
-            setCancelText("Cancel")
-        }
-
-        return dialog
-    }
-
-    fun showDialogCustom(
-        context: Context,
-        title: String?,
-        textContent: String?,
         onConfirm: () -> Unit = {},
         onDismis: () -> Unit
     ): SweetAlertDialog {
@@ -110,6 +85,10 @@ object DialogHelper {
             alertType = SweetAlertDialog.CUSTOM_IMAGE_TYPE,
             onConfirm = onConfirm
         )
+
+        val contentText = dialog.findViewById<TextView>(cn.pedant.SweetAlert.R.id.content_text)
+
+        contentText.textSize = 14f
 
         dialog.setCustomImage(R.drawable.icon_error)
 

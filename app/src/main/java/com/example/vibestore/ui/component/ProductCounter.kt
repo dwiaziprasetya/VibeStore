@@ -68,7 +68,7 @@ fun ProductCounter(
         Surface(
             shape = RoundedCornerShape(size = 5.dp),
             color = Color.Transparent,
-            contentColor = Color("#29bf12".toColorInt()),
+            contentColor = MaterialTheme.colorScheme.primary,
             modifier = Modifier.size(30.dp)
         ) {
             Text(

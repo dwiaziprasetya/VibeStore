@@ -16,6 +16,7 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
@@ -24,7 +25,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.core.graphics.toColorInt
 import com.example.vibestore.model.dummySliderImage
 import com.example.vibestore.ui.theme.VibeStoreTheme
 import kotlinx.coroutines.delay
@@ -58,7 +58,7 @@ fun ImageSlider() {
             horizontalArrangement = Arrangement.Center
         ) {
             repeat(pagerState.pageCount) { iteration ->
-                val color = if (pagerState.currentPage == iteration) Color("#29bf12".toColorInt()) else Color.LightGray
+                val color = if (pagerState.currentPage == iteration) MaterialTheme.colorScheme.primary else Color.LightGray
                 Box(
                     modifier = Modifier
                         .padding(2.dp)

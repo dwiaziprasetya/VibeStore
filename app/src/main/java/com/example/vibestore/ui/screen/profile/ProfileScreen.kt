@@ -118,7 +118,7 @@ fun ProfileScreen(
                         .clip(RoundedCornerShape(100.dp))
                         .border(
                             width = 2.dp,
-                            color = Color("#29bf12".toColorInt()),
+                            color = MaterialTheme.colorScheme.primary,
                             shape = CircleShape
                         ),
                     contentScale = ContentScale.Crop
@@ -265,7 +265,7 @@ fun ProfileScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clickable {
-                        dialog = DialogHelper.showDialogCustom(
+                        dialog = DialogHelper.showDialogWarning(
                             context = context,
                             title = "Log out",
                             textContent = "Are you sure you want to log out?",

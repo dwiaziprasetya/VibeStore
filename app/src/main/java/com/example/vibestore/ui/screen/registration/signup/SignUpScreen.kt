@@ -63,7 +63,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.graphics.toColorInt
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import cn.pedant.SweetAlert.SweetAlertDialog
@@ -344,14 +343,14 @@ fun SignUpContent(
                 shape = RoundedCornerShape(40.dp),
                 onClick = onSignUpClick,
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color("#29bf12".toColorInt())
+                    containerColor = MaterialTheme.colorScheme.primary
                 )
             ) {
                 Text(
                     fontFamily = poppinsFontFamily,
                     text = stringResource(R.string.sign_up),
                     fontSize = 18.sp,
-                    color = Color.White,
+                    color = MaterialTheme.colorScheme.background,
                     modifier = Modifier
                 )
             }
@@ -377,7 +376,7 @@ fun SignUpContent(
                     text = " "+ stringResource(R.string.login),
                     fontFamily = poppinsFontFamily,
                     fontSize = 14.sp,
-                    color = Color("#29bf12".toColorInt()),
+                    color = MaterialTheme.colorScheme.primary,
                     modifier = Modifier
                         .clickable {
                             onLoginClick()
@@ -395,8 +394,8 @@ fun RoundedCornerCheckbox(
     isChecked: Boolean,
     modifier: Modifier = Modifier,
     size: Float = 20f,
-    checkedColor: Color = Color("#29bf12".toColorInt()),
-    uncheckedColor: Color = Color.White,
+    checkedColor: Color = MaterialTheme.colorScheme.primary,
+    uncheckedColor: Color = MaterialTheme.colorScheme.background,
     onValueChange: (Boolean) -> Unit
 ) {
     val checkboxColor: Color by animateColorAsState(if (isChecked) checkedColor else uncheckedColor,
@@ -453,7 +452,7 @@ fun RoundedCornerCheckbox(
             fontFamily = poppinsFontFamily,
             fontSize = 14.sp,
             fontWeight = FontWeight.Light,
-            color = Color("#29bf12".toColorInt())
+            color = MaterialTheme.colorScheme.primary
         )
     }
 }
@@ -473,9 +472,9 @@ fun CustomOutlinedTextField(
     OutlinedTextField(
         shape = RoundedCornerShape(32.dp),
         colors = TextFieldDefaults.colors(
-            focusedContainerColor = Color.White,
-            unfocusedContainerColor = Color.White,
-            disabledContainerColor = Color.White,
+            focusedContainerColor = MaterialTheme.colorScheme.background,
+            unfocusedContainerColor = MaterialTheme.colorScheme.background,
+            disabledContainerColor = MaterialTheme.colorScheme.background,
             focusedIndicatorColor = Color(0xFFCAC8C8),
             unfocusedIndicatorColor = Color(0xFFCAC8C8),
         ),
@@ -501,7 +500,7 @@ fun CustomOutlinedTextField(
         },
         visualTransformation = visualTransformation,
         textStyle = TextStyle(
-            color = Color.Black,
+            color = MaterialTheme.colorScheme.onSurface,
             fontFamily = poppinsFontFamily,
             fontSize = 14.sp,
         ),

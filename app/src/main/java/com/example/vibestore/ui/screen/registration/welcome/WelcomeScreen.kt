@@ -204,14 +204,14 @@ fun WelcomeScreen(
                     shape = RoundedCornerShape(40.dp),
                     onClick = { isSheetOpen = true },
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color("#29bf12".toColorInt())
+                        containerColor = MaterialTheme.colorScheme.primary
                     )
                 ) {
                     Text(
                         fontFamily = poppinsFontFamily,
                         text = stringResource(R.string.get_started),
                         fontSize = 18.sp,
-                        color = Color.White,
+                        color = MaterialTheme.colorScheme.background,
                         modifier = Modifier
                     )
                 }
@@ -260,7 +260,7 @@ fun BottomSheetWelcomeContent(
 ) {
     Box(
         modifier = modifier
-            .background(color = Color.White)
+            .background(color = MaterialTheme.colorScheme.background)
     ) {
         Column(
             modifier = Modifier
@@ -270,7 +270,7 @@ fun BottomSheetWelcomeContent(
                     top = 16.dp,
                     bottom = 32.dp
                 )
-                .background(Color.White)
+                .background(MaterialTheme.colorScheme.background)
                 .align(Alignment.BottomCenter)
         ) {
             Button(
@@ -281,14 +281,15 @@ fun BottomSheetWelcomeContent(
                 shape = RoundedCornerShape(40.dp),
                 onClick = onSignUpClick,
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color("#29bf12".toColorInt())
+                    containerColor = MaterialTheme.colorScheme.primary
                 )
             ) {
                 Text(
                     fontFamily = poppinsFontFamily,
                     text = stringResource(R.string.sign_up),
                     fontSize = 16.sp,
-                    modifier = Modifier
+                    modifier = Modifier,
+                    color = Color.White
                 )
             }
             Button(
@@ -308,14 +309,14 @@ fun BottomSheetWelcomeContent(
                 shape = RoundedCornerShape(40.dp),
                 onClick = onLoginClick,
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.White
+                    containerColor = MaterialTheme.colorScheme.background
                 )
             ) {
                 Text(
                     fontFamily = poppinsFontFamily,
                     text = stringResource(R.string.login) + " to Vibe Store",
                     fontSize = 16.sp,
-                    color = Color.Black,
+                    color = MaterialTheme.colorScheme.onPrimary,
                     modifier = Modifier
                 )
             }
@@ -335,7 +336,7 @@ fun BottomSheetWelcomeContent(
                     color = Color(0xFFE3E3E3),
                     modifier = Modifier
                         .weight(2f)
-                        .background(color = Color.White)
+                        .background(color = MaterialTheme.colorScheme.background)
                         .padding(end = 20.dp)
                 )
 
@@ -346,7 +347,7 @@ fun BottomSheetWelcomeContent(
                     color = Color(0xFFE3E3E3),
                     modifier = Modifier
                         .weight(2f)
-                        .background(color = Color.White)
+                        .background(color = MaterialTheme.colorScheme.background)
                         .padding(start = 20.dp)
                 )
             }
@@ -366,7 +367,7 @@ fun BottomSheetWelcomeContent(
                 shape = RoundedCornerShape(40.dp),
                 onClick = onGuestClick,
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.White
+                    containerColor = MaterialTheme.colorScheme.background
                 )
             ) {
                 Row(
@@ -383,7 +384,7 @@ fun BottomSheetWelcomeContent(
                         fontFamily = poppinsFontFamily,
                         text = stringResource(R.string.continue_with_google),
                         fontSize = 16.sp,
-                        color = Color.Black,
+                        color = MaterialTheme.colorScheme.onPrimary,
                         modifier = Modifier
                     )
                     Spacer(modifier = Modifier.width(0.1.dp))
@@ -406,7 +407,7 @@ fun BottomSheetWelcomeContent(
                 shape = RoundedCornerShape(40.dp),
                 onClick = onGuestClick,
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.White
+                    containerColor = MaterialTheme.colorScheme.background
                 )
             ) {
                 Row(
@@ -423,7 +424,7 @@ fun BottomSheetWelcomeContent(
                         fontFamily = poppinsFontFamily,
                         text = stringResource(R.string.continue_with_facebook),
                         fontSize = 16.sp,
-                        color = Color.Black,
+                        color = MaterialTheme.colorScheme.onPrimary,
                         modifier = Modifier
                     )
                     Spacer(modifier = Modifier.width(0.1.dp))
@@ -446,7 +447,7 @@ fun BottomSheetWelcomeContent(
                 shape = RoundedCornerShape(40.dp),
                 onClick = onGuestClick,
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.White
+                    containerColor = MaterialTheme.colorScheme.background
                 )
             ) {
                 Row(
@@ -463,7 +464,7 @@ fun BottomSheetWelcomeContent(
                         fontFamily = poppinsFontFamily,
                         text = stringResource(R.string.continue_as_guest),
                         fontSize = 16.sp,
-                        color = Color.Black,
+                        color = MaterialTheme.colorScheme.onPrimary,
                         modifier = Modifier
                     )
                     Spacer(modifier = Modifier.width(0.1.dp))

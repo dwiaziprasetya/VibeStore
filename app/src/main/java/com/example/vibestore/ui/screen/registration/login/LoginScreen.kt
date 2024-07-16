@@ -55,7 +55,6 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.graphics.toColorInt
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import cn.pedant.SweetAlert.SweetAlertDialog
@@ -283,7 +282,7 @@ fun LoginContent(
                 text = stringResource(R.string.forgot_password),
                 fontFamily = poppinsFontFamily,
                 fontSize = 14.sp,
-                color = Color("#29bf12".toColorInt()),
+                color = MaterialTheme.colorScheme.primary,
             )
         }
         AnimatedVisibility(
@@ -301,14 +300,14 @@ fun LoginContent(
                 shape = RoundedCornerShape(40.dp),
                 onClick = onLoginClick,
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color("#29bf12".toColorInt())
+                    containerColor = MaterialTheme.colorScheme.primary
                 )
             ) {
                 Text(
                     fontFamily = poppinsFontFamily,
                     text = stringResource(R.string.login),
                     fontSize = 18.sp,
-                    color = Color.White,
+                    color = MaterialTheme.colorScheme.background,
                     modifier = Modifier
                 )
             }
@@ -334,7 +333,7 @@ fun LoginContent(
                     color = Color(0xFFE3E3E3),
                     modifier = Modifier
                         .weight(2f)
-                        .background(color = Color.White)
+                        .background(color = MaterialTheme.colorScheme.background)
                         .padding(end = 20.dp)
                 )
 
@@ -345,7 +344,7 @@ fun LoginContent(
                     color = Color(0xFFE3E3E3),
                     modifier = Modifier
                         .weight(2f)
-                        .background(color = Color.White)
+                        .background(color = MaterialTheme.colorScheme.background)
                         .padding(start = 20.dp)
                 )
             }
@@ -377,7 +376,7 @@ fun LoginContent(
                     shape = RoundedCornerShape(40.dp),
                     onClick = {},
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.White
+                        containerColor = MaterialTheme.colorScheme.background
                     )
                 ) {
                     Row(
@@ -404,7 +403,7 @@ fun LoginContent(
                     shape = RoundedCornerShape(40.dp),
                     onClick = {},
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.White
+                        containerColor = MaterialTheme.colorScheme.background
                     )
                 ) {
                     Row(
@@ -433,7 +432,7 @@ fun LoginContent(
                     shape = RoundedCornerShape(40.dp),
                     onClick = {},
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.White
+                        containerColor = MaterialTheme.colorScheme.background
                     )
                 ) {
                     Row(
@@ -471,13 +470,13 @@ fun LoginContent(
                     text = stringResource(R.string.dont_have_account),
                     fontFamily = poppinsFontFamily,
                     fontSize = 14.sp,
-                    color = Color.Black
+                    color = MaterialTheme.colorScheme.onPrimary
                 )
                 Text(
                     text = " " + stringResource(R.string.sign_up),
                     fontFamily = poppinsFontFamily,
                     fontSize = 14.sp,
-                    color = Color("#29bf12".toColorInt()),
+                    color = MaterialTheme.colorScheme.primary,
                     modifier = Modifier
                         .clickable {
                             onSignUpClick()
@@ -502,9 +501,9 @@ fun CustomOutlinedTextField(
     OutlinedTextField(
         shape = RoundedCornerShape(32.dp),
         colors = TextFieldDefaults.colors(
-            focusedContainerColor = Color.White,
-            unfocusedContainerColor = Color.White,
-            disabledContainerColor = Color.White,
+            focusedContainerColor = MaterialTheme.colorScheme.background,
+            unfocusedContainerColor = MaterialTheme.colorScheme.background,
+            disabledContainerColor = MaterialTheme.colorScheme.background,
             focusedIndicatorColor = Color(0xFFCAC8C8),
             unfocusedIndicatorColor = Color(0xFFCAC8C8),
         ),
@@ -530,7 +529,7 @@ fun CustomOutlinedTextField(
         },
         visualTransformation = visualTransformation,
         textStyle = TextStyle(
-            color = Color.Black,
+            color = MaterialTheme.colorScheme.onPrimary,
             fontFamily = poppinsFontFamily,
             fontSize = 14.sp
         ),

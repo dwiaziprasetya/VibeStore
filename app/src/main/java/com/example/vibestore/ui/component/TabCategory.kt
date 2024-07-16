@@ -29,7 +29,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.core.graphics.toColorInt
 import com.example.vibestore.ui.screen.product.all.AllProductScreen
 import com.example.vibestore.ui.screen.product.electronic.ElectronicProductScreen
 import com.example.vibestore.ui.screen.product.jewelery.JeweleryProductScreen
@@ -84,7 +83,7 @@ fun TabCategory(
                         .height(TabRowDefaults.IndicatorHeight * 2)
                         .padding(start = 20.dp, end = 20.dp)
                         .background(
-                            color = Color("#29bf12".toColorInt()),
+                            color = MaterialTheme.colorScheme.primary,
                             shape = RoundedCornerShape(50.dp)
                         )
                 )
@@ -99,7 +98,7 @@ fun TabCategory(
                                 text = category[index],
                                 fontFamily = poppinsFontFamily,
                                 fontWeight = FontWeight.Medium,
-                                color = Color("#29bf12".toColorInt())
+                                color = MaterialTheme.colorScheme.primary
                             )
                         } else {
                             Text(

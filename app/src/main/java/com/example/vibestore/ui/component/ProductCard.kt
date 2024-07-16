@@ -33,33 +33,6 @@ fun ProductCard(
             .wrapContentHeight(),
         horizontalAlignment = Alignment.Start
     ) {
-//        Box(
-//            modifier = Modifier.padding(bottom = 16.dp)
-//        ) {
-//            AsyncImage(
-//                model = image,
-//                contentDescription = null,
-//                contentScale = ContentScale.FillHeight,
-//                modifier = Modifier
-//                    .width(196.dp)
-//                    .height(196.dp)
-//                    .clip(RoundedCornerShape(10.dp))
-//            )
-//            Surface(
-//                shape = RoundedCornerShape(50.dp),
-//                color = Color.White,
-//                modifier = Modifier.align(Alignment.TopEnd)
-//            ) {
-//                Icon(
-//                    imageVector = Icons.Default.FavoriteBorder,
-//                    tint = MaterialTheme.colorScheme.outline,
-//                    contentDescription = "Favourite",
-//                    modifier = Modifier
-//                        .align(Alignment.TopEnd)
-//                        .padding(8.dp)
-//                )
-//            }
-//        }
         AsyncImage(
             model = image,
             contentDescription = null,

@@ -21,7 +21,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         actionBar?.hide()
         setContent {
-            VibeStoreTheme(darkTheme = false){
+            VibeStoreTheme(dynamicColor = false){
                 RootNavigationGraph(navController = rememberNavController())
             }
         }
