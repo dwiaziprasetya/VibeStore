@@ -80,7 +80,7 @@ fun HomeScreen(
                 },
                 actions = {
                     Icon(
-                        painter = painterResource(R.drawable.cartoutlined),
+                        painter = painterResource(R.drawable.icon_cart_outlined),
                         contentDescription = "Cart",
                         modifier = Modifier
                             .clickable {
@@ -89,8 +89,12 @@ fun HomeScreen(
                     )
                     Spacer(modifier = Modifier.width(16.dp))
                     Icon(
-                        painter = painterResource(R.drawable.notificationoutlined),
-                        contentDescription = null
+                        painter = painterResource(R.drawable.icon_notification_outlined),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .clickable { 
+                                navcontroller.navigate(Screen.Notification.route)
+                            }
                     )
                 },
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(

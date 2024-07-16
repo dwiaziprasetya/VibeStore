@@ -78,14 +78,12 @@ fun WelcomeScreen(
         )
     )
 ) {
-
     val context = LocalContext.current
     var isSheetOpen by rememberSaveable { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
     val isVisible = remember { mutableStateOf(false) }
     var dialog by remember { mutableStateOf<SweetAlertDialog?>(null) }
-
-
+    
     if (isSheetOpen) {
         BottomSheetRegister(
             modifier = Modifier.wrapContentHeight(),
@@ -116,7 +114,7 @@ fun WelcomeScreen(
                     dialog = DialogHelper.showDialogSuccess(
                         context = context,
                         title = "Success",
-                        textContent = "Login Success",
+                        textContent = "Welcome to Vibe Store",
                         onConfirm = {
                             navController.popBackStack()
                             navController.navigate(Screen.MainNav.route)
@@ -138,7 +136,7 @@ fun WelcomeScreen(
 
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
-            painter = painterResource(R.drawable.woi),
+            painter = painterResource(R.drawable.image_welcome_1),
             contentDescription = null,
             modifier = Modifier
                 .fillMaxSize(),

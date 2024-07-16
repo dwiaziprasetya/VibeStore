@@ -10,7 +10,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.vibestore.ui.navigation.Screen
 import com.example.vibestore.ui.navigation.graph.authNav
-import com.example.vibestore.ui.screen.SplashScreen
+import com.example.vibestore.ui.screen.splash.SplashScreen
 import com.example.vibestore.ui.screen.main.MainScreen
 import com.example.vibestore.ui.theme.VibeStoreTheme
 

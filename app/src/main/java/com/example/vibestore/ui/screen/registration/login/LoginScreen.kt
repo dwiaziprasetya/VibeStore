@@ -87,9 +87,9 @@ fun LoginScreen(
     var username by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
     val icon = if (passwordVisibility)
-        painterResource(R.drawable.ic_visibility)
+        painterResource(R.drawable.icon_visibility)
     else
-        painterResource(R.drawable.ic_visibility_off)
+        painterResource(R.drawable.icon_visibility_off)
 
     val uiState by viewModel.uiState.observeAsState(initial = UiState.Loading)
     var isVisible by remember { mutableStateOf(false) }
@@ -556,7 +556,7 @@ private fun LoginContentPreview() {
             password = "",
             onUsernameChange = {},
             onPasswordChange = {},
-            icon = painterResource(R.drawable.ic_visibility_off),
+            icon = painterResource(R.drawable.icon_visibility_off),
             passwordVisibility = true,
             onPasswordVisibilityChange = {},
             onSignUpClick = {},

@@ -115,7 +115,7 @@ fun OurProductScreen(
                         .fillMaxSize()
                 ){
                     Image(
-                        painter = painterResource(R.drawable.no_product_found),
+                        painter = painterResource(R.drawable.image_no_product_found),
                         contentDescription = null,
                         modifier = Modifier
                             .size(180.dp)

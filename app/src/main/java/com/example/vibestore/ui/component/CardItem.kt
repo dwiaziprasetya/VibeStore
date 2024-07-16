@@ -33,7 +33,7 @@ fun CartItem() {
     ) {
         Image(
             modifier = Modifier.size(90.dp),
-            painter = painterResource(R.drawable.clothes),
+            painter = painterResource(R.drawable.image_clothes),
             contentDescription = null
         )
         Column(

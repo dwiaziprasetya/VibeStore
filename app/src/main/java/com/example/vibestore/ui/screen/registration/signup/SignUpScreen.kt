@@ -97,9 +97,9 @@ fun SignUpScreen(
     var password by rememberSaveable { mutableStateOf("") }
     var dialog by remember { mutableStateOf<SweetAlertDialog?>(null) }
     val icon = if (passwordVisibility)
-        painterResource(R.drawable.ic_visibility)
+        painterResource(R.drawable.icon_visibility)
     else
-        painterResource(R.drawable.ic_visibility_off)
+        painterResource(R.drawable.icon_visibility_off)
 
 
     val uiState by viewModel.uiState.observeAsState(initial = UiState.Loading)
@@ -534,7 +534,7 @@ private fun SignUpContentPreview() {
             onEmailChange = {},
             onUsernameChange = {},
             onPasswordChange = {},
-            icon = painterResource(R.drawable.ic_visibility_off),
+            icon = painterResource(R.drawable.icon_visibility_off),
             passwordVisibility = false,
             onPasswordVisibilityChange = {},
             onSignUpClick = {},

@@ -31,7 +31,7 @@ fun SectionInProgress() {
                 .padding(80.dp)
         ) {
             Image(
-                painter = painterResource(R.drawable.errordata),
+                painter = painterResource(R.drawable.image_error_data),
                 contentDescription = "Error Data",
                 modifier = Modifier.size(290.dp)
             )

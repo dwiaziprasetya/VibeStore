@@ -1,4 +1,4 @@
-package com.example.vibestore.ui.screen
+package com.example.vibestore.ui.screen.splash
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.LinearOutSlowInEasing
@@ -104,7 +104,7 @@ fun SplashScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Image(
-                    painter = painterResource(R.drawable.fui),
+                    painter = painterResource(R.drawable.logo),
                     contentDescription = null,
                     modifier = Modifier
                         .size(96.dp)

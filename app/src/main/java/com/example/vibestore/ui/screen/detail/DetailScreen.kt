@@ -87,7 +87,7 @@ fun DetailScreen(
                 },
                 actions = {
                     Icon(
-                        painter = painterResource(R.drawable.favouriteoutlined),
+                        painter = painterResource(R.drawable.icon_favourite_outlined),
                         contentDescription = "favourite",
                         tint = Color.Black
                     )

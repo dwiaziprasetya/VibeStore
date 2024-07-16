@@ -18,7 +18,7 @@ class MainActivity : ComponentActivity() {
         )
         super.onCreate(savedInstanceState)
         setContent {
-            VibeStoreTheme(dynamicColor = false) {
+            VibeStoreTheme{
                 RootNavigationGraph(navController = rememberNavController())
             }
         }

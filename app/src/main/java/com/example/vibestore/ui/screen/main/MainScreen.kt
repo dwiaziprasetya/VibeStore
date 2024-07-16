@@ -31,7 +31,8 @@ fun MainScreen(
                 Screen.Categories.route,
                 Screen.Welcome.route,
                 Screen.Login.route,
-                Screen.SignUp.route
+                Screen.SignUp.route,
+                Screen.Notification.route
             )
                 ) {
                 BottomNavigation(

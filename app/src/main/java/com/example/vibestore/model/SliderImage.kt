@@ -7,8 +7,8 @@ data class SliderImage(
 )
 
 val dummySliderImage = listOf(
-    SliderImage(R.drawable.sliderimageone),
-    SliderImage(R.drawable.sliderimagetwo),
-    SliderImage(R.drawable.sliderimagethree),
-    SliderImage(R.drawable.sliderimagefour),
+    SliderImage(R.drawable.image_slider_one),
+    SliderImage(R.drawable.image_slider_two),
+    SliderImage(R.drawable.image_slider_three),
+    SliderImage(R.drawable.image_slider_four),
 )

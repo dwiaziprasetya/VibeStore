@@ -52,32 +52,32 @@ fun BottomNavigation(
         val navigationItems = listOf(
             NavigationItem(
                 title = "Home",
-                icon = painterResource(R.drawable.homeoutlined),
-                iconActive = painterResource(R.drawable.homefilled),
+                icon = painterResource(R.drawable.icon_home_outlined),
+                iconActive = painterResource(R.drawable.icon_home_filled),
                 screen = Screen.Home
             ),
             NavigationItem(
                 title = "Product",
-                icon = painterResource(R.drawable.shoppingbagoutlined),
-                iconActive = painterResource(R.drawable.shoppingbagfilled),
+                icon = painterResource(R.drawable.icon_shopping_bag_outlined),
+                iconActive = painterResource(R.drawable.icon_shopping_bag_filled),
                 screen = Screen.OurProduct
             ),
             NavigationItem(
                 title = "Coupon",
-                icon = painterResource(R.drawable.couponoutlined),
-                iconActive = painterResource(R.drawable.couponfilled),
+                icon = painterResource(R.drawable.icon_coupon_outlined),
+                iconActive = painterResource(R.drawable.icon_coupon_filled),
                 screen = Screen.Coupon
             ),
             NavigationItem(
                 title = "Favourite",
-                icon = painterResource(R.drawable.favouriteoutlined),
-                iconActive = painterResource(R.drawable.favouritefilled),
+                icon = painterResource(R.drawable.icon_favourite_outlined),
+                iconActive = painterResource(R.drawable.icon_favourite_filled),
                 screen = Screen.Favourite
             ),
             NavigationItem(
                 title = "Profile",
-                icon = painterResource(R.drawable.profileoutlined),
-                iconActive = painterResource(R.drawable.profilefilled),
+                icon = painterResource(R.drawable.icon_profile_outlined),
+                iconActive = painterResource(R.drawable.icon_profile_filled),
 
                 screen = Screen.Profile
             ),
