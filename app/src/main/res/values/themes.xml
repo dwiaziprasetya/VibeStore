@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.VibeStore" parent="Theme.Material3.DayNight.NoActionBar"/>
-
-    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
-
+    <style name="Theme.VibeStore" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="windowActionBar">false</item>
     </style>
 </resources>

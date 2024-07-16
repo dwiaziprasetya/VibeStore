@@ -50,19 +50,17 @@ fun SplashScreen(
     val textOffsetX = remember { Animatable(screenWidth.value / 1.4f) }
 
     LaunchedEffect(Unit) {
-        // Animate the image to move slightly to the left
         imageOffsetX.animateTo(
             targetValue = -5f,
             animationSpec = tween(
-                durationMillis = 500,
+                durationMillis = 1000,
                 easing = FastOutSlowInEasing
             )
         )
-        // Animate the text to move to the left
         textOffsetX.animateTo(
             targetValue = 0f,
             animationSpec = tween(
-                durationMillis = 500,
+                durationMillis = 1000,
                 easing = FastOutSlowInEasing
             )
         )

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.VibeStore.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">?attr/colorOnPrimary</item>
+        <item name="postSplashScreenTheme">@style/Theme.VibeStore</item>
+    </style>
+</resources>

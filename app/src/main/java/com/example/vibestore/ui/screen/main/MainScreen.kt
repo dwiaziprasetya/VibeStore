@@ -23,7 +23,8 @@ fun MainScreen(
 
     Scaffold(
         contentWindowInsets = WindowInsets(0, 0, 0, 0),
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize(),
         bottomBar = {
             if (currentDestination !in listOf(
                 Screen.DetailProduct.route,
@@ -37,8 +38,7 @@ fun MainScreen(
                 ) {
                 BottomNavigation(
                     navController = navController,
-                    modifier = Modifier
-                        .navigationBarsPadding()
+                    modifier = Modifier.navigationBarsPadding()
                 )
             }
         }
