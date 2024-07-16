@@ -1,13 +1,32 @@
 package com.example.vibestore.repository
 
+import com.example.vibestore.SessionPreferences
 import com.example.vibestore.data.remote.retrofit.ApiService
 import com.example.vibestore.model.LoginResponse
 import com.example.vibestore.model.ProductResponseItem
 import com.example.vibestore.model.UserResponse
+import kotlinx.coroutines.flow.Flow
 
 class VibeStoreRepository private constructor(
-    private val apiService : ApiService
+    private val apiService : ApiService,
+    private val pref: SessionPreferences
 ){
+    fun getSession() : Flow<LoginResponse> {
+        return pref.getSession()
+    }
+
+    fun getUsername() : Flow<String> {
+        return pref.getUsername()
+    }
+
+    suspend fun saveLoginData(username: String, token: String) {
+        pref.saveLoginData(username, token)
+    }
+
+    suspend fun logout() {
+        pref.logout()
+    }
+
     suspend fun login(
         username: String,
         password: String
@@ -51,7 +70,11 @@ class VibeStoreRepository private constructor(
 
     companion object {
         fun getInstance(
-            apiService: ApiService
-        ) = VibeStoreRepository(apiService)
+            apiService: ApiService,
+            userPreferences: SessionPreferences
+        ) = VibeStoreRepository(
+            apiService,
+            userPreferences
+        )
     }
 }

@@ -62,6 +62,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog
 import com.example.vibestore.R
 import com.example.vibestore.helper.DialogHelper
 import com.example.vibestore.helper.ViewModelFactory
+import com.example.vibestore.model.LoginResponse
 import com.example.vibestore.ui.common.UiState
 import com.example.vibestore.ui.navigation.Screen
 import com.example.vibestore.ui.theme.VibeStoreTheme
@@ -111,9 +112,15 @@ fun LoginScreen(
                 dialog = DialogHelper.showDialogSuccess(
                     context = context,
                     title = "Success",
-                    textContent = "Login Success"
+                    textContent = "Login Success",
+                    onConfirm = {
+                        navController.navigate(Screen.MainNav.route)
+                        viewModel.saveLoginData(
+                            username = username,
+                            token = (uiState as UiState.Success<LoginResponse>).data.token
+                        )
+                    }
                 )
-                viewModel.resetUiState()
             }
             is UiState.Error -> {
                 dialog?.dismissWithAnimation()
@@ -143,6 +150,7 @@ fun LoginScreen(
         },
         onSignUpClick = {
             navController.navigate(Screen.SignUp.route)
+            viewModel.resetUiState()
         },
         onLoginClick = {
             if (

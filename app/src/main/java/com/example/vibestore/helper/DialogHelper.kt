@@ -63,6 +63,21 @@ object DialogHelper {
         )
     }
 
+    fun showDialogWarning(
+        context: Context,
+        title: String?,
+        textContent: String?,
+        onConfirm: () -> Unit = {}
+    ) : SweetAlertDialog {
+        return showDialog(
+            context = context,
+            title = title,
+            textContent = textContent,
+            alertType = SweetAlertDialog.WARNING_TYPE,
+            onConfirm = onConfirm
+        )
+    }
+
     fun showDialogError(
         context: Context,
         title: String?,
@@ -74,6 +89,7 @@ object DialogHelper {
             title = title,
             textContent = textContent,
             alertType = SweetAlertDialog.ERROR_TYPE,
+            onConfirm = onConfirm
         )
     }
 

@@ -16,7 +16,7 @@ fun NavGraphBuilder.authNav(
 ) {
     navigation(
         startDestination = Screen.Welcome.route,
-        route = Screen.AuthNav.route
+        route = Screen.AuthNav.route,
     ) {
         composable(
             route = Screen.Welcome.route,

@@ -32,13 +32,14 @@ fun MainNavGraph(
         route = Screen.MainNav.route,
         startDestination = Screen.Home.route,
     ) {
+        authNav(navController)
         composable(
             route = Screen.Home.route,
         ) {
             HomeScreen(navController)
         }
         composable(route = Screen.Profile.route) {
-            ProfileScreen()
+            ProfileScreen(navController = navController)
         }
         composable(
             route = Screen.DetailProduct.route,
@@ -109,7 +110,6 @@ fun MainNavGraph(
         }
         composable(Screen.Coupon.route){ CouponScreen() }
         composable(Screen.Favourite.route){ FavouriteScreen() }
-        composable(Screen.Profile.route){ ProfileScreen() }
         composable(Screen.OurProduct.route){ OurProductScreen(navController) }
         composable(
             route = Screen.Categories.route,

@@ -10,16 +10,20 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.vibestore.ui.navigation.Screen
 import com.example.vibestore.ui.navigation.graph.authNav
-import com.example.vibestore.ui.screen.home.MainScreen
+import com.example.vibestore.ui.screen.SplashScreen
+import com.example.vibestore.ui.screen.main.MainScreen
 import com.example.vibestore.ui.theme.VibeStoreTheme
 
 @Composable
-fun RootNavigationGraph(navController: NavHostController) {
+fun RootNavigationGraph(
+    navController: NavHostController,
+) {
     NavHost(
         navController = navController,
         route = Screen.Root.route,
-        startDestination = Screen.AuthNav.route
+        startDestination = Screen.Splash.route
     ) {
+        composable(Screen.Splash.route) { SplashScreen(navController) }
         authNav(navController = navController)
         composable(
             route = Screen.MainNav.route,

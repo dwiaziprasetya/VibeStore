@@ -7,12 +7,14 @@ import com.example.vibestore.di.Injection
 import com.example.vibestore.repository.VibeStoreRepository
 import com.example.vibestore.ui.screen.detail.DetailViewModel
 import com.example.vibestore.ui.screen.foryou.ForYouViewModel
+import com.example.vibestore.ui.screen.main.MainViewModel
 import com.example.vibestore.ui.screen.ourproduct.OurProductViewModel
 import com.example.vibestore.ui.screen.product.all.AllProductViewModel
 import com.example.vibestore.ui.screen.product.electronic.ElectronicProductViewModel
 import com.example.vibestore.ui.screen.product.jewelery.JeweleryProductViewModel
 import com.example.vibestore.ui.screen.product.men.MenProductViewModel
 import com.example.vibestore.ui.screen.product.women.WomenProductViewModel
+import com.example.vibestore.ui.screen.profile.ProfileViewModel
 import com.example.vibestore.ui.screen.registration.login.LoginViewModel
 import com.example.vibestore.ui.screen.registration.signup.SignUpViewModel
 
@@ -42,8 +44,12 @@ class ViewModelFactory(
             DetailViewModel(repository) as T
         } else if (modelClass.isAssignableFrom(SignUpViewModel::class.java)){
             SignUpViewModel(repository) as T
-        } else {
+        } else if (modelClass.isAssignableFrom(LoginViewModel::class.java)){
             LoginViewModel(repository) as T
+        } else if (modelClass.isAssignableFrom(ProfileViewModel::class.java)) {
+            ProfileViewModel(repository) as T
+        } else {
+            MainViewModel(repository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
     }

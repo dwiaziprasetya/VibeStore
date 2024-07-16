@@ -30,6 +30,12 @@ class LoginViewModel (
         }
     }
 
+    fun saveLoginData(username: String, token: String) {
+        viewModelScope.launch {
+            repository.saveLoginData(username, token)
+        }
+    }
+
     fun resetUiState() {
         _uiState.value = null
     }

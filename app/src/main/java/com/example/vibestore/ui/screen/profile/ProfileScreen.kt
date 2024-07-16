@@ -1,7 +1,9 @@
 package com.example.vibestore.ui.screen.profile
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -26,12 +28,19 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Devices
@@ -39,13 +48,34 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.graphics.toColorInt
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import cn.pedant.SweetAlert.SweetAlertDialog
 import com.example.vibestore.R
+import com.example.vibestore.helper.DialogHelper
+import com.example.vibestore.helper.ViewModelFactory
+import com.example.vibestore.ui.navigation.Screen
 import com.example.vibestore.ui.theme.VibeStoreTheme
 import com.example.vibestore.ui.theme.poppinsFontFamily
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProfileScreen() {
+fun ProfileScreen(
+    viewModel: ProfileViewModel = viewModel(
+        factory = ViewModelFactory.getInstance(
+            context = LocalContext.current
+        )
+    ),
+    navController: NavHostController
+) {
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+    val username by viewModel.getUsername().observeAsState()
+    var dialog by remember { mutableStateOf<SweetAlertDialog?>(null) }
+
     Scaffold(
         modifier = Modifier.padding(horizontal = 16.dp),
         topBar = {
@@ -102,7 +132,7 @@ fun ProfileScreen() {
                 ) {
                     Text(
                         letterSpacing = 0.001.sp,
-                        text = "Dwi Azi Prasetya",
+                        text = username.toString(),
                         fontFamily = poppinsFontFamily,
                         fontWeight = FontWeight.SemiBold,
                         fontSize = 18.sp,
@@ -226,7 +256,34 @@ fun ProfileScreen() {
                 )
             }
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable {
+                        dialog = DialogHelper.showDialogWarning(
+                            context = context,
+                            title = "Log out",
+                            textContent = "Are you sure you want to log out?",
+                            onConfirm = {
+                                dialog?.dismissWithAnimation()
+                                dialog = DialogHelper.showDialogLoading(
+                                    context = context,
+                                    textContent = "Please wait"
+                                )
+                                scope.launch {
+                                    delay(2000)
+                                    dialog?.dismissWithAnimation()
+                                    navController.popBackStack(Screen.MainNav.route, true)
+                                    navController.navigate(Screen.AuthNav.route)
+                                    Toast.makeText(
+                                        context,
+                                        "Log out success",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                    viewModel.logout()
+                                }
+                            }
+                        )
+                    },
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
@@ -255,6 +312,8 @@ fun ProfileScreen() {
 @Composable
 private fun ProfileScreenPreview() {
     VibeStoreTheme {
-        ProfileScreen()
+        ProfileScreen(
+            navController = rememberNavController()
+        )
     }
 }

@@ -1,4 +1,4 @@
-package com.example.vibestore.ui.screen.home
+package com.example.vibestore.ui.screen.main
 
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -28,7 +28,10 @@ fun MainScreen(
             if (currentDestination !in listOf(
                 Screen.DetailProduct.route,
                 Screen.MyCart.route,
-                Screen.Categories.route
+                Screen.Categories.route,
+                Screen.Welcome.route,
+                Screen.Login.route,
+                Screen.SignUp.route
             )
                 ) {
                 BottomNavigation(
