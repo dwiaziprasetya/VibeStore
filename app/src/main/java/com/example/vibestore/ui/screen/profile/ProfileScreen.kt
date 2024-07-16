@@ -13,11 +13,10 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForwardIos
-import androidx.compose.material.icons.automirrored.filled.HelpOutline
+import androidx.compose.material.icons.automirrored.filled.Help
 import androidx.compose.material.icons.automirrored.filled.Logout
-import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.LocationOn
-import androidx.compose.material.icons.filled.LockOpen
+import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.ShoppingBag
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -38,7 +37,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -112,8 +110,7 @@ fun ProfileScreen(
                     .fillMaxWidth()
             ) {
                 Image(
-                    imageVector = Icons.Default.AccountCircle,
-                    colorFilter = ColorFilter.tint(Color.Gray),
+                    painter = painterResource(R.drawable.jhon),
                     contentDescription = "profile",
                     modifier = Modifier
                         .size(100.dp)
@@ -160,17 +157,19 @@ fun ProfileScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
-                    tint = MaterialTheme.colorScheme.outline,
+                    tint = Color("#f8b62d".toColorInt()),
                     imageVector = Icons.Default.ShoppingBag,
                     contentDescription = "bag",
                     modifier = Modifier
-                        .padding(16.dp)
+                        .padding(vertical = 16.dp)
                         .size(20.dp)
                 )
                 Text(
                     text = "My Orders",
                     fontFamily = poppinsFontFamily,
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier
+                        .padding(start = 16.dp)
+                        .weight(1f),
                     fontSize = 14.sp,
                 )
                 Icon(
@@ -185,17 +184,19 @@ fun ProfileScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
-                    tint = MaterialTheme.colorScheme.outline,
+                    tint = Color("#00dae3".toColorInt()),
                     imageVector = Icons.Default.LocationOn,
                     contentDescription = "location",
                     modifier = Modifier
-                        .padding(16.dp)
+                        .padding(vertical = 16.dp)
                         .size(20.dp)
                 )
                 Text(
                     text = "Address",
                     fontFamily = poppinsFontFamily,
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier
+                        .padding(start = 16.dp)
+                        .weight(1f),
                     fontSize = 14.sp,
                 )
                 Icon(
@@ -210,17 +211,19 @@ fun ProfileScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
-                    tint = MaterialTheme.colorScheme.outline,
-                    imageVector = Icons.Default.LockOpen,
+                    tint = Color("#374d7c".toColorInt()),
+                    imageVector = Icons.Default.Lock,
                     contentDescription = "lock",
                     modifier = Modifier
-                        .padding(16.dp)
+                        .padding(vertical = 16.dp)
                         .size(20.dp)
                 )
                 Text(
                     text = "Change Password",
                     fontFamily = poppinsFontFamily,
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier
+                        .padding(start = 16.dp)
+                        .weight(1f),
                     fontSize = 14.sp,
                 )
                 Icon(
@@ -235,17 +238,19 @@ fun ProfileScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
-                    tint = MaterialTheme.colorScheme.outline,
-                    imageVector = Icons.AutoMirrored.Filled.HelpOutline,
+                    tint = Color("#082db4".toColorInt()),
+                    imageVector = Icons.AutoMirrored.Filled.Help,
                     contentDescription = "help",
                     modifier = Modifier
-                        .padding(16.dp)
+                        .padding(vertical = 16.dp)
                         .size(20.dp)
                 )
                 Text(
                     text = "Help & Support",
                     fontFamily = poppinsFontFamily,
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier
+                        .padding(start = 16.dp)
+                        .weight(1f),
                     fontSize = 14.sp,
                 )
                 Icon(
@@ -275,11 +280,13 @@ fun ProfileScreen(
                                     dialog?.dismissWithAnimation()
                                     navController.popBackStack(Screen.MainNav.route, true)
                                     navController.navigate(Screen.AuthNav.route)
-                                    Toast.makeText(
-                                        context,
-                                        "Log out success",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
+                                    Toast
+                                        .makeText(
+                                            context,
+                                            "Log out success",
+                                            Toast.LENGTH_SHORT
+                                        )
+                                        .show()
                                     viewModel.logout()
                                 }
                             }
@@ -291,7 +298,7 @@ fun ProfileScreen(
                     imageVector = Icons.AutoMirrored.Filled.Logout,
                     contentDescription = "log out",
                     modifier = Modifier
-                        .padding(16.dp)
+                        .padding(vertical = 16.dp)
                         .size(20.dp),
                     tint = Color("#bf122f".toColorInt())
                 )
@@ -300,6 +307,7 @@ fun ProfileScreen(
                     fontFamily = poppinsFontFamily,
                     color = Color("#bf122f".toColorInt()),
                     fontSize = 14.sp,
+                    modifier = Modifier.padding(start = 16.dp)
                 )
             }
         }
