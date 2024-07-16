@@ -1,6 +1,7 @@
 package com.example.vibestore.helper
 
 import android.content.Context
+import android.graphics.Color
 import android.graphics.Typeface
 import android.widget.Button
 import android.widget.TextView
@@ -20,7 +21,7 @@ object DialogHelper {
         title: String?,
         textContent: String?,
         alertType: Int,
-        onConfirm: () -> Unit = {}
+        onConfirm: () -> Unit = {},
     ) : SweetAlertDialog {
         val customFont = getCustomFont(context)
 
@@ -40,12 +41,16 @@ object DialogHelper {
         val titleText = dialog.findViewById<TextView>(cn.pedant.SweetAlert.R.id.title_text)
         val contentText = dialog.findViewById<TextView>(cn.pedant.SweetAlert.R.id.content_text)
         val confirmButton = dialog.findViewById<Button>(cn.pedant.SweetAlert.R.id.confirm_button)
-
+        val cancelButton = dialog.findViewById<Button>(cn.pedant.SweetAlert.R.id.cancel_button)
 
         titleText?.typeface = customFont
         contentText?.typeface = customFont
         confirmButton?.typeface = customFont
+        cancelButton?.typeface = customFont
 
+        if (alertType == SweetAlertDialog.WARNING_TYPE) contentText.textSize = 14f
+
+        cancelButton.backgroundTintList = ContextCompat.getColorStateList(context, R.color.red)
         confirmButton.backgroundTintList = ContextCompat.getColorStateList(context, R.color.green)
 
         return dialog
@@ -55,27 +60,66 @@ object DialogHelper {
         context: Context,
         textContent: String?
     ): SweetAlertDialog {
-        return showDialog(
+        val dialog = showDialog(
             context = context,
             title = null,
             textContent = textContent,
             alertType = SweetAlertDialog.PROGRESS_TYPE
         )
+
+        dialog.progressHelper.barColor = Color.parseColor("#29bf12")
+
+        return dialog
     }
 
     fun showDialogWarning(
         context: Context,
         title: String?,
         textContent: String?,
-        onConfirm: () -> Unit = {}
+        onConfirm: () -> Unit,
+        onDismis: () -> Unit
     ) : SweetAlertDialog {
-        return showDialog(
+        val dialog = showDialog(
             context = context,
             title = title,
             textContent = textContent,
             alertType = SweetAlertDialog.WARNING_TYPE,
             onConfirm = onConfirm
         )
+
+        dialog.apply {
+            setCancelClickListener { onDismis() }
+            showCancelButton(true)
+            setCancelText("Cancel")
+        }
+
+        return dialog
+    }
+
+    fun showDialogCustom(
+        context: Context,
+        title: String?,
+        textContent: String?,
+        onConfirm: () -> Unit = {},
+        onDismis: () -> Unit
+    ): SweetAlertDialog {
+        val dialog = showDialog(
+            context = context,
+            title = title,
+            textContent = textContent,
+            alertType = SweetAlertDialog.CUSTOM_IMAGE_TYPE,
+            onConfirm = onConfirm
+        )
+
+        dialog.setCustomImage(R.drawable.icon_error)
+
+        dialog.apply {
+            setCancelClickListener { onDismis() }
+            showCancelButton(true)
+            setCancelText("Cancel")
+        }
+
+        return dialog
     }
 
     fun showDialogError(
@@ -99,12 +143,16 @@ object DialogHelper {
         textContent: String?,
         onConfirm: () -> Unit = {}
     ): SweetAlertDialog {
-        return showDialog(
+        val dialog = showDialog(
             context = context,
             title = title,
             textContent = textContent,
-            alertType = SweetAlertDialog.SUCCESS_TYPE,
+            alertType = SweetAlertDialog.CUSTOM_IMAGE_TYPE,
             onConfirm = onConfirm
         )
+
+        dialog.setCustomImage(R.drawable.icon_success)
+
+        return dialog
     }
 }

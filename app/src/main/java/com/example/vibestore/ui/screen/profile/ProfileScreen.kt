@@ -259,10 +259,11 @@ fun ProfileScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clickable {
-                        dialog = DialogHelper.showDialogWarning(
+                        dialog = DialogHelper.showDialogCustom(
                             context = context,
                             title = "Log out",
                             textContent = "Are you sure you want to log out?",
+                            onDismis = { dialog?.dismissWithAnimation() },
                             onConfirm = {
                                 dialog?.dismissWithAnimation()
                                 dialog = DialogHelper.showDialogLoading(

@@ -17,6 +17,7 @@ import com.example.vibestore.ui.screen.product.women.WomenProductViewModel
 import com.example.vibestore.ui.screen.profile.ProfileViewModel
 import com.example.vibestore.ui.screen.registration.login.LoginViewModel
 import com.example.vibestore.ui.screen.registration.signup.SignUpViewModel
+import com.example.vibestore.ui.screen.registration.welcome.WelcomeViewModel
 
 @Suppress("UNCHECKED_CAST", "UNREACHABLE_CODE")
 class ViewModelFactory(
@@ -48,8 +49,10 @@ class ViewModelFactory(
             LoginViewModel(repository) as T
         } else if (modelClass.isAssignableFrom(ProfileViewModel::class.java)) {
             ProfileViewModel(repository) as T
-        } else {
+        } else if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
             MainViewModel(repository) as T
+        } else {
+            WelcomeViewModel(repository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
     }

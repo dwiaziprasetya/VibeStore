@@ -55,19 +55,29 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.graphics.toColorInt
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.example.vibestore.R
 import com.example.vibestore.helper.DialogHelper
+import com.example.vibestore.helper.ViewModelFactory
 import com.example.vibestore.ui.navigation.Screen
+import com.example.vibestore.ui.screen.registration.login.LoginViewModel
 import com.example.vibestore.ui.theme.VibeStoreTheme
 import com.example.vibestore.ui.theme.poppinsFontFamily
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
-fun WelcomeScreen(navController: NavHostController) {
+fun WelcomeScreen(
+    navController: NavHostController,
+    viewModel: LoginViewModel = viewModel(
+        factory = ViewModelFactory.getInstance(
+            context = LocalContext.current
+        )
+    )
+) {
 
     val context = LocalContext.current
     var isSheetOpen by rememberSaveable { mutableStateOf(false) }
@@ -110,6 +120,10 @@ fun WelcomeScreen(navController: NavHostController) {
                         onConfirm = {
                             navController.popBackStack()
                             navController.navigate(Screen.MainNav.route)
+                            viewModel.saveLoginData(
+                                username = "Guest",
+                                token = "Guest"
+                            )
                         }
                     )
                     isSheetOpen = false
