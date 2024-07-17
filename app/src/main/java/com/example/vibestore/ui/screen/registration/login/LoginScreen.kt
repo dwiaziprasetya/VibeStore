@@ -194,6 +194,9 @@ fun LoginContent(
 ) {
     Column(
         modifier = Modifier
+            .background(
+                color = MaterialTheme.colorScheme.background
+            )
             .padding(
                 top = 100.dp,
                 start = 32.dp,

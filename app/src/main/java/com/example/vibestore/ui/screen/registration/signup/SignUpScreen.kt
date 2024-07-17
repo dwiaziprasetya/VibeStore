@@ -94,6 +94,7 @@ fun SignUpScreen(
     var email by rememberSaveable { mutableStateOf("") }
     var username by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
+    var isVisible by remember { mutableStateOf(false) }
     var dialog by remember { mutableStateOf<SweetAlertDialog?>(null) }
     val icon = if (passwordVisibility)
         painterResource(R.drawable.icon_visibility)
@@ -131,6 +132,10 @@ fun SignUpScreen(
             }
             null -> {}
         }
+    }
+
+    LaunchedEffect(Unit) {
+        isVisible = true
     }
 
     SignUpContent(
@@ -177,7 +182,8 @@ fun SignUpScreen(
             navController.navigate(Screen.Login.route)
         },
         passwordError = passwordError,
-        emailError = emailError
+        emailError = emailError,
+        isVisible = isVisible
     )
 
 }
@@ -198,16 +204,14 @@ fun SignUpContent(
     onSignUpClick: () -> Unit,
     onLoginClick: () -> Unit,
     passwordError: Boolean,
-    emailError: Boolean
+    emailError: Boolean,
+    isVisible: Boolean,
 ) {
-    val isVisible = remember { mutableStateOf(false) }
-
-    LaunchedEffect(Unit) {
-        isVisible.value = true
-    }
-
     Column(
         modifier = Modifier
+            .background(
+                color = MaterialTheme.colorScheme.background
+            )
             .padding(
                 top = 100.dp,
                 start = 32.dp,
@@ -217,7 +221,7 @@ fun SignUpContent(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         AnimatedVisibility(
-            visible = isVisible.value,
+            visible = isVisible,
             enter = slideInVertically(
                 initialOffsetY = { -40 },
                 animationSpec = tween(1000)
@@ -242,7 +246,7 @@ fun SignUpContent(
             }
         }
         AnimatedVisibility(
-            visible = isVisible.value,
+            visible = isVisible,
             enter = slideInVertically(
                 initialOffsetY = { -40 },
                 animationSpec = tween(1000)
@@ -259,7 +263,7 @@ fun SignUpContent(
             )
         }
         AnimatedVisibility(
-            visible = isVisible.value,
+            visible = isVisible,
             enter = slideInVertically(
                 initialOffsetY = { -40 },
                 animationSpec = tween(1000)
@@ -309,7 +313,7 @@ fun SignUpContent(
             }
         }
         AnimatedVisibility(
-            visible = isVisible.value,
+            visible = isVisible,
             enter = slideInVertically(
                 initialOffsetY = { -40 },
                 animationSpec = tween(1000)
@@ -329,7 +333,7 @@ fun SignUpContent(
             }
         }
         AnimatedVisibility(
-            visible = isVisible.value,
+            visible = isVisible,
             enter = slideInVertically(
                 initialOffsetY = { -40 },
                 animationSpec = tween(1000)
@@ -356,7 +360,7 @@ fun SignUpContent(
             }
         }
         AnimatedVisibility(
-            visible = isVisible.value,
+            visible = isVisible,
             enter = slideInVertically(
                 initialOffsetY = { -40 },
                 animationSpec = tween(1000)
@@ -540,7 +544,8 @@ private fun SignUpContentPreview() {
             onCheckedChange = {},
             onLoginClick = {},
             passwordError = true,
-            emailError = true
+            emailError = true,
+            isVisible = true
         )
     }
 }

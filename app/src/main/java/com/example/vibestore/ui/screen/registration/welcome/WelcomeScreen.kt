@@ -32,6 +32,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.SheetState
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -85,6 +86,9 @@ fun WelcomeScreen(
     val scope = rememberCoroutineScope()
     val isVisible = remember { mutableStateOf(false) }
     var dialog by remember { mutableStateOf<SweetAlertDialog?>(null) }
+    val modalBottomSheetState = rememberModalBottomSheetState(
+        skipPartiallyExpanded = true,
+    )
     
     if (isSheetOpen) {
         BottomSheetRegister(
@@ -92,6 +96,7 @@ fun WelcomeScreen(
             onDismiss = {
                 isSheetOpen = false
             },
+            modalBottomSheetState = modalBottomSheetState,
             onLoginClick = {
                 scope.launch {
                     systemUiController.setSystemBarsColor(
@@ -246,12 +251,8 @@ fun BottomSheetRegister(
     onSignUpClick: () -> Unit,
     onGuestClick: () -> Unit,
     modifier: Modifier = Modifier,
+    modalBottomSheetState: SheetState
 ) {
-
-    val modalBottomSheetState = rememberModalBottomSheetState(
-        skipPartiallyExpanded = true,
-    )
-
     ModalBottomSheet(
         containerColor = MaterialTheme.colorScheme.background,
         modifier = modifier,
