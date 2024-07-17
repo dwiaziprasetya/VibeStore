@@ -158,7 +158,7 @@ fun ProfileScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
-                    tint = Color("#f8b62d".toColorInt()),
+                    tint = MaterialTheme.colorScheme.outline,
                     imageVector = Icons.Default.ShoppingBag,
                     contentDescription = "bag",
                     modifier = Modifier
@@ -185,7 +185,7 @@ fun ProfileScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
-                    tint = Color("#00dae3".toColorInt()),
+                    tint = MaterialTheme.colorScheme.outline,
                     imageVector = Icons.Default.LocationOn,
                     contentDescription = "location",
                     modifier = Modifier
@@ -212,7 +212,7 @@ fun ProfileScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
-                    tint = Color("#374d7c".toColorInt()),
+                    tint = MaterialTheme.colorScheme.outline,
                     imageVector = Icons.Default.Lock,
                     contentDescription = "lock",
                     modifier = Modifier
@@ -239,7 +239,7 @@ fun ProfileScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
-                    tint = Color("#082db4".toColorInt()),
+                    tint = MaterialTheme.colorScheme.outline,
                     imageVector = Icons.AutoMirrored.Filled.Help,
                     contentDescription = "help",
                     modifier = Modifier

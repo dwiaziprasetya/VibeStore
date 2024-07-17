@@ -66,6 +66,7 @@ import com.example.vibestore.ui.navigation.model.Screen
 import com.example.vibestore.ui.screen.registration.login.LoginViewModel
 import com.example.vibestore.ui.theme.VibeStoreTheme
 import com.example.vibestore.ui.theme.poppinsFontFamily
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -78,6 +79,7 @@ fun WelcomeScreen(
         )
     )
 ) {
+    val systemUiController = rememberSystemUiController()
     val context = LocalContext.current
     var isSheetOpen by rememberSaveable { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
@@ -92,12 +94,20 @@ fun WelcomeScreen(
             },
             onLoginClick = {
                 scope.launch {
+                    systemUiController.setSystemBarsColor(
+                        color = Color.Transparent,
+                        darkIcons = true
+                    )
                     navController.navigate(Screen.Login.route)
                     isSheetOpen = false
                 }
             },
             onSignUpClick = {
                 scope.launch {
+                    systemUiController.setSystemBarsColor(
+                        color = Color.Transparent,
+                        darkIcons = true
+                    )
                     navController.navigate(Screen.SignUp.route)
                     isSheetOpen = false
                 }
@@ -116,6 +126,10 @@ fun WelcomeScreen(
                         title = "Success",
                         textContent = "Welcome to Vibe Store",
                         onConfirm = {
+                            systemUiController.setSystemBarsColor(
+                                color = Color.Transparent,
+                                darkIcons = true
+                            )
                             navController.popBackStack()
                             navController.navigate(Screen.MainNav.route)
                             viewModel.saveLoginData(
@@ -132,11 +146,15 @@ fun WelcomeScreen(
 
     LaunchedEffect(Unit) {
         isVisible.value = true
+        systemUiController.setSystemBarsColor(
+            color = Color.Transparent,
+            darkIcons = false
+        )
     }
 
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
-            painter = painterResource(R.drawable.image_welcome_1),
+            painter = painterResource(R.drawable.ahahah),
             contentDescription = null,
             modifier = Modifier
                 .fillMaxSize(),
@@ -235,6 +253,7 @@ fun BottomSheetRegister(
     )
 
     ModalBottomSheet(
+        containerColor = MaterialTheme.colorScheme.background,
         modifier = modifier,
         onDismissRequest = onDismiss,
         sheetState = modalBottomSheetState,

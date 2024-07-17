@@ -206,8 +206,8 @@ fun LoginContent(
             visible = isVisible,
             enter = slideInVertically(
                 initialOffsetY = { -40 },
-                animationSpec = tween(2000)
-            ) + fadeIn(animationSpec = tween(2000)),
+                animationSpec = tween(1000)
+            ) + fadeIn(animationSpec = tween(1000)),
         ) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally
@@ -230,8 +230,8 @@ fun LoginContent(
             visible = isVisible,
             enter = slideInVertically(
                 initialOffsetY = { -40 },
-                animationSpec = tween(2000)
-            ) + fadeIn(animationSpec = tween(2000)),
+                animationSpec = tween(1000)
+            ) + fadeIn(animationSpec = tween(1000)),
         ) {
             Column(
                 modifier = Modifier
@@ -272,8 +272,8 @@ fun LoginContent(
             visible = isVisible,
             enter = slideInVertically(
                 initialOffsetY = { -40 },
-                animationSpec = tween(2000)
-            ) + fadeIn(animationSpec = tween(2000)),
+                animationSpec = tween(1000)
+            ) + fadeIn(animationSpec = tween(1000)),
             modifier = Modifier
                 .padding(top = 8.dp)
                 .align(Alignment.End)
@@ -289,8 +289,8 @@ fun LoginContent(
             visible = isVisible,
             enter = slideInVertically(
                 initialOffsetY = { -40 },
-                animationSpec = tween(2000)
-            ) + fadeIn(animationSpec = tween(2000)),
+                animationSpec = tween(1000)
+            ) + fadeIn(animationSpec = tween(1000)),
         ) {
             Button(
                 modifier = Modifier
@@ -316,8 +316,8 @@ fun LoginContent(
             visible = isVisible,
             enter = slideInVertically(
                 initialOffsetY = { -40 },
-                animationSpec = tween(2000)
-            ) + fadeIn(animationSpec = tween(2000)),
+                animationSpec = tween(1000)
+            ) + fadeIn(animationSpec = tween(1000)),
         ) {
             Row (
                 horizontalArrangement = Arrangement.Center,
@@ -353,8 +353,8 @@ fun LoginContent(
             visible = isVisible,
             enter = slideInVertically(
                 initialOffsetY = { -40 },
-                animationSpec = tween(2000)
-            ) + fadeIn(animationSpec = tween(2000)),
+                animationSpec = tween(1000)
+            ) + fadeIn(animationSpec = tween(1000)),
         ) {
             Row(
                 modifier = Modifier
@@ -459,8 +459,8 @@ fun LoginContent(
             visible = isVisible,
             enter = slideInVertically(
                 initialOffsetY = { -40 },
-                animationSpec = tween(2000)
-            ) + fadeIn(animationSpec = tween(2000)),
+                animationSpec = tween(1000)
+            ) + fadeIn(animationSpec = tween(1000)),
         ) {
             Row(
                 modifier = Modifier

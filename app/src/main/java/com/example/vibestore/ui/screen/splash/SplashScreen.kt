@@ -5,6 +5,7 @@ import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -34,6 +35,7 @@ import com.example.vibestore.ui.navigation.model.Screen
 import com.example.vibestore.ui.screen.main.MainViewModel
 import com.example.vibestore.ui.theme.VibeStoreTheme
 import com.example.vibestore.ui.theme.poppinsFontFamily
+import kotlinx.coroutines.delay
 
 @Composable
 fun SplashScreen(
@@ -52,17 +54,18 @@ fun SplashScreen(
         imageOffsetX.animateTo(
             targetValue = -5f,
             animationSpec = tween(
-                durationMillis = 1000,
+                durationMillis = 500,
                 easing = FastOutSlowInEasing
             )
         )
         textOffsetX.animateTo(
             targetValue = 0f,
             animationSpec = tween(
-                durationMillis = 1000,
+                durationMillis = 500,
                 easing = FastOutSlowInEasing
             )
         )
+        delay(500)
         viewModel.getSession().collect { session ->
             val startDestination = if (session.token.isNotEmpty()) {
                 Screen.MainNav.route
@@ -91,15 +94,27 @@ fun SplashScreen(
                     .size(120.dp)
             )
             Spacer(modifier = Modifier.width(8.dp))
-            Text(
-                modifier = Modifier
-                    .offset(x = textOffsetX.value.dp),
-                text = "VIBE STORE",
-                fontFamily = poppinsFontFamily,
-                fontWeight = FontWeight.Bold,
-                fontSize = 30.sp,
-                color = MaterialTheme.colorScheme.primary
-            )
+            Column(
+                modifier = Modifier.offset(
+                    x = textOffsetX.value.dp,
+                    y = 10.dp
+                ),
+            ){
+                Text(
+                    text = "VIBE STORE",
+                    fontFamily = poppinsFontFamily,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 30.sp,
+                    color = MaterialTheme.colorScheme.primary
+                )
+                Text(
+                    text = "Chosee your fashion",
+                    fontFamily = poppinsFontFamily,
+                    modifier = Modifier.offset(y = (-14).dp),
+                    fontSize = 18.sp,
+                    color = MaterialTheme.colorScheme.primary
+                )
+            }
         }
     }
 }
