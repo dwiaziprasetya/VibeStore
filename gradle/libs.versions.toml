@@ -23,8 +23,15 @@ materialIconsExtendedAndroid = "1.6.5"
 navigationCompose = "2.7.7"
 retrofit = "2.9.0"
 runtimeLivedata = "1.6.5"
+roomCompiler = "2.5.2"
+roomRuntime = "2.5.2"
+roomKTX = "2.5.2"
+
 
 [libraries]
+androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomKTX" }
+androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
+room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomCompiler" }
 accompanist-pager-indicators = { module = "com.google.accompanist:accompanist-pager-indicators", version.ref = "accompanistPagerIndicators" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }

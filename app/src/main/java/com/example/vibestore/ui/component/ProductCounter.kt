@@ -2,6 +2,7 @@ package com.example.vibestore.ui.component
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -25,7 +26,10 @@ import com.example.vibestore.ui.theme.poppinsFontFamily
 
 @Composable
 fun ProductCounter(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    orderCount: Int,
+    onIncrement: () -> Unit,
+    onDecrement: () -> Unit
 ) {
     Row(
         horizontalArrangement = Arrangement.Center,
@@ -36,7 +40,7 @@ fun ProductCounter(
             .border(
                 border = BorderStroke(
                     1.dp,
-                    Color("#e3e3e3".toColorInt())
+                    Color("#cdcdcd".toColorInt())
                 ),
                 shape = RoundedCornerShape(10.dp)
             )
@@ -50,15 +54,16 @@ fun ProductCounter(
             Text(
                 text = "—",
                 fontSize = 22.sp,
-                color = Color("#e3e3e3".toColorInt()),
+                color = Color("#cdcdcd".toColorInt()),
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .weight(1f)
+                    .clickable { onDecrement() }
             )
         }
         Text(
             fontFamily = poppinsFontFamily,
-            text = "5",
+            text = orderCount.toString(),
             modifier = Modifier
                 .weight(1f)
                 .testTag("count"),
@@ -73,10 +78,11 @@ fun ProductCounter(
         ) {
             Text(
                 text = "＋",
-                fontSize = 22.sp,
+                fontSize = 20.sp,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .weight(1f)
+                    .clickable { onIncrement() }
             )
         }
     }
@@ -86,6 +92,10 @@ fun ProductCounter(
 @Composable
 private fun ProductCounterPreview() {
     VibeStoreTheme {
-        ProductCounter()
+        ProductCounter(
+            orderCount = 5,
+            onIncrement = {},
+            onDecrement = {}
+        )
     }
 }

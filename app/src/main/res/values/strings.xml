@@ -25,8 +25,10 @@
     <string name="product_detail">Product Detail</string>
     <string name="description_product">Description Product</string>
     <string name="checkout">Checkout</string>
+    <string name="add_to_cart">Add to Cart</string>
     <string name="for_you">For You</string>
     <string name="my_cart">My Cart</string>
+    <string name="favourite">Favourite</string>
     <string name="your_profile">Your Profile</string>
     <string name="my_orders">My Orders</string>
     <string name="address">Address</string>

@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.Typeface
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
@@ -21,14 +22,16 @@ object DialogHelper {
         title: String?,
         textContent: String?,
         alertType: Int,
+        textConfirm: String = "Ok",
+        textConfirmSize: Float = 14f,
         onConfirm: () -> Unit = {},
     ) : SweetAlertDialog {
         val customFont = getCustomFont(context)
 
         val dialog = SweetAlertDialog(context, alertType)
             .setTitleText(title)
+            .setConfirmText(textConfirm)
             .setContentText(textContent)
-            .setConfirmText("OK")
             .setConfirmClickListener {
                 onConfirm()
                 it.dismissWithAnimation()
@@ -46,6 +49,7 @@ object DialogHelper {
         titleText?.typeface = customFont
         contentText?.typeface = customFont
         confirmButton?.typeface = customFont
+        confirmButton.textSize = textConfirmSize
         cancelButton?.typeface = customFont
 
 
@@ -87,9 +91,12 @@ object DialogHelper {
         )
 
         val contentText = dialog.findViewById<TextView>(cn.pedant.SweetAlert.R.id.content_text)
+        val customImage = dialog.findViewById<ImageView>(cn.pedant.SweetAlert.R.id.custom_image)
 
+        customImage?.layoutParams?.width = 400
+        customImage?.layoutParams?.height = 400
+        customImage?.requestLayout()
         contentText.textSize = 14f
-
         dialog.setCustomImage(R.drawable.icon_error)
 
         dialog.apply {
@@ -119,17 +126,24 @@ object DialogHelper {
     fun showDialogSuccess(
         context: Context,
         title: String?,
+        textConfirm: String = "OK",
         textContent: String?,
+        textConfirmSize: Float = 14f,
         onConfirm: () -> Unit = {}
     ): SweetAlertDialog {
         val dialog = showDialog(
             context = context,
             title = title,
+            textConfirm = textConfirm,
             textContent = textContent,
             alertType = SweetAlertDialog.CUSTOM_IMAGE_TYPE,
-            onConfirm = onConfirm
+            onConfirm = onConfirm,
+            textConfirmSize = textConfirmSize
         )
-
+        val customImage = dialog.findViewById<ImageView>(cn.pedant.SweetAlert.R.id.custom_image)
+        customImage?.layoutParams?.width = 400
+        customImage?.layoutParams?.height = 400
+        customImage?.requestLayout()
         dialog.setCustomImage(R.drawable.icon_success)
 
         return dialog

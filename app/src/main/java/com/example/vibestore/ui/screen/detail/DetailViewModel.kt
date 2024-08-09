@@ -1,11 +1,15 @@
 package com.example.vibestore.ui.screen.detail
 
+import android.content.Context
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.vibestore.data.local.entity.Cart
+import com.example.vibestore.data.local.entity.Favourite
+import com.example.vibestore.data.repository.VibeStoreRepository
 import com.example.vibestore.model.ProductResponseItem
-import com.example.vibestore.repository.VibeStoreRepository
 import com.example.vibestore.ui.common.UiState
 import kotlinx.coroutines.launch
 
@@ -15,6 +19,8 @@ class DetailViewModel(
 
     private val _uiState: MutableLiveData<UiState<ProductResponseItem>> = MutableLiveData(UiState.Loading)
     val uiState: LiveData<UiState<ProductResponseItem>> get() =  _uiState
+
+    val favouriteItems: LiveData<List<Favourite>> = repository.getAllFavourites()
 
     fun getSingleProduct(id: Int) {
         viewModelScope.launch {
@@ -26,5 +32,47 @@ class DetailViewModel(
                 _uiState.value = UiState.Error(e.message ?: "Unknown Error")
             }
         }
+    }
+
+    fun addToCart(product: ProductResponseItem) {
+        viewModelScope.launch{
+            val cartItems = Cart(
+                productId = product.id,
+                productName = product.title,
+                productPrice = product.price.toString(),
+                productImage = product.image,
+                productCategory = product.category,
+                productQuantity = 1
+            )
+            repository.addToCart(cartItems)
+        }
+    }
+
+    fun addToFavourite(product: ProductResponseItem, context: Context) {
+        viewModelScope.launch {
+            val favourite = Favourite(
+                productId = product.id,
+                productName = product.title,
+                productPrice = product.price.toString(),
+                productImage = product.image,
+                productCategory = product.category,
+                productQuantity = 1
+            )
+            repository.addToFavourite(favourite)
+            Toast.makeText(context, "Product added to favourites", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    fun isProductFavorited(productId: Int): LiveData<Boolean> {
+        return repository.isProductFavorited(productId)
+    }
+
+
+    fun deleteFavouriteById(favourite: Favourite, context: Context) {
+        viewModelScope.launch {
+            repository.deleteFavouriteById(favourite.id)
+            Toast.makeText(context, "Product removed from favourites", Toast.LENGTH_SHORT).show()
+        }
+
     }
 }

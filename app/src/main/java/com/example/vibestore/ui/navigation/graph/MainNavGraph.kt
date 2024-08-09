@@ -2,6 +2,8 @@ package com.example.vibestore.ui.navigation.graph
 
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
@@ -32,6 +34,10 @@ fun MainNavGraph(
         modifier = Modifier.padding(paddingValues),
         route = Screen.MainNav.route,
         startDestination = Screen.Home.route,
+        enterTransition = { fadeIn(animationSpec = tween(100)) },
+        exitTransition = { fadeOut(animationSpec = tween(100)) },
+        popEnterTransition = { fadeIn(animationSpec = tween(100)) },
+        popExitTransition = { fadeOut(animationSpec = tween(100)) }
     ) {
         authNav(navController)
         composable(
@@ -139,7 +145,7 @@ fun MainNavGraph(
             NotificationScreen()
         }
         composable(Screen.Coupon.route){ CouponScreen() }
-        composable(Screen.Favourite.route){ FavouriteScreen() }
+        composable(Screen.Favourite.route){ FavouriteScreen(navController) }
         composable(Screen.OurProduct.route){ OurProductScreen(navController) }
         composable(
             route = Screen.Categories.route,

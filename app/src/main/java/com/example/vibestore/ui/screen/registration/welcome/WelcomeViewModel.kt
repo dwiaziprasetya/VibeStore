@@ -2,7 +2,7 @@ package com.example.vibestore.ui.screen.registration.welcome
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.vibestore.repository.VibeStoreRepository
+import com.example.vibestore.data.repository.VibeStoreRepository
 import kotlinx.coroutines.launch
 
 class WelcomeViewModel(

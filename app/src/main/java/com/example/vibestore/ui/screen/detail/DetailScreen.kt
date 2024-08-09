@@ -45,6 +45,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.example.vibestore.R
+import com.example.vibestore.helper.DialogHelper
 import com.example.vibestore.helper.ViewModelFactory
 import com.example.vibestore.model.ProductResponseItem
 import com.example.vibestore.ui.common.UiState
@@ -64,7 +65,11 @@ fun DetailScreen(
         )
     )
 ) {
+    val context = LocalContext.current
     val uiState by viewModel.uiState.observeAsState(initial = UiState.Loading)
+    val favouriteItems by viewModel.favouriteItems.observeAsState(emptyList())
+    val isProductFavorited by viewModel.isProductFavorited(productId).observeAsState(false)
+
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -88,9 +93,25 @@ fun DetailScreen(
                 },
                 actions = {
                     Icon(
-                        painter = painterResource(R.drawable.icon_favourite_outlined),
+                        painter = painterResource(
+                            id = if (isProductFavorited) R.drawable.icon_favourite_filled_red
+                            else R.drawable.icon_favourite_outlined
+                        ),
+                        tint = Color.Unspecified,
                         contentDescription = "favourite",
-                        tint = Color.Black
+                        modifier = Modifier
+                            .clickable {
+                                if (isProductFavorited) {
+                                    favouriteItems.find { it.productId == productId }?.let {
+                                        viewModel.deleteFavouriteById(it, context)
+                                    }
+                                } else {
+                                    viewModel.addToFavourite(
+                                        (uiState as UiState.Success<ProductResponseItem>).data,
+                                        context
+                                    )
+                                }
+                            }
                     )
                 }
             )
@@ -105,8 +126,20 @@ fun DetailScreen(
                 val data = (uiState as UiState.Success<ProductResponseItem>).data
                 DetailContent(
                     product = data,
-                    navcontroller = navcontroller,
-                    paddingValues = innerPading
+                    paddingValues = innerPading,
+                    addCart = {
+                        viewModel.addToCart(data)
+                        DialogHelper.showDialogSuccess(
+                            context = context,
+                            title = "Success",
+                            textContent = "Product successfully added to cart",
+                            textConfirm = "See Cart",
+                            textConfirmSize = 13f,
+                            onConfirm = {
+                                navcontroller.navigate(Screen.MyCart.route)
+                            }
+                        )
+                    },
                 )
             }
             is UiState.Error -> {
@@ -121,8 +154,8 @@ fun DetailScreen(
 @Composable
 fun DetailContent(
     product: ProductResponseItem,
-    navcontroller: NavHostController,
-    paddingValues: PaddingValues
+    addCart: () -> Unit,
+    paddingValues: PaddingValues,
 ) {
     Box(
         modifier = Modifier
@@ -220,20 +253,16 @@ fun DetailContent(
                         .height(55.dp)
                         .width(170.dp),
                     shape = RoundedCornerShape(10.dp),
-                    onClick = {},
+                    onClick = addCart,
                     colors = ButtonDefaults.buttonColors(
                         containerColor = MaterialTheme.colorScheme.primary
                     )
                 ) {
                     Text(
                         fontFamily = poppinsFontFamily,
-                        text = stringResource(R.string.checkout),
+                        text = stringResource(R.string.add_to_cart),
                         color = Color.White,
                         fontSize = 16.sp,
-                        modifier = Modifier
-                            .clickable {
-                                navcontroller.navigate(Screen.MyCart.route)
-                            }
                     )
                 }
             }

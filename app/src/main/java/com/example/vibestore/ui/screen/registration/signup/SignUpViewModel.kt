@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.vibestore.model.UserResponse
-import com.example.vibestore.repository.VibeStoreRepository
+import com.example.vibestore.data.repository.VibeStoreRepository
 import com.example.vibestore.ui.common.UiState
 import kotlinx.coroutines.launch
 
