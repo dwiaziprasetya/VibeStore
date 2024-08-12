@@ -1,27 +1,35 @@
 package com.example.vibestore.ui.screen.mycart
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandHorizontally
 import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -42,7 +50,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
@@ -71,7 +81,9 @@ fun MyCartScreen(
 ) {
 
     val cartItems by viewModel.cartItems.observeAsState(emptyList())
-    val subTotalPrice by viewModel.totalPrice.observeAsState(0.0)
+    val totalPrice by viewModel.totalPrice.observeAsState(0.0)
+    val checkedValue by remember { mutableStateOf(false) }
+    val context = LocalContext.current
 
     Scaffold(
         topBar = {
@@ -117,9 +129,16 @@ fun MyCartScreen(
                     onQuantityChange = { cart, quantity ->
                         viewModel.updateQuantity(cart, quantity)
                     },
-                    subTotalPrice = subTotalPrice,
-                    totalPrice = subTotalPrice + 13.0,
-                    navController = navHostController
+                    totalPrice = totalPrice,
+                    navController = navHostController,
+                    onCheckedChange = { cart, isChekced ->
+                        viewModel.updateCheckedItem(cart, isChekced)
+                    },
+                    checked = checkedValue,
+                    addOrder = {
+                        viewModel.createOrderFromSelectedItems(context = context)
+                        navHostController.navigate(Screen.Checkout.route)
+                    }
                 )
             }
         }
@@ -133,9 +152,12 @@ fun MyCartContent(
     state: List<Cart>,
     onQuantityChange: (Cart, Int) -> Unit,
     modifier: Modifier = Modifier,
-    subTotalPrice: Double,
     totalPrice: Double,
+    checked: Boolean,
+    onCheckedChange: (Cart, Boolean) -> Unit,
+    addOrder: () -> Unit
 ) {
+
     Column(
         modifier = modifier.fillMaxSize()
     ) {
@@ -171,85 +193,58 @@ fun MyCartContent(
                         modifier = Modifier
                             .clickable {
                                 navController.navigate(Screen.DetailProduct.createRoute(cartItem.productId))
-                            }
+                            },
+                        onCheckedChange = { isChecked ->
+                            onCheckedChange(cartItem, isChecked)
+                        }
                     )
                 }
             }
         }
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight()
-                .background(MaterialTheme.colorScheme.background)
-        ) {
-            Divider()
-            Column(
-                modifier = Modifier.padding(
-                    top = 16.dp,
-                    start = 16.dp,
-                    end = 16.dp
-                )
-            ) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                ) {
-                    Text(
-                        modifier = Modifier.weight(1f),
-                        fontFamily = poppinsFontFamily,
-                        text = "Sub-total",
-                        color = MaterialTheme.colorScheme.outline
-                    )
-                    Text(
-                        fontFamily = poppinsFontFamily,
-                        text = "\$${"%.2f".format(subTotalPrice)}",
-                        fontWeight = FontWeight.SemiBold
-                    )
-                }
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                ) {
-                    Text(
-                        modifier = Modifier.weight(1f),
-                        fontFamily = poppinsFontFamily,
-                        text = "Shipping Charge",
-                        color = MaterialTheme.colorScheme.outline
-                    )
-                    Text(
-                        fontFamily = poppinsFontFamily,
-                        text = "$13.00",
-                        fontWeight = FontWeight.SemiBold
-                    )
-                }
-            }
-        }
-
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(85.dp)
                 .background(MaterialTheme.colorScheme.background)
         ) {
+            Divider()
             Row(
+                verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
                     .align(Alignment.CenterStart)
                     .padding(16.dp)
                     .fillMaxWidth()
             ) {
-                Text(
-                    modifier = Modifier.weight(1f),
-                    fontFamily = poppinsFontFamily,
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize = 40.sp,
-                    text = "\$${"%.2f".format(totalPrice)}"
+                RoundedCornerCheckbox(
+                    label = "Select All",
+                    isChecked = checked,
+                    onValueChange = {  },
+                    modifier = Modifier
+                        .padding(end = 32.dp)
                 )
+                Column(modifier = Modifier.weight(1f)){
+                    Text(
+                        fontFamily = poppinsFontFamily,
+                        fontWeight = FontWeight.SemiBold,
+                        text = "Total",
+                        fontSize = 14.sp,
+                        color = MaterialTheme.colorScheme.outline
+                    )
+                    Text(
+                        modifier = Modifier.weight(1f),
+                        fontFamily = poppinsFontFamily,
+                        fontWeight = FontWeight.SemiBold,
+                        fontSize = 18.sp,
+                        text = "\$${"%.2f".format(totalPrice)}"
+                    )
+                }
+                Spacer(modifier = Modifier.size(16.dp))
                 Button(
                     modifier = Modifier
                         .height(55.dp)
-                        .width(170.dp),
+                        .width(120.dp),
                     shape = RoundedCornerShape(10.dp),
-                    onClick = {},
+                    onClick = addOrder,
                     colors = ButtonDefaults.buttonColors(
                         containerColor = MaterialTheme.colorScheme.primary
                     )
@@ -257,7 +252,7 @@ fun MyCartContent(
                     Text(
                         fontFamily = poppinsFontFamily,
                         text = stringResource(R.string.checkout),
-                        fontSize = 16.sp,
+                        fontSize = 14.sp,
                         color = Color.White
                     )
                 }
@@ -266,7 +261,74 @@ fun MyCartContent(
     }
 }
 
+@Composable
+fun RoundedCornerCheckbox(
+    label: String,
+    isChecked: Boolean,
+    modifier: Modifier = Modifier,
+    size: Float = 20f,
+    checkedColor: Color = MaterialTheme.colorScheme.primary,
+    uncheckedColor: Color = MaterialTheme.colorScheme.background,
+    onValueChange: (Boolean) -> Unit
+) {
+    val checkboxColor: Color by animateColorAsState(if (isChecked) checkedColor else uncheckedColor,
+        label = ""
+    )
+    val density = LocalDensity.current
+    val duration = 200
 
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = modifier
+            .toggleable(
+                value = isChecked,
+                role = Role.Checkbox,
+                onValueChange = onValueChange
+            )
+    ) {
+        Box(
+            modifier = Modifier
+                .size(size.dp)
+                .background(
+                    color = checkboxColor,
+                    shape = RoundedCornerShape(4.dp)
+                )
+                .border(
+                    width = 1.5.dp,
+                    color = if (isChecked) checkedColor else MaterialTheme.colorScheme.outline,
+                    shape = RoundedCornerShape(4.dp)
+                ),
+            contentAlignment = Alignment.Center
+        ) {
+            androidx.compose.animation.AnimatedVisibility(
+                visible = isChecked,
+                enter = slideInHorizontally(animationSpec = tween(duration)) {
+                    with(density) { (size * -0.5).dp.roundToPx() }
+                } + expandHorizontally(
+                    expandFrom = Alignment.Start,
+                    animationSpec = tween(duration)
+                ),
+                exit = fadeOut()
+            ) {
+                androidx.compose.material.Icon(
+                    Icons.Default.Check,
+                    contentDescription = null,
+                    tint = uncheckedColor
+                )
+            }
+        }
+        if (label != "") {
+            androidx.compose.material.Text(
+                modifier = Modifier
+                    .padding(start = 16.dp),
+                text = label,
+                fontFamily = poppinsFontFamily,
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Medium,
+            )
+        }
+    }
+}
 
 @Preview(
     showBackground = true,
@@ -287,9 +349,12 @@ private fun MyCartScreenPreview() {
                 )
             ),
             onQuantityChange = { _, _ ->},
-            subTotalPrice = 0.0,
-            totalPrice = 0.0,
-            navController = rememberNavController()
+            totalPrice = 4567323.00,
+            navController = rememberNavController(),
+            onCheckedChange = { _, _ ->
+            },
+            checked = false,
+            addOrder = {}
         )
     }
 }

@@ -119,7 +119,9 @@ fun DetailScreen(
     ) { innerPading ->
         when (uiState) {
             is UiState.Loading -> {
-                AnimatedShimmerDetailProduct()
+                AnimatedShimmerDetailProduct(
+                    modifier = Modifier.padding(innerPading)
+                )
                 viewModel.getSingleProduct(productId)
             }
             is UiState.Success -> {

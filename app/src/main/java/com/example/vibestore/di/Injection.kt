@@ -13,6 +13,7 @@ object Injection {
         val apiService = ApiConfig.getApiService()
         val cartDao = VibeStoreRoomDatabase.getDatabase(context).cartDao()
         val favoriteDao = VibeStoreRoomDatabase.getDatabase(context).favouriteDao()
-        return VibeStoreRepository.getInstance(apiService, user, cartDao, favoriteDao)
+        val orderDao = VibeStoreRoomDatabase.getDatabase(context).orderDao()
+        return VibeStoreRepository.getInstance(apiService, user, cartDao, favoriteDao, orderDao)
     }
 }

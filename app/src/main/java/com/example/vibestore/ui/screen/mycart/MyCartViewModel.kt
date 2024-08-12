@@ -1,9 +1,14 @@
 package com.example.vibestore.ui.screen.mycart
 
+import android.content.Context
+import android.widget.Toast
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.example.vibestore.data.local.entity.Cart
+import com.example.vibestore.data.local.entity.Order
 import com.example.vibestore.data.repository.VibeStoreRepository
 import kotlinx.coroutines.launch
 
@@ -11,7 +16,11 @@ class MyCartViewModel(
     private val repository: VibeStoreRepository
 ) : ViewModel() {
     val cartItems: LiveData<List<Cart>> = repository.getAllCartItems()
-    val totalPrice: LiveData<Double> = repository.calculateTotalPrice()
+    private val selectedCartItems = MutableLiveData<Set<Cart>>(emptySet())
+
+    val totalPrice: LiveData<Double> = selectedCartItems.map { items ->
+        items.sumOf { it.productPrice.toDouble() * it.productQuantity }
+    }
 
     fun updateQuantity(cart: Cart, quantity: Int) {
         viewModelScope.launch {
@@ -20,6 +29,48 @@ class MyCartViewModel(
             } else {
                 repository.deleteCartById(cart.id)
             }
+
+            val currentItems = selectedCartItems.value.orEmpty().toMutableSet()
+            if (currentItems.contains(cart)) {
+                val updatedCart = cart.copy(productQuantity = quantity)
+                currentItems.remove(cart)
+                if (quantity > 0) currentItems.add(updatedCart)
+                selectedCartItems.value = currentItems
+            }
         }
+    }
+
+    fun createOrderFromSelectedItems(context: Context) {
+        val selectedItems = selectedCartItems.value.orEmpty()
+        if (selectedItems.isNotEmpty()) {
+            val totalPrice = selectedItems.sumOf { it.productPrice.toDouble() * it.productQuantity }
+            val order = Order(
+                totalPrice = totalPrice,
+                items = selectedItems.toList()
+            )
+            viewModelScope.launch {
+                repository.addOrder(order)
+
+                Toast.makeText(context, "Order created successfully", Toast.LENGTH_SHORT).show()
+
+                selectedItems.forEach { cartItem ->
+                    repository.deleteCartById(cartItem.id)
+                }
+
+                selectedCartItems.value = emptySet()
+            }
+        } else {
+            Toast.makeText(context, "No items selected", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    fun updateCheckedItem(cart: Cart, isChecked: Boolean) {
+        val currentItems = selectedCartItems.value.orEmpty().toMutableSet()
+        if (isChecked) {
+            currentItems.add(cart)
+        } else {
+            currentItems.remove(cart)
+        }
+        selectedCartItems.value = currentItems
     }
 }

@@ -1,11 +1,12 @@
 package com.example.vibestore.data.repository
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.map
 import com.example.vibestore.data.local.dao.CartDao
 import com.example.vibestore.data.local.dao.FavouriteDao
+import com.example.vibestore.data.local.dao.OrderDao
 import com.example.vibestore.data.local.entity.Cart
 import com.example.vibestore.data.local.entity.Favourite
+import com.example.vibestore.data.local.entity.Order
 import com.example.vibestore.data.remote.retrofit.ApiService
 import com.example.vibestore.model.LoginResponse
 import com.example.vibestore.model.ProductResponseItem
@@ -17,10 +18,15 @@ class VibeStoreRepository private constructor(
     private val apiService : ApiService,
     private val pref: SessionPreferences,
     private val cartDao: CartDao,
-    private val favouriteDao: FavouriteDao
+    private val favouriteDao: FavouriteDao,
+    private val orderDao: OrderDao,
 ){
     fun getSession() : Flow<LoginResponse> {
         return pref.getSession()
+    }
+
+    suspend fun addOrder(order: Order) {
+        return orderDao.insert(order)
     }
 
     fun isProductFavorited(productId: Int): LiveData<Boolean> {
@@ -45,14 +51,6 @@ class VibeStoreRepository private constructor(
 
     suspend fun deleteCartById(cartId: Int) {
         cartDao.deleteById(cartId)
-    }
-
-    fun calculateTotalPrice() : LiveData<Double> {
-        return cartDao.getAllCart().map { cartItems ->
-            cartItems.sumOf {
-                it.productPrice.toDouble() * it.productQuantity
-            }
-        }
     }
 
     fun getAllCartItems() : LiveData<List<Cart>> {
@@ -129,12 +127,14 @@ class VibeStoreRepository private constructor(
             apiService: ApiService,
             userPreferences: SessionPreferences,
             cartDao: CartDao,
-            favouriteDao: FavouriteDao
+            favouriteDao: FavouriteDao,
+            orderDao: OrderDao
         ) = VibeStoreRepository(
             apiService,
             userPreferences,
             cartDao,
-            favouriteDao
+            favouriteDao,
+            orderDao
         )
     }
 }

@@ -4,15 +4,20 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.example.vibestore.data.local.dao.CartDao
 import com.example.vibestore.data.local.dao.FavouriteDao
+import com.example.vibestore.data.local.dao.OrderDao
 import com.example.vibestore.data.local.entity.Cart
 import com.example.vibestore.data.local.entity.Favourite
+import com.example.vibestore.data.local.entity.Order
 
-@Database(entities = [Cart::class, Favourite::class], version = 2)
+@Database(entities = [Cart::class, Favourite::class, Order::class], version = 3)
+@TypeConverters(Converter::class)
 abstract class VibeStoreRoomDatabase : RoomDatabase(){
     abstract fun cartDao(): CartDao
     abstract fun favouriteDao(): FavouriteDao
+    abstract fun orderDao(): OrderDao
 
     companion object {
         @Volatile

@@ -65,12 +65,15 @@ fun AnimatedShimmerDetailProduct(modifier: Modifier = Modifier) {
         )
     )
 
-    ShimmerItem(brush = brush)
+    ShimmerItem(brush = brush, modifier = modifier)
 }
 
 @Composable
-fun ShimmerItem(brush: Brush) {
-    Box(modifier = Modifier.fillMaxSize()) {
+fun ShimmerItem(
+    brush: Brush,
+    modifier: Modifier = Modifier
+) {
+    Box(modifier = modifier.fillMaxSize()) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()

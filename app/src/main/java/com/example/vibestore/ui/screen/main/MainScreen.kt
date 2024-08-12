@@ -33,7 +33,8 @@ fun MainScreen(
                 Screen.Welcome.route,
                 Screen.Login.route,
                 Screen.SignUp.route,
-                Screen.Notification.route
+                Screen.Notification.route,
+                Screen.Checkout.route,
             )
                 ) {
                 BottomNavigation(
