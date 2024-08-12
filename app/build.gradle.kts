@@ -53,6 +53,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.maps.compose)
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.library)
     implementation(libs.google.accompanist.systemuicontroller)

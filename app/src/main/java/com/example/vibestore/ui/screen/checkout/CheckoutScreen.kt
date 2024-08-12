@@ -42,6 +42,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.vibestore.R
 import com.example.vibestore.ui.component.CartItemDummy
+import com.example.vibestore.ui.navigation.model.Screen
 import com.example.vibestore.ui.theme.VibeStoreTheme
 import com.example.vibestore.ui.theme.poppinsFontFamily
 
@@ -78,13 +79,19 @@ fun CheckoutScreen(
         }
     ) { innerPadding ->
         CheckoutContent(
-            modifier = Modifier.padding(innerPadding)
+            modifier = Modifier.padding(innerPadding),
+            onEditAddress = {
+                navController.navigate(Screen.Address.route)
+            }
         )
     }
 }
 
 @Composable
-fun CheckoutContent(modifier: Modifier = Modifier) {
+fun CheckoutContent(
+    modifier: Modifier = Modifier,
+    onEditAddress: () -> Unit,
+) {
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -145,7 +152,9 @@ fun CheckoutContent(modifier: Modifier = Modifier) {
                         )
                     }
                     Row(
-                        verticalAlignment = Alignment.CenterVertically
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier
+                            .clickable { onEditAddress() }
                     ) {
                         Text(
                             text = "Edit",
@@ -312,6 +321,8 @@ private fun CheckoutContentPreview() {
     VibeStoreTheme(
         dynamicColor = false
     ) {
-        CheckoutContent()
+        CheckoutContent(
+            onEditAddress = {}
+        )
     }
 }
