@@ -15,6 +15,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.vibestore.ui.navigation.model.Screen
 import com.example.vibestore.ui.screen.address.AddressScreen
+import com.example.vibestore.ui.screen.address.add_address.AddAddressScreen
 import com.example.vibestore.ui.screen.categories.CategoriesScreen
 import com.example.vibestore.ui.screen.checkout.CheckoutScreen
 import com.example.vibestore.ui.screen.coupon.CouponScreen
@@ -145,6 +146,35 @@ fun MainNavGraph(
             }
         ) {
             AddressScreen(navHostController = navController)
+        }
+        composable(
+            route = Screen.AddAddress.route,
+            exitTransition = {
+                slideOutOfContainer(
+                    AnimatedContentTransitionScope.SlideDirection.Left,
+                    tween(500)
+                )
+            },
+            enterTransition = {
+                slideIntoContainer(
+                    AnimatedContentTransitionScope.SlideDirection.Left,
+                    tween(500)
+                )
+            },
+            popExitTransition = {
+                slideOutOfContainer(
+                    AnimatedContentTransitionScope.SlideDirection.Right,
+                    tween(500)
+                )
+            },
+            popEnterTransition = {
+                slideIntoContainer(
+                    AnimatedContentTransitionScope.SlideDirection.Right,
+                    tween(500)
+                )
+            }
+        ) {
+            AddAddressScreen(navController = navController)
         }
         composable(
             route = Screen.MyCart.route,

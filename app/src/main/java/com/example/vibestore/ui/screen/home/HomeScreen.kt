@@ -131,6 +131,7 @@ fun HomeScreen(
                 },
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                     scrolledContainerColor = MaterialTheme.colorScheme.background,
+                    containerColor = MaterialTheme.colorScheme.background
                 )
             )
         }

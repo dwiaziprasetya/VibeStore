@@ -22,6 +22,8 @@ mapsCompose = "4.3.3"
 material = "1.12.0"
 materialIconsExtendedAndroid = "1.6.5"
 navigationCompose = "2.7.7"
+playServicesLocation = "21.3.0"
+playServicesMaps = "19.0.0"
 retrofit = "2.9.0"
 runtimeLivedata = "1.6.5"
 roomCompiler = "2.5.2"
@@ -33,6 +35,8 @@ roomKTX = "2.5.2"
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomKTX" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
 maps-compose = { module = "com.google.maps.android:maps-compose", version.ref = "mapsCompose" }
+play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocation" }
+play-services-maps = { module = "com.google.android.gms:play-services-maps", version.ref = "playServicesMaps" }
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomCompiler" }
 accompanist-pager-indicators = { module = "com.google.accompanist:accompanist-pager-indicators", version.ref = "accompanistPagerIndicators" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }

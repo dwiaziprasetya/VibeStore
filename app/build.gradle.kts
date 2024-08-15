@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
@@ -15,14 +17,21 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
         signingConfig = signingConfigs.getByName("debug")
-    }
 
+        val keyStoreFile = project.rootProject.file("local.properties")
+        val properties = Properties()
+        properties.load(keyStoreFile.inputStream())
+        val apiKey = properties.getProperty("API_KEY") ?: ""
+        manifestPlaceholders["MAPS_API_KEY"] = apiKey
+    }
+    buildFeatures {
+        buildConfig = true
+    }
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -53,6 +62,8 @@ android {
 }
 
 dependencies {
+    implementation(libs.play.services.maps)
+    implementation(libs.play.services.location)
     implementation(libs.maps.compose)
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.library)

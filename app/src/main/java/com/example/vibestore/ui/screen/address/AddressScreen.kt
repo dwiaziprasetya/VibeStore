@@ -4,8 +4,10 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.icons.Icons
@@ -18,7 +20,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -31,14 +35,18 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.vibestore.R
 import com.example.vibestore.ui.component.AddressItemScreen
+import com.example.vibestore.ui.navigation.model.Screen
 import com.example.vibestore.ui.theme.VibeStoreTheme
 import com.example.vibestore.ui.theme.poppinsFontFamily
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddressScreen(
     navHostController: NavHostController
 ) {
+    val scope = rememberCoroutineScope()
     Scaffold(
         topBar = {
            CenterAlignedTopAppBar(
@@ -62,7 +70,10 @@ fun AddressScreen(
                                navHostController.navigateUp()
                            }
                    )
-               }
+               },
+               colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                   containerColor = MaterialTheme.colorScheme.background
+               )
            )
         }
     ) { innerPadding ->
@@ -71,7 +82,9 @@ fun AddressScreen(
             name = "Dwi Azi Prasetya",
             address = "Jl. Durian No. 123, Banyubiru " +
                     "Kab. Semarang, Jawa Tengah " +
-                    "Indonesia, 50123"
+                    "Indonesia, 50123",
+            navHostController = navHostController,
+            scope = scope
         )
     }
 }
@@ -80,12 +93,15 @@ fun AddressScreen(
 fun AddressContent(
     modifier: Modifier = Modifier,
     name: String,
-    address: String
+    address: String,
+    scope: CoroutineScope,
+    navHostController: NavHostController
 ) {
     Column(
         modifier = modifier.padding(16.dp)
     ) {
         AddressItemScreen(name = name, address = address)
+        Spacer(modifier = Modifier.size(16.dp))
         AddressItemScreen(name = name, address = address)
         Card(
             border = BorderStroke(
@@ -100,7 +116,15 @@ fun AddressContent(
                 .fillMaxWidth()
                 .wrapContentHeight()
         ) {
-            Box(modifier = Modifier.fillMaxWidth()) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable {
+                        scope.launch {
+                            navHostController.navigate(Screen.AddAddress.route)
+                        }
+                    }
+            ) {
                 Text(
                     text = "Add New Address",
                     fontSize = 14.sp,
@@ -133,7 +157,9 @@ private fun AddressContentPreview() {
             name = "Dwi Azi Prasetya",
             address = "Jl. Durian No. 123, Banyubiru " +
                     "Kab. Semarang, Jawa Tengah " +
-                    "Indonesia, 50123"
+                    "Indonesia, 50123",
+            navHostController = rememberNavController(),
+            scope = rememberCoroutineScope()
         )
     }
 }

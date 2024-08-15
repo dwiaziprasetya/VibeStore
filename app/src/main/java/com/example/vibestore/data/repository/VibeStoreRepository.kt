@@ -1,6 +1,10 @@
 package com.example.vibestore.data.repository
 
+import android.annotation.SuppressLint
+import android.location.Geocoder
+import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.vibestore.data.local.dao.CartDao
 import com.example.vibestore.data.local.dao.FavouriteDao
 import com.example.vibestore.data.local.dao.OrderDao
@@ -12,14 +16,21 @@ import com.example.vibestore.model.LoginResponse
 import com.example.vibestore.model.ProductResponseItem
 import com.example.vibestore.model.UserResponse
 import com.example.vibestore.util.SessionPreferences
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.maps.model.LatLng
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.withContext
 
+@Suppress("DEPRECATION")
 class VibeStoreRepository private constructor(
     private val apiService : ApiService,
     private val pref: SessionPreferences,
     private val cartDao: CartDao,
     private val favouriteDao: FavouriteDao,
     private val orderDao: OrderDao,
+    private val fusedLocationClient: FusedLocationProviderClient,
+    private val geocoder: Geocoder
 ){
     fun getSession() : Flow<LoginResponse> {
         return pref.getSession()
@@ -64,6 +75,28 @@ class VibeStoreRepository private constructor(
             cartDao.updateQuantity(existingCartItem.id, newQuantity)
         } else {
             cartDao.insert(cart)
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    fun getCurrentLocation() : LiveData<LatLng?> {
+        val liveData = MutableLiveData<LatLng?>()
+        fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+            if (location != null) {
+                Log.d("VibeStoreRepository", "Location: ${location.latitude}, ${location.longitude}")
+                liveData.value = LatLng(location.latitude, location.longitude)
+            } else {
+                Log.d("VibeStoreRepository", "No location found")
+            }
+        }
+        return liveData
+    }
+
+    suspend fun getAddressFromLatLng(latLng: LatLng) : String {
+        return withContext(Dispatchers.IO) {
+            val address = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1)
+            val result = address?.firstOrNull()
+            result?.getAddressLine(0) ?: "Unkown Location"
         }
     }
 
@@ -128,13 +161,17 @@ class VibeStoreRepository private constructor(
             userPreferences: SessionPreferences,
             cartDao: CartDao,
             favouriteDao: FavouriteDao,
-            orderDao: OrderDao
+            orderDao: OrderDao,
+            fusedLocationClient: FusedLocationProviderClient,
+            geocoder: Geocoder
         ) = VibeStoreRepository(
             apiService,
             userPreferences,
             cartDao,
             favouriteDao,
-            orderDao
+            orderDao,
+            fusedLocationClient,
+            geocoder
         )
     }
 }

@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.vibestore.data.repository.VibeStoreRepository
 import com.example.vibestore.di.Injection
+import com.example.vibestore.ui.screen.address.add_address.AddAddressViewModel
 import com.example.vibestore.ui.screen.detail.DetailViewModel
 import com.example.vibestore.ui.screen.favourite.FavouriteViewModel
 import com.example.vibestore.ui.screen.foryou.ForYouViewModel
@@ -60,8 +61,10 @@ class ViewModelFactory(
             MyCartViewModel(repository) as T
         } else if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
             HomeViewModel(repository) as T
-        } else {
+        } else if (modelClass.isAssignableFrom(FavouriteViewModel::class.java)) {
             FavouriteViewModel(repository) as T
+        } else {
+            AddAddressViewModel(repository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
     }

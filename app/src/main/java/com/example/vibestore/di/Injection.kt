@@ -1,11 +1,14 @@
 package com.example.vibestore.di
 
 import android.content.Context
+import android.location.Geocoder
 import com.example.vibestore.data.local.database.VibeStoreRoomDatabase
 import com.example.vibestore.data.remote.retrofit.ApiConfig
 import com.example.vibestore.data.repository.VibeStoreRepository
 import com.example.vibestore.util.SessionPreferences
 import com.example.vibestore.util.dataStore
+import com.google.android.gms.location.LocationServices
+import java.util.Locale
 
 object Injection {
     fun provideRepository(context: Context): VibeStoreRepository {
@@ -14,6 +17,16 @@ object Injection {
         val cartDao = VibeStoreRoomDatabase.getDatabase(context).cartDao()
         val favoriteDao = VibeStoreRoomDatabase.getDatabase(context).favouriteDao()
         val orderDao = VibeStoreRoomDatabase.getDatabase(context).orderDao()
-        return VibeStoreRepository.getInstance(apiService, user, cartDao, favoriteDao, orderDao)
+        val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
+        val geocoder = Geocoder(context, Locale.getDefault())
+        return VibeStoreRepository.getInstance(
+            apiService,
+            user,
+            cartDao,
+            favoriteDao,
+            orderDao,
+            fusedLocationClient,
+            geocoder
+        )
     }
 }
