@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.vibestore.data.local.entity.UserLocation
 import com.example.vibestore.data.repository.VibeStoreRepository
 import com.example.vibestore.ui.common.UiState
 import com.google.android.gms.maps.model.LatLng
@@ -18,6 +19,18 @@ class AddAddressViewModel(
 
     private val _uiState = MutableLiveData<UiState<LatLng>>()
     val uiState: LiveData<UiState<LatLng>> = _uiState
+
+    val userLocationItems: LiveData<List<UserLocation>> = repository.getAllUsersLocation()
+
+    fun addUsersLocation(name: String, address: String) {
+        viewModelScope.launch {
+            val userLocation = UserLocation(
+                name = name,
+                address = address
+            )
+            repository.addUsersLocation(userLocation)
+        }
+    }
 
     fun getCurrentLocation(){
         _uiState.value = UiState.Loading

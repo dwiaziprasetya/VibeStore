@@ -22,33 +22,33 @@ fun MainScreen(
         .value?.destination?.route
 
     Scaffold(
+        content = { innerPadding ->
+            MainNavGraph(
+                navController = navController,
+                paddingValues = innerPadding
+            )
+        },
         contentWindowInsets = WindowInsets(0, 0, 0, 0),
-        modifier = Modifier
-            .fillMaxSize(),
+        modifier = Modifier.fillMaxSize(),
         bottomBar = {
             if (currentDestination !in listOf(
-                Screen.DetailProduct.route,
-                Screen.MyCart.route,
-                Screen.Categories.route,
-                Screen.Welcome.route,
-                Screen.Login.route,
-                Screen.SignUp.route,
-                Screen.Notification.route,
-                Screen.Checkout.route,
-                Screen.Address.route,
-                Screen.AddAddress.route
-            )
-                ) {
+                    Screen.DetailProduct.route,
+                    Screen.MyCart.route,
+                    Screen.Categories.route,
+                    Screen.Welcome.route,
+                    Screen.Login.route,
+                    Screen.SignUp.route,
+                    Screen.Notification.route,
+                    Screen.Checkout.route,
+                    Screen.Address.route,
+                    Screen.AddAddress.route
+                )
+            ) {
                 BottomNavigation(
                     navController = navController,
                     modifier = Modifier.navigationBarsPadding()
                 )
             }
         }
-    ) { innerPadding ->
-        MainNavGraph(
-            navController = navController,
-            paddingValues = innerPadding
-        )
-    }
+    )
 }

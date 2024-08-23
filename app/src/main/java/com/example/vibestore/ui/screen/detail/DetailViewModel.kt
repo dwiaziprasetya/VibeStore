@@ -73,6 +73,5 @@ class DetailViewModel(
             repository.deleteFavouriteById(favourite.id)
             Toast.makeText(context, "Product removed from favourites", Toast.LENGTH_SHORT).show()
         }
-
     }
 }

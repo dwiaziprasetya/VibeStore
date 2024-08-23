@@ -8,6 +8,7 @@ import androidx.compose.animation.slideInHorizontally
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -24,6 +25,7 @@ import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -60,6 +62,10 @@ fun CartItem(
     var checked by remember { mutableStateOf(checkedValue) }
     var quantity by remember { mutableIntStateOf(orderCount) }
     val totalPrice = price.toDouble() * quantity
+
+    LaunchedEffect(checkedValue) {
+        checked = checkedValue
+    }
 
     Row(
         modifier = modifier
@@ -105,7 +111,7 @@ fun CartItem(
                 maxLines = 2
             )
             Text(
-                text = "Category : $category",
+                text = category,
                 fontFamily = poppinsFontFamily,
                 fontSize = 12.sp,
                 maxLines = 1,
@@ -125,7 +131,7 @@ fun CartItem(
                 quantity += 1
                 onQuantityChange(quantity)
                 if (checked) onCheckedChange(checked)
-                          },
+            },
             onDecrement = {
                 quantity -= 1
                 onQuantityChange(quantity)
@@ -274,6 +280,72 @@ fun RoundedCornerCheckbox(
     }
 }
 
+@Composable
+fun CartItemMini(
+    modifier: Modifier = Modifier,
+    productName: String,
+    imageId: String,
+    price: String,
+    orderCount: Int,
+    totalOrder: Int,
+    onDetailOrder: () -> Unit,
+) {
+    val totalPrice = price.toDouble() * orderCount
+
+    Row(
+        modifier = modifier
+            .padding(
+                vertical = 8.dp,
+                horizontal = 16.dp
+            )
+            .height(80.dp)
+            .fillMaxWidth()
+            .background(
+                MaterialTheme.colorScheme.background
+            )
+    ) {
+        AsyncImage(
+            modifier = Modifier
+                .size(60.dp),
+            model = imageId,
+            contentDescription = null
+        )
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 16.dp)
+                .weight(1f)
+        ) {
+            Text(
+                text = productName,
+                fontFamily = poppinsFontFamily,
+                fontSize = 12.sp,
+                fontWeight = FontWeight.Medium,
+                maxLines = 2
+            )
+            Spacer(modifier = Modifier.padding(top = 8.dp))
+            Row {
+                Text(
+                    text = "$orderCount x $${"%.2f".format(totalPrice)}",
+                    fontFamily = poppinsFontFamily,
+                    fontWeight = FontWeight.Medium,
+                    modifier = Modifier.weight(1f)
+                )
+                if (totalOrder > 1) {
+                    Text(
+                        text = "and ${totalOrder - 1} more",
+                        fontFamily = poppinsFontFamily,
+                        fontWeight = FontWeight.Normal,
+                        fontSize = 12.sp,
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.clickable { onDetailOrder() }
+                    )
+                }
+            }
+        }
+    }
+}
+
 @Preview(showBackground = true, device = Devices.PIXEL_4_XL)
 @Composable
 private fun CartItemPreview() {
@@ -285,6 +357,23 @@ private fun CartItemPreview() {
             category = "men's clothing",
             price = "78",
             orderCount = 2,
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun CartItemMiniPreview() {
+    VibeStoreTheme(
+        dynamicColor = false
+    ) {
+        CartItemMini(
+            productName = "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
+            price = "78",
+            orderCount = 2,
+            imageId = "",
+            totalOrder = 3,
+            onDetailOrder = {}
         )
     }
 }

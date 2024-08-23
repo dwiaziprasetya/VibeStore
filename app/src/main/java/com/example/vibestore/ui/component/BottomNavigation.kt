@@ -137,7 +137,9 @@ fun BottomNavigation(
 @Preview
 @Composable
 private fun BottomNavigationPreview() {
-    VibeStoreTheme {
+    VibeStoreTheme(
+        dynamicColor = false
+    ) {
         BottomNavigation(rememberNavController())
     }
 }

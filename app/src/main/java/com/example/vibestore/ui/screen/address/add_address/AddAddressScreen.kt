@@ -55,9 +55,11 @@ import androidx.core.graphics.toColorInt
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.vibestore.R
+import com.example.vibestore.helper.DialogHelper
 import com.example.vibestore.helper.ViewModelFactory
 import com.example.vibestore.ui.common.UiState
 import com.example.vibestore.ui.component.AnimatedShimmerDetailAddress
+import com.example.vibestore.ui.navigation.model.Screen
 import com.example.vibestore.ui.theme.VibeStoreTheme
 import com.example.vibestore.ui.theme.poppinsFontFamily
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -83,7 +85,7 @@ fun AddAddressScreen(
         position = CameraPosition.fromLatLngZoom(initialPosition, 17f)
     }
 
-    val name by remember { mutableStateOf("") }
+    var name by remember { mutableStateOf("") }
     val scaffoldState = rememberBottomSheetScaffoldState()
     val context = LocalContext.current
     val uiState by viewModel.uiState.observeAsState(UiState.Loading)
@@ -184,8 +186,26 @@ fun AddAddressScreen(
                 locationName = locationName,
                 uiState = uiState,
                 viewModel = viewModel,
+                onRecipientNameChange = { name = it },
                 cameraPositionState = cameraPositionState,
-                recipientName = name
+                recipientName = name,
+                onConfirm = {
+                    viewModel.addUsersLocation(
+                        name,
+                        locationName,
+                    )
+                    DialogHelper.showDialogSuccess(
+                        context = context,
+                        title = "Success",
+                        textContent = "Location added",
+                        textConfirm = "OK",
+                        onConfirm = {
+                            navController.navigate(Screen.Address.route){
+                                popUpTo(Screen.Address.route) { inclusive = true }
+                            }
+                        }
+                    )
+                }
             )
         },
         modifier = Modifier.navigationBarsPadding(),
@@ -254,9 +274,9 @@ fun BottomSheetContent(
     viewModel: AddAddressViewModel,
     cameraPositionState: CameraPositionState,
     recipientName: String,
+    onRecipientNameChange: (String) -> Unit,
+    onConfirm: () -> Unit
 ) {
-    var name by remember { mutableStateOf(recipientName) }
-
     Column(
         modifier = Modifier
             .height(265.dp)
@@ -272,8 +292,8 @@ fun BottomSheetContent(
                     modifier = Modifier.padding(bottom = 8.dp)
                 )
                 BasicTextField(
-                    value = name,
-                    onValueChange = { name = it },
+                    value = recipientName,
+                    onValueChange = onRecipientNameChange,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(bottom = 16.dp)
@@ -298,7 +318,7 @@ fun BottomSheetContent(
                             modifier = Modifier
                                 .padding(vertical = 4.dp)
                         ) {
-                            if (name.isEmpty()) {
+                            if (recipientName.isEmpty()) {
                                 Text(
                                     text = "Enter recipient's name",
                                     style = TextStyle(
@@ -338,7 +358,7 @@ fun BottomSheetContent(
                         .height(55.dp)
                         .fillMaxWidth(),
                     shape = RoundedCornerShape(10.dp),
-                    onClick = {},
+                    onClick = onConfirm,
                     colors = ButtonDefaults.buttonColors(
                         containerColor = MaterialTheme.colorScheme.primary
                     )
@@ -358,8 +378,8 @@ fun BottomSheetContent(
                     modifier = Modifier.padding(bottom = 8.dp)
                 )
                 BasicTextField(
-                    value = name,
-                    onValueChange = { name = it },
+                    value = recipientName,
+                    onValueChange = onRecipientNameChange,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(bottom = 16.dp)
@@ -384,7 +404,7 @@ fun BottomSheetContent(
                             modifier = Modifier
                                 .padding(vertical = 4.dp)
                         ) {
-                            if (name.isEmpty()) {
+                            if (recipientName.isEmpty()) {
                                 Text(
                                     text = "Enter recipient's name",
                                     style = TextStyle(
@@ -425,7 +445,7 @@ fun BottomSheetContent(
                         .height(55.dp)
                         .fillMaxWidth(),
                     shape = RoundedCornerShape(10.dp),
-                    onClick = {},
+                    onClick = onConfirm,
                     colors = ButtonDefaults.buttonColors(
                         containerColor = MaterialTheme.colorScheme.primary
                     )

@@ -8,9 +8,11 @@ import androidx.lifecycle.MutableLiveData
 import com.example.vibestore.data.local.dao.CartDao
 import com.example.vibestore.data.local.dao.FavouriteDao
 import com.example.vibestore.data.local.dao.OrderDao
+import com.example.vibestore.data.local.dao.UserLocationDao
 import com.example.vibestore.data.local.entity.Cart
 import com.example.vibestore.data.local.entity.Favourite
 import com.example.vibestore.data.local.entity.Order
+import com.example.vibestore.data.local.entity.UserLocation
 import com.example.vibestore.data.remote.retrofit.ApiService
 import com.example.vibestore.model.LoginResponse
 import com.example.vibestore.model.ProductResponseItem
@@ -29,11 +31,32 @@ class VibeStoreRepository private constructor(
     private val cartDao: CartDao,
     private val favouriteDao: FavouriteDao,
     private val orderDao: OrderDao,
+    private val userLocationDao: UserLocationDao,
     private val fusedLocationClient: FusedLocationProviderClient,
     private val geocoder: Geocoder
 ){
     fun getSession() : Flow<LoginResponse> {
         return pref.getSession()
+    }
+
+    suspend fun addUsersLocation(userLocation: UserLocation) {
+        return userLocationDao.insertUserLocation(userLocation)
+    }
+
+    suspend fun deleteUsersLocation(id: Int) {
+        return userLocationDao.deleteUserLocation(id)
+    }
+
+    fun getAllUsersLocation(): LiveData<List<UserLocation>> {
+        return userLocationDao.getAllUserLocations()
+    }
+
+    fun getLatestOrder(): LiveData<Order> {
+        return orderDao.getLatestOrder()
+    }
+
+    fun getAllOrders(): LiveData<List<Order>> {
+        return orderDao.getAllOrders()
     }
 
     suspend fun addOrder(order: Order) {
@@ -162,6 +185,7 @@ class VibeStoreRepository private constructor(
             cartDao: CartDao,
             favouriteDao: FavouriteDao,
             orderDao: OrderDao,
+            userLocationDao: UserLocationDao,
             fusedLocationClient: FusedLocationProviderClient,
             geocoder: Geocoder
         ) = VibeStoreRepository(
@@ -170,8 +194,9 @@ class VibeStoreRepository private constructor(
             cartDao,
             favouriteDao,
             orderDao,
+            userLocationDao,
             fusedLocationClient,
-            geocoder
+            geocoder,
         )
     }
 }

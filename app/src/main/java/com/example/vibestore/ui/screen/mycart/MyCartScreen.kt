@@ -83,8 +83,14 @@ fun MyCartScreen(
 
     val cartItems by viewModel.cartItems.observeAsState(emptyList())
     val totalPrice by viewModel.totalPrice.observeAsState(0.0)
-    val checkedValue by remember { mutableStateOf(false) }
+    var checkedAllValue by remember { mutableStateOf(false) }
     val context = LocalContext.current
+    val onCheckedAllChange: (Boolean) -> Unit = { isChecked ->
+        viewModel.cartItems.value?.forEach { item ->
+            viewModel.updateCheckedItem(item, isChecked)
+        }
+        checkedAllValue = isChecked
+    }
 
     Scaffold(
         topBar = {
@@ -138,10 +144,13 @@ fun MyCartScreen(
                     onCheckedChange = { cart, isChekced ->
                         viewModel.updateCheckedItem(cart, isChekced)
                     },
-                    checked = checkedValue,
+                    checkedAllValue = checkedAllValue,
                     addOrder = {
                         viewModel.createOrderFromSelectedItems(context = context)
                         navHostController.navigate(Screen.Checkout.route)
+                    },
+                    onCheckedAllChange = { isChecked ->
+                        onCheckedAllChange(isChecked)
                     }
                 )
             }
@@ -157,9 +166,10 @@ fun MyCartContent(
     onQuantityChange: (Cart, Int) -> Unit,
     modifier: Modifier = Modifier,
     totalPrice: Double,
-    checked: Boolean,
+    checkedAllValue: Boolean,
     onCheckedChange: (Cart, Boolean) -> Unit,
-    addOrder: () -> Unit
+    onCheckedAllChange: (Boolean) -> Unit,
+    addOrder: () -> Unit,
 ) {
 
     Column(
@@ -194,13 +204,14 @@ fun MyCartContent(
                         onQuantityChange = { newQuantity ->
                             onQuantityChange(cartItem, newQuantity)
                         },
+                        checkedValue = checkedAllValue,
                         modifier = Modifier
                             .clickable {
                                 navController.navigate(Screen.DetailProduct.createRoute(cartItem.productId))
                             },
                         onCheckedChange = { isChecked ->
                             onCheckedChange(cartItem, isChecked)
-                        }
+                        },
                     )
                 }
             }
@@ -221,8 +232,8 @@ fun MyCartContent(
             ) {
                 RoundedCornerCheckbox(
                     label = "Select All",
-                    isChecked = checked,
-                    onValueChange = {  },
+                    isChecked = checkedAllValue,
+                    onValueChange = onCheckedAllChange,
                     modifier = Modifier
                         .padding(end = 32.dp)
                 )
@@ -357,8 +368,9 @@ private fun MyCartScreenPreview() {
             navController = rememberNavController(),
             onCheckedChange = { _, _ ->
             },
-            checked = false,
-            addOrder = {}
+            addOrder = {},
+            onCheckedAllChange = {  },
+            checkedAllValue = false
         )
     }
 }

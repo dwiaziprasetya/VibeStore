@@ -15,6 +15,9 @@ interface OrderDao {
     @Query("SELECT * FROM `order` ORDER BY order_date DESC")
     fun getAllOrders(): LiveData<List<Order>>
 
+    @Query("SELECT * FROM `order` ORDER BY order_date DESC LIMIT 1")
+    fun getLatestOrder(): LiveData<Order>
+
     @Query("DELETE FROM `order` WHERE id = :orderId")
     suspend fun deleteOrderById(orderId: Int)
 

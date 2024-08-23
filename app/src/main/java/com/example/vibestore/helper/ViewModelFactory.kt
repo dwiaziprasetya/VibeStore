@@ -5,7 +5,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.vibestore.data.repository.VibeStoreRepository
 import com.example.vibestore.di.Injection
+import com.example.vibestore.ui.screen.address.AddressViewModel
 import com.example.vibestore.ui.screen.address.add_address.AddAddressViewModel
+import com.example.vibestore.ui.screen.checkout.CheckoutViewModel
 import com.example.vibestore.ui.screen.detail.DetailViewModel
 import com.example.vibestore.ui.screen.favourite.FavouriteViewModel
 import com.example.vibestore.ui.screen.foryou.ForYouViewModel
@@ -63,8 +65,12 @@ class ViewModelFactory(
             HomeViewModel(repository) as T
         } else if (modelClass.isAssignableFrom(FavouriteViewModel::class.java)) {
             FavouriteViewModel(repository) as T
-        } else {
+        } else if (modelClass.isAssignableFrom(AddAddressViewModel::class.java)) {
             AddAddressViewModel(repository) as T
+        } else if (modelClass.isAssignableFrom(AddressViewModel::class.java)) {
+            AddressViewModel(repository) as T
+        } else {
+            CheckoutViewModel(repository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
     }

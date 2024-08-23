@@ -30,7 +30,7 @@ import com.example.vibestore.ui.screen.profile.ProfileScreen
 @Composable
 fun MainNavGraph(
     navController: NavHostController,
-    paddingValues: PaddingValues,
+    paddingValues: PaddingValues = PaddingValues(),
 ) {
     NavHost(
         navController = navController,

@@ -17,6 +17,7 @@ object Injection {
         val cartDao = VibeStoreRoomDatabase.getDatabase(context).cartDao()
         val favoriteDao = VibeStoreRoomDatabase.getDatabase(context).favouriteDao()
         val orderDao = VibeStoreRoomDatabase.getDatabase(context).orderDao()
+        val userLocationDao = VibeStoreRoomDatabase.getDatabase(context).userLocationDao()
         val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
         val geocoder = Geocoder(context, Locale.getDefault())
         return VibeStoreRepository.getInstance(
@@ -25,8 +26,9 @@ object Injection {
             cartDao,
             favoriteDao,
             orderDao,
+            userLocationDao,
             fusedLocationClient,
-            geocoder
+            geocoder,
         )
     }
 }

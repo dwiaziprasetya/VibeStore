@@ -29,5 +29,5 @@ data class Cart(
     var productCategory: String,
 
     @ColumnInfo(name = "product_quantity")
-    var productQuantity: Int
+    var productQuantity: Int,
 ) : Parcelable
