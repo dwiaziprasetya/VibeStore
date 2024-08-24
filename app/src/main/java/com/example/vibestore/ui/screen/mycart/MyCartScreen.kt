@@ -83,13 +83,17 @@ fun MyCartScreen(
 
     val cartItems by viewModel.cartItems.observeAsState(emptyList())
     val totalPrice by viewModel.totalPrice.observeAsState(0.0)
+    var checkedValue by remember { mutableStateOf(false) }
     var checkedAllValue by remember { mutableStateOf(false) }
+    val selectedCartItems by viewModel.selectedCartItems.observeAsState(emptySet())
     val context = LocalContext.current
-    val onCheckedAllChange: (Boolean) -> Unit = { isChecked ->
-        viewModel.cartItems.value?.forEach { item ->
-            viewModel.updateCheckedItem(item, isChecked)
+
+    LaunchedEffect(cartItems.size, selectedCartItems.size) {
+        checkedAllValue = if (cartItems.isNotEmpty()) {
+            selectedCartItems.size == cartItems.size
+        } else {
+            false
         }
-        checkedAllValue = isChecked
     }
 
     Scaffold(
@@ -135,6 +139,7 @@ fun MyCartScreen(
                 )
             } else {
                 MyCartContent(
+                    selectedCartItems = selectedCartItems,
                     state = cartItems,
                     onQuantityChange = { cart, quantity ->
                         viewModel.updateQuantity(cart, quantity)
@@ -144,13 +149,17 @@ fun MyCartScreen(
                     onCheckedChange = { cart, isChekced ->
                         viewModel.updateCheckedItem(cart, isChekced)
                     },
+//                    checkedValue = checkedValue,
                     checkedAllValue = checkedAllValue,
                     addOrder = {
                         viewModel.createOrderFromSelectedItems(context = context)
                         navHostController.navigate(Screen.Checkout.route)
                     },
                     onCheckedAllChange = { isChecked ->
-                        onCheckedAllChange(isChecked)
+                        cartItems.forEach { item ->
+                            viewModel.updateCheckedItem(item, isChecked)
+                        }
+                        checkedValue = isChecked
                     }
                 )
             }
@@ -166,6 +175,8 @@ fun MyCartContent(
     onQuantityChange: (Cart, Int) -> Unit,
     modifier: Modifier = Modifier,
     totalPrice: Double,
+    selectedCartItems: Set<Cart>,
+//    checkedValue: Boolean,
     checkedAllValue: Boolean,
     onCheckedChange: (Cart, Boolean) -> Unit,
     onCheckedAllChange: (Boolean) -> Unit,
@@ -204,7 +215,7 @@ fun MyCartContent(
                         onQuantityChange = { newQuantity ->
                             onQuantityChange(cartItem, newQuantity)
                         },
-                        checkedValue = checkedAllValue,
+                        checkedValue = checkedAllValue || cartItem.id in selectedCartItems.map { it.id },
                         modifier = Modifier
                             .clickable {
                                 navController.navigate(Screen.DetailProduct.createRoute(cartItem.productId))
@@ -370,7 +381,9 @@ private fun MyCartScreenPreview() {
             },
             addOrder = {},
             onCheckedAllChange = {  },
-            checkedAllValue = false
+//            checkedValue = false,
+            checkedAllValue = false,
+            selectedCartItems = emptySet()
         )
     }
 }

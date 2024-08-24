@@ -16,11 +16,14 @@ class MyCartViewModel(
     private val repository: VibeStoreRepository
 ) : ViewModel() {
     val cartItems: LiveData<List<Cart>> = repository.getAllCartItems()
-    private val selectedCartItems = MutableLiveData<Set<Cart>>(emptySet())
+    private val _selectedCartItems = MutableLiveData<Set<Cart>>(emptySet())
+    val selectedCartItems: LiveData<Set<Cart>> = _selectedCartItems
 
-    val totalPrice: LiveData<Double> = selectedCartItems.map { items ->
+    val totalPrice: LiveData<Double> = _selectedCartItems.map { items ->
         items.sumOf { it.productPrice.toDouble() * it.productQuantity }
     }
+
+
 
     fun updateQuantity(cart: Cart, quantity: Int) {
         viewModelScope.launch {
@@ -30,18 +33,18 @@ class MyCartViewModel(
                 repository.deleteCartById(cart.id)
             }
 
-            val currentItems = selectedCartItems.value.orEmpty().toMutableSet()
+            val currentItems = _selectedCartItems.value.orEmpty().toMutableSet()
             if (currentItems.contains(cart)) {
                 val updatedCart = cart.copy(productQuantity = quantity)
                 currentItems.remove(cart)
                 if (quantity > 0) currentItems.add(updatedCart)
-                selectedCartItems.value = currentItems
+                _selectedCartItems.value = currentItems
             }
         }
     }
 
     fun createOrderFromSelectedItems(context: Context) {
-        val selectedItems = selectedCartItems.value.orEmpty()
+        val selectedItems = _selectedCartItems.value.orEmpty()
         if (selectedItems.isNotEmpty()) {
             val totalPrice = selectedItems.sumOf { it.productPrice.toDouble() * it.productQuantity }
             val order = Order(
@@ -57,7 +60,7 @@ class MyCartViewModel(
                     repository.deleteCartById(cartItem.id)
                 }
 
-                selectedCartItems.value = emptySet()
+                _selectedCartItems.value = emptySet()
             }
         } else {
             Toast.makeText(context, "No items selected", Toast.LENGTH_SHORT).show()
@@ -65,12 +68,12 @@ class MyCartViewModel(
     }
 
     fun updateCheckedItem(cart: Cart, isChecked: Boolean) {
-        val currentItems = selectedCartItems.value.orEmpty().toMutableSet()
+        val currentItems = _selectedCartItems.value.orEmpty().toMutableSet()
         if (isChecked) {
             currentItems.add(cart)
         } else {
             currentItems.remove(cart)
         }
-        selectedCartItems.value = currentItems
+        _selectedCartItems.value = currentItems
     }
 }

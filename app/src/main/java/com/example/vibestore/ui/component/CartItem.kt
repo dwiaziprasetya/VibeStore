@@ -111,7 +111,7 @@ fun CartItem(
                 maxLines = 2
             )
             Text(
-                text = category,
+                text = "Category : $category",
                 fontFamily = poppinsFontFamily,
                 fontSize = 12.sp,
                 maxLines = 1,
