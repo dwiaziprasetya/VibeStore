@@ -149,7 +149,6 @@ fun MyCartScreen(
                     onCheckedChange = { cart, isChekced ->
                         viewModel.updateCheckedItem(cart, isChekced)
                     },
-//                    checkedValue = checkedValue,
                     checkedAllValue = checkedAllValue,
                     addOrder = {
                         viewModel.createOrderFromSelectedItems(context = context)
@@ -381,7 +380,6 @@ private fun MyCartScreenPreview() {
             },
             addOrder = {},
             onCheckedAllChange = {  },
-//            checkedValue = false,
             checkedAllValue = false,
             selectedCartItems = emptySet()
         )
