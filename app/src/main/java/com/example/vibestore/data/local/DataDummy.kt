@@ -1,7 +1,9 @@
 package com.example.vibestore.data.local
 
+import androidx.compose.ui.graphics.Color
 import com.example.vibestore.R
 import com.example.vibestore.data.local.entity.UserLocation
+import com.example.vibestore.model.Coupon
 import com.example.vibestore.model.PaymentMethod
 
 object DataDummy {
@@ -29,6 +31,29 @@ object DataDummy {
         PaymentMethod(
             icon = R.drawable.icon_brimo,
             name = "BRI Mobile"
+        )
+    )
+    val dummyCoupon = listOf(
+        Coupon(
+            discountedPrice = "FREE SHIPPING",
+            description = "Applies to get free shipping",
+            expiredDate = "31 Desember 2024",
+            color1 = Color(0xFF9733EE),
+            color2 = Color(0xFFDA22FF)
+        ),
+        Coupon(
+            discountedPrice = "25%",
+            description = "Applies to get 25% off",
+            expiredDate = "31 Desember 2024",
+            color1 = Color(0xFFFFA726),
+            color2 = Color(0xFFFFD54F)
+        ),
+        Coupon(
+            discountedPrice = "50%",
+            description = "Applies to get 50% off",
+            expiredDate = "31 Desember 2024",
+            color1 = Color(0xFF00C9FF),
+            color2 = Color(0xFF92FE9D)
         )
     )
 }

@@ -1,6 +1,10 @@
 package com.example.vibestore.ui.screen.profile
 
 import android.widget.Toast
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -28,6 +32,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -71,6 +76,13 @@ fun ProfileScreen(
     ),
     navController: NavHostController
 ) {
+
+    var visible by remember { mutableStateOf(false) }
+
+    LaunchedEffect(Unit) {
+        visible = true
+    }
+
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     val username by viewModel.getUsername().observeAsState()
@@ -108,212 +120,271 @@ fun ProfileScreen(
                 .fillMaxWidth()
                 .padding(innerPadding),
         ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .padding(bottom = 32.dp)
-                    .fillMaxWidth()
+            AnimatedVisibility(
+                visible = visible,
+                enter = slideInVertically(
+                    initialOffsetY = { -it },
+                    animationSpec = tween(durationMillis = 300)
+                ) + fadeIn(animationSpec = tween(durationMillis = 300))
             ) {
-                Image(
-                    painter = painterResource(R.drawable.image_user),
-                    contentDescription = "profile",
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier
-                        .size(100.dp)
-                        .clip(RoundedCornerShape(100.dp))
-                        .border(
-                            width = 2.dp,
-                            color = MaterialTheme.colorScheme.primary,
-                            shape = CircleShape
-                        ),
-                    contentScale = ContentScale.Crop
-                )
-                Column(
-                    modifier = Modifier
-                        .padding(start = 16.dp)
-                        .weight(1f)
+                        .padding(bottom = 16.dp)
+                        .fillMaxWidth()
                 ) {
-                    Text(
-                        letterSpacing = 0.001.sp,
-                        text = username.toString(),
-                        fontFamily = poppinsFontFamily,
-                        fontWeight = FontWeight.SemiBold,
-                        fontSize = 18.sp,
-
-                    )
-                    Text(
-                        text = "$ 2.341.000",
-                        fontFamily = poppinsFontFamily,
-                        fontSize = 14.sp,
-                        color = MaterialTheme.colorScheme.outline,
+                    Image(
+                        painter = painterResource(R.drawable.image_user),
+                        contentDescription = "profile",
                         modifier = Modifier
+                            .size(100.dp)
+                            .clip(RoundedCornerShape(100.dp))
+                            .border(
+                                width = 2.dp,
+                                color = MaterialTheme.colorScheme.primary,
+                                shape = CircleShape
+                            ),
+                        contentScale = ContentScale.Crop
+                    )
+                    Column(
+                        modifier = Modifier
+                            .padding(start = 16.dp)
+                            .weight(1f)
+                    ) {
+                        Text(
+                            letterSpacing = 0.001.sp,
+                            text = username.toString(),
+                            fontFamily = poppinsFontFamily,
+                            fontWeight = FontWeight.SemiBold,
+                            fontSize = 18.sp,
+
+                            )
+                        Text(
+                            text = "$ 2.341.000",
+                            fontFamily = poppinsFontFamily,
+                            fontSize = 14.sp,
+                            color = MaterialTheme.colorScheme.outline,
+                            modifier = Modifier
+                        )
+                    }
+                    Icon(
+                        imageVector = Icons.Default.Settings,
+                        contentDescription = "settings",
+                        tint = MaterialTheme.colorScheme.outline,
+                        modifier = Modifier
+                            .size(20.dp)
                     )
                 }
-                Icon(
-                    imageVector = Icons.Default.Settings,
-                    contentDescription = "settings",
-                    tint = MaterialTheme.colorScheme.outline,
-                    modifier = Modifier
-                        .size(20.dp)
-                )
             }
-            Divider(color = Color(0xFFE3E3E3))
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
+            AnimatedVisibility(
+                visible = visible,
+                enter = slideInVertically(
+                    initialOffsetY = { -it },
+                    animationSpec = tween(durationMillis = 300)
+                ) + fadeIn(animationSpec = tween(durationMillis = 300))
             ) {
-                Icon(
-                    tint = MaterialTheme.colorScheme.outline,
-                    imageVector = Icons.Default.ShoppingBag,
-                    contentDescription = "bag",
-                    modifier = Modifier
-                        .padding(vertical = 16.dp)
-                        .size(20.dp)
-                )
-                Text(
-                    text = stringResource(R.string.my_orders),
-                    fontFamily = poppinsFontFamily,
-                    modifier = Modifier
-                        .padding(start = 16.dp)
-                        .weight(1f),
-                    fontSize = 14.sp,
-                )
-                Icon(
-                    tint = MaterialTheme.colorScheme.outline,
-                    modifier = Modifier.size(20.dp),
-                    imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
-                    contentDescription = "forward"
+                Divider(
+                    color = Color(0xFFE3E3E3),
+                    modifier = Modifier.padding(bottom = 16.dp)
                 )
             }
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
+            AnimatedVisibility(
+                visible = visible,
+                enter = slideInVertically(
+                    initialOffsetY = { -it },
+                    animationSpec = tween(durationMillis = 300)
+                ) + fadeIn(animationSpec = tween(durationMillis = 300))
             ) {
-                Icon(
-                    tint = MaterialTheme.colorScheme.outline,
-                    imageVector = Icons.Default.LocationOn,
-                    contentDescription = "location",
-                    modifier = Modifier
-                        .padding(vertical = 16.dp)
-                        .size(20.dp)
-                )
-                Text(
-                    text = stringResource(R.string.address),
-                    fontFamily = poppinsFontFamily,
-                    modifier = Modifier
-                        .padding(start = 16.dp)
-                        .weight(1f),
-                    fontSize = 14.sp,
-                )
-                Icon(
-                    tint = MaterialTheme.colorScheme.outline,
-                    modifier = Modifier.size(20.dp),
-                    imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
-                    contentDescription = "forward"
-                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        tint = MaterialTheme.colorScheme.outline,
+                        imageVector = Icons.Default.ShoppingBag,
+                        contentDescription = "bag",
+                        modifier = Modifier
+                            .padding(vertical = 16.dp)
+                            .size(20.dp)
+                    )
+                    Text(
+                        text = stringResource(R.string.my_orders),
+                        fontFamily = poppinsFontFamily,
+                        modifier = Modifier
+                            .padding(start = 16.dp)
+                            .weight(1f),
+                        fontSize = 14.sp,
+                    )
+                    Icon(
+                        tint = MaterialTheme.colorScheme.outline,
+                        modifier = Modifier.size(20.dp),
+                        imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
+                        contentDescription = "forward"
+                    )
+                }
             }
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
+            AnimatedVisibility(
+                visible = visible,
+                enter = slideInVertically(
+                    initialOffsetY = { -it },
+                    animationSpec = tween(durationMillis = 300)
+                ) + fadeIn(animationSpec = tween(durationMillis = 300))
             ) {
-                Icon(
-                    tint = MaterialTheme.colorScheme.outline,
-                    imageVector = Icons.Default.Lock,
-                    contentDescription = "lock",
-                    modifier = Modifier
-                        .padding(vertical = 16.dp)
-                        .size(20.dp)
-                )
-                Text(
-                    text = stringResource(R.string.change_password),
-                    fontFamily = poppinsFontFamily,
-                    modifier = Modifier
-                        .padding(start = 16.dp)
-                        .weight(1f),
-                    fontSize = 14.sp,
-                )
-                Icon(
-                    tint = MaterialTheme.colorScheme.outline,
-                    modifier = Modifier.size(20.dp),
-                    imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
-                    contentDescription = "forward"
-                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        tint = MaterialTheme.colorScheme.outline,
+                        imageVector = Icons.Default.LocationOn,
+                        contentDescription = "location",
+                        modifier = Modifier
+                            .padding(vertical = 16.dp)
+                            .size(20.dp)
+                    )
+                    Text(
+                        text = stringResource(R.string.address),
+                        fontFamily = poppinsFontFamily,
+                        modifier = Modifier
+                            .padding(start = 16.dp)
+                            .weight(1f),
+                        fontSize = 14.sp,
+                    )
+                    Icon(
+                        tint = MaterialTheme.colorScheme.outline,
+                        modifier = Modifier.size(20.dp),
+                        imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
+                        contentDescription = "forward"
+                    )
+                }
             }
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
+            AnimatedVisibility(
+                visible = visible,
+                enter = slideInVertically(
+                    initialOffsetY = { -it },
+                    animationSpec = tween(durationMillis = 300)
+                ) + fadeIn(animationSpec = tween(durationMillis = 300))
             ) {
-                Icon(
-                    tint = MaterialTheme.colorScheme.outline,
-                    imageVector = Icons.AutoMirrored.Filled.Help,
-                    contentDescription = "help",
-                    modifier = Modifier
-                        .padding(vertical = 16.dp)
-                        .size(20.dp)
-                )
-                Text(
-                    text = stringResource(R.string.help_and_support),
-                    fontFamily = poppinsFontFamily,
-                    modifier = Modifier
-                        .padding(start = 16.dp)
-                        .weight(1f),
-                    fontSize = 14.sp,
-                )
-                Icon(
-                    tint = MaterialTheme.colorScheme.outline,
-                    modifier = Modifier.size(20.dp),
-                    imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
-                    contentDescription = "forward"
-                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        tint = MaterialTheme.colorScheme.outline,
+                        imageVector = Icons.Default.Lock,
+                        contentDescription = "lock",
+                        modifier = Modifier
+                            .padding(vertical = 16.dp)
+                            .size(20.dp)
+                    )
+                    Text(
+                        text = stringResource(R.string.change_password),
+                        fontFamily = poppinsFontFamily,
+                        modifier = Modifier
+                            .padding(start = 16.dp)
+                            .weight(1f),
+                        fontSize = 14.sp,
+                    )
+                    Icon(
+                        tint = MaterialTheme.colorScheme.outline,
+                        modifier = Modifier.size(20.dp),
+                        imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
+                        contentDescription = "forward"
+                    )
+                }
             }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable {
-                        dialog = DialogHelper.showDialogWarning(
-                            context = context,
-                            title = "Log out",
-                            textContent = "Are you sure you want to log out?",
-                            onDismis = { dialog?.dismissWithAnimation() },
-                            onConfirm = {
-                                dialog?.dismissWithAnimation()
-                                dialog = DialogHelper.showDialogLoading(
-                                    context = context,
-                                    textContent = "Please wait"
-                                )
-                                scope.launch {
-                                    delay(2000)
+            AnimatedVisibility(
+                visible = visible,
+                enter = slideInVertically(
+                    initialOffsetY = { -it },
+                    animationSpec = tween(durationMillis = 300)
+                ) + fadeIn(animationSpec = tween(durationMillis = 300))
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        tint = MaterialTheme.colorScheme.outline,
+                        imageVector = Icons.AutoMirrored.Filled.Help,
+                        contentDescription = "help",
+                        modifier = Modifier
+                            .padding(vertical = 16.dp)
+                            .size(20.dp)
+                    )
+                    Text(
+                        text = stringResource(R.string.help_and_support),
+                        fontFamily = poppinsFontFamily,
+                        modifier = Modifier
+                            .padding(start = 16.dp)
+                            .weight(1f),
+                        fontSize = 14.sp,
+                    )
+                    Icon(
+                        tint = MaterialTheme.colorScheme.outline,
+                        modifier = Modifier.size(20.dp),
+                        imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
+                        contentDescription = "forward"
+                    )
+                }
+            }
+            AnimatedVisibility(
+                visible = visible,
+                enter = slideInVertically(
+                    initialOffsetY = { -it },
+                    animationSpec = tween(durationMillis = 300)
+                ) + fadeIn(animationSpec = tween(durationMillis = 300))
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable {
+                            dialog = DialogHelper.showDialogWarning(
+                                context = context,
+                                title = "Log out",
+                                textContent = "Are you sure you want to log out?",
+                                onDismis = { dialog?.dismissWithAnimation() },
+                                onConfirm = {
                                     dialog?.dismissWithAnimation()
-                                    navController.popBackStack(Screen.MainNav.route, true)
-                                    navController.navigate(Screen.AuthNav.route)
-                                    Toast
-                                        .makeText(
-                                            context,
-                                            "Log out success",
-                                            Toast.LENGTH_SHORT
-                                        )
-                                        .show()
-                                    viewModel.logout()
+                                    dialog = DialogHelper.showDialogLoading(
+                                        context = context,
+                                        textContent = "Please wait"
+                                    )
+                                    scope.launch {
+                                        delay(2000)
+                                        dialog?.dismissWithAnimation()
+                                        navController.popBackStack(Screen.MainNav.route, true)
+                                        navController.navigate(Screen.AuthNav.route)
+                                        Toast
+                                            .makeText(
+                                                context,
+                                                "Log out success",
+                                                Toast.LENGTH_SHORT
+                                            )
+                                            .show()
+                                        viewModel.logout()
+                                    }
                                 }
-                            }
-                        )
-                    },
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.Logout,
-                    contentDescription = "log out",
-                    modifier = Modifier
-                        .padding(vertical = 16.dp)
-                        .size(20.dp),
-                    tint = Color("#bf122f".toColorInt())
-                )
-                Text(
-                    text = stringResource(R.string.logout),
-                    fontFamily = poppinsFontFamily,
-                    color = Color("#bf122f".toColorInt()),
-                    fontSize = 14.sp,
-                    modifier = Modifier.padding(start = 16.dp)
-                )
+                            )
+                        },
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.Logout,
+                        contentDescription = "log out",
+                        modifier = Modifier
+                            .padding(vertical = 16.dp)
+                            .size(20.dp),
+                        tint = Color("#bf122f".toColorInt())
+                    )
+                    Text(
+                        text = stringResource(R.string.logout),
+                        fontFamily = poppinsFontFamily,
+                        color = Color("#bf122f".toColorInt()),
+                        fontSize = 14.sp,
+                        modifier = Modifier.padding(start = 16.dp)
+                    )
+                }
             }
         }
     }
