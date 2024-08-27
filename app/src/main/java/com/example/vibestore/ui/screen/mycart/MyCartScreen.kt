@@ -152,7 +152,7 @@ fun MyCartScreen(
                     checkedAllValue = checkedAllValue,
                     addOrder = {
                         viewModel.createOrderFromSelectedItems(context = context)
-                        navHostController.navigate(Screen.Checkout.route)
+                        navHostController.navigate(Screen.Checkout.createRoute(-1))
                     },
                     onCheckedAllChange = { isChecked ->
                         cartItems.forEach { item ->
@@ -175,7 +175,6 @@ fun MyCartContent(
     modifier: Modifier = Modifier,
     totalPrice: Double,
     selectedCartItems: Set<Cart>,
-//    checkedValue: Boolean,
     checkedAllValue: Boolean,
     onCheckedChange: (Cart, Boolean) -> Unit,
     onCheckedAllChange: (Boolean) -> Unit,

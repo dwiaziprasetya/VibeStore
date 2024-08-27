@@ -109,7 +109,16 @@ fun AddressScreen(
             selectedItemId = selectedItemId,
             onSelectedItem = { id -> viewModel.selectItem(id) },
             onDeletedItem = { id -> viewModel.deleteItem(id) },
-            scope = scope
+            scope = scope,
+            onConfirmationClick = {
+                selectedItemId.let { id -> 
+                    navHostController.navigate(
+                        Screen.Checkout.createRoute(id ?: 0)
+                    ) {
+                        popUpTo(Screen.Checkout.route) { inclusive = true }
+                    }
+                }
+            }
         )
     }
 }
@@ -123,13 +132,14 @@ fun AddressContent(
     selectedItemId: Int?,
     onSelectedItem: (Int) -> Unit,
     onDeletedItem: (Int) -> Unit,
+    onConfirmationClick: () -> Unit,
     navHostController: NavHostController
 ) {
     Column(
         modifier = modifier
             .padding(16.dp)
             .fillMaxSize(),
-        verticalArrangement = Arrangement.SpaceBetween // Mengatur konten dengan space-between
+        verticalArrangement = Arrangement.SpaceBetween
     ) {
         Column(modifier = Modifier.weight(1f)) {
             if (state.isEmpty()) {
@@ -203,7 +213,7 @@ fun AddressContent(
                     .height(55.dp)
                     .fillMaxWidth(),
                 shape = RoundedCornerShape(10.dp),
-                onClick = {},
+                onClick = onConfirmationClick,
                 colors = ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.primary
                 )
@@ -230,7 +240,8 @@ private fun AddressContentPreview() {
             scope = rememberCoroutineScope(),
             selectedItemId = 2,
             onSelectedItem = {},
-            onDeletedItem = {}
+            onDeletedItem = {},
+            onConfirmationClick = {}
         )
     }
 }

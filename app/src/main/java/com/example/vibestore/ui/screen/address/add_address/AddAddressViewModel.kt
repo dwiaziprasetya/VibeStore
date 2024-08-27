@@ -20,8 +20,6 @@ class AddAddressViewModel(
     private val _uiState = MutableLiveData<UiState<LatLng>>()
     val uiState: LiveData<UiState<LatLng>> = _uiState
 
-    val userLocationItems: LiveData<List<UserLocation>> = repository.getAllUsersLocation()
-
     fun addUsersLocation(name: String, address: String) {
         viewModelScope.launch {
             val userLocation = UserLocation(

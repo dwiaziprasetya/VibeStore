@@ -12,6 +12,9 @@ interface UserLocationDao {
     @Query("SELECT * FROM userlocation")
     fun getAllUserLocations(): LiveData<List<UserLocation>>
 
+    @Query("SELECT * FROM userlocation WHERE id = :id")
+    fun getUserLocationById(id: Int): LiveData<UserLocation>
+
    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertUserLocation(userLocation: UserLocation)
 

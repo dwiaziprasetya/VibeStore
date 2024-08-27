@@ -91,6 +91,12 @@ fun MainNavGraph(
         }
         composable(
             route = Screen.Checkout.route,
+            arguments = listOf(
+                navArgument("userLocationId") {
+                    type = NavType.IntType
+                    defaultValue = -1
+                }
+            ),
             exitTransition = {
                 slideOutOfContainer(
                     AnimatedContentTransitionScope.SlideDirection.Left,
@@ -115,8 +121,12 @@ fun MainNavGraph(
                     tween(500)
                 )
             }
-        ) {
-            CheckoutScreen(navController = navController)
+        ) { backStackEntry ->
+            val id = backStackEntry.arguments?.getInt("userLocationId") ?: -1
+            CheckoutScreen(
+                navController = navController,
+                selectedLocationId = id
+            )
         }
         composable(
             route = Screen.Address.route,

@@ -51,12 +51,12 @@ class VibeStoreRepository private constructor(
         return userLocationDao.getAllUserLocations()
     }
 
-    fun getLatestOrder(): LiveData<Order> {
-        return orderDao.getLatestOrder()
+    fun getUserLocationById(id: Int): LiveData<UserLocation> {
+        return userLocationDao.getUserLocationById(id)
     }
 
-    fun getAllOrders(): LiveData<List<Order>> {
-        return orderDao.getAllOrders()
+    fun getLatestOrder(): LiveData<Order> {
+        return orderDao.getLatestOrder()
     }
 
     suspend fun addOrder(order: Order) {

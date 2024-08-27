@@ -41,7 +41,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -63,8 +62,10 @@ import com.example.vibestore.R
 import com.example.vibestore.data.local.DataDummy
 import com.example.vibestore.data.local.entity.Cart
 import com.example.vibestore.data.local.entity.Order
+import com.example.vibestore.data.local.entity.UserLocation
 import com.example.vibestore.helper.ViewModelFactory
 import com.example.vibestore.model.PaymentMethod
+import com.example.vibestore.ui.component.AddressItemScreen
 import com.example.vibestore.ui.component.CardPaymentItem
 import com.example.vibestore.ui.component.CartItemMini
 import com.example.vibestore.ui.navigation.model.Screen
@@ -79,16 +80,15 @@ fun CheckoutScreen(
         factory = ViewModelFactory.getInstance(
             context = LocalContext.current,
         )
-    )
+    ),
+    selectedLocationId: Int
 ) {
 
     val latestOrder by viewModel.orderItems.observeAsState()
     var showDialog by remember { mutableStateOf(false) }
     val paymentMethod = DataDummy.dummyPaymentMethod
     var isSheetOpen by rememberSaveable { mutableStateOf(false) }
-    val modalBottomSheetState = rememberModalBottomSheetState(
-        skipPartiallyExpanded = true,
-    )
+    val selectedLocation by viewModel.getUserLocationById(selectedLocationId).observeAsState()
 
     if (isSheetOpen) {
         BottomSheetShipping(
@@ -134,7 +134,9 @@ fun CheckoutScreen(
             state = latestOrder,
             onShowDialog = { showDialog = true },
             paymentMethod = paymentMethod,
-            onChooseShipping = { isSheetOpen = true }
+            onChooseShipping = { isSheetOpen = true },
+            selectedLocation = selectedLocation ?: UserLocation(0, "", ""),
+            selectedLocationId = selectedLocationId
         )
 
         if (showDialog) {
@@ -151,6 +153,8 @@ fun CheckoutContent(
     modifier: Modifier = Modifier,
     onEditAddress: () -> Unit,
     state: Order ?= null,
+    selectedLocationId: Int?,
+    selectedLocation: UserLocation,
     onShowDialog: () -> Unit,
     paymentMethod: List<PaymentMethod>,
     onChooseShipping: () -> Unit,
@@ -183,57 +187,24 @@ fun CheckoutContent(
                 modifier = Modifier
                     .padding(bottom = 16.dp)
                     .fillMaxWidth()
-                    .wrapContentHeight()
+                    .clickable { onEditAddress() }
+                    .height(125.dp)
             ) {
-                Row(
-                    modifier = Modifier
-                        .padding(16.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Column(
-                        modifier = Modifier
-                            .weight(1f)
-                    ) {
+                if (selectedLocationId == -1) {
+                    Box(modifier = Modifier.fillMaxSize()) {
                         Text(
-                            text = "Dwi Azi Prasetya",
+                            modifier = Modifier.align(Alignment.Center),
+                            text = "Add New Address",
                             fontSize = 14.sp,
                             fontFamily = poppinsFontFamily,
-                            fontWeight = FontWeight.SemiBold
-                        )
-                        Text(
-                            text = "Jl. Durian No. 123, Banyubiru",
-                            fontSize = 14.sp,
-                            fontFamily = poppinsFontFamily,
-                        )
-                        Text(
-                            text = "Kab. Semarang, Jawa Tengah",
-                            fontSize = 14.sp,
-                            fontFamily = poppinsFontFamily,
-                        )
-                        Text(
-                            text = "Indonesia, 50123",
-                            fontSize = 14.sp,
-                            fontFamily = poppinsFontFamily,
+                            fontWeight = FontWeight.Medium,
                         )
                     }
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier
-                            .clickable { onEditAddress() }
-                    ) {
-                        Text(
-                            text = "Edit",
-                            fontSize = 14.sp,
-                            fontFamily = poppinsFontFamily,
-                        )
-                        Spacer(modifier = Modifier.size(4.dp))
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
-                            contentDescription = "",
-                            modifier = Modifier
-                                .size(20.dp)
-                        )
-                    }
+                } else {
+                    AddressItemScreen(
+                        name = selectedLocation.name,
+                        address = selectedLocation.address
+                    )
                 }
             }
             state?.items?.firstOrNull()?.let { item ->
@@ -702,7 +673,9 @@ private fun CheckoutContentPreview() {
             onEditAddress = {},
             onShowDialog = {},
             paymentMethod = DataDummy.dummyPaymentMethod,
-            onChooseShipping = {}
+            onChooseShipping = {},
+            selectedLocation = UserLocation(0, "", ""),
+            selectedLocationId = 0
         )
     }
 }
