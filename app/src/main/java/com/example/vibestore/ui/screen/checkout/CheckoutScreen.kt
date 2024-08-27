@@ -15,10 +15,10 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -36,7 +36,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -65,9 +64,10 @@ import com.example.vibestore.data.local.entity.Order
 import com.example.vibestore.data.local.entity.UserLocation
 import com.example.vibestore.helper.ViewModelFactory
 import com.example.vibestore.model.PaymentMethod
+import com.example.vibestore.model.Shipping
 import com.example.vibestore.ui.component.AddressItemScreen
-import com.example.vibestore.ui.component.CardPaymentItem
 import com.example.vibestore.ui.component.CartItemMini
+import com.example.vibestore.ui.component.ShippingItem
 import com.example.vibestore.ui.navigation.model.Screen
 import com.example.vibestore.ui.theme.VibeStoreTheme
 import com.example.vibestore.ui.theme.poppinsFontFamily
@@ -89,10 +89,17 @@ fun CheckoutScreen(
     val paymentMethod = DataDummy.dummyPaymentMethod
     var isSheetOpen by rememberSaveable { mutableStateOf(false) }
     val selectedLocation by viewModel.getUserLocationById(selectedLocationId).observeAsState()
+    val shippingItem = DataDummy.dummyShipping
+    val selectedShippingId by viewModel.selectedShippingId.observeAsState()
+    val selectedPaymentId by viewModel.selectedPaymentId.observeAsState()
 
     if (isSheetOpen) {
         BottomSheetShipping(
-            onDismiss = { isSheetOpen = false }
+            onDismiss = { isSheetOpen = false },
+            state = shippingItem,
+            selectedShippingId = selectedShippingId,
+            onChoose = { id -> viewModel.selectShipping(id) },
+            onConfirmationShipping = { isSheetOpen = false }
         )
     }
 
@@ -136,7 +143,11 @@ fun CheckoutScreen(
             paymentMethod = paymentMethod,
             onChooseShipping = { isSheetOpen = true },
             selectedLocation = selectedLocation ?: UserLocation(0, "", ""),
-            selectedLocationId = selectedLocationId
+            selectedLocationId = selectedLocationId,
+            onChoosePayment = { id -> viewModel.selectPayment(id) },
+            selectedPaymentId = selectedPaymentId,
+            selectedShippingId = selectedShippingId,
+            shippingItem = shippingItem
         )
 
         if (showDialog) {
@@ -158,6 +169,10 @@ fun CheckoutContent(
     onShowDialog: () -> Unit,
     paymentMethod: List<PaymentMethod>,
     onChooseShipping: () -> Unit,
+    onChoosePayment: (Int) -> Unit,
+    selectedPaymentId: Int?,
+    selectedShippingId: Int?,
+    shippingItem: List<Shipping>
 ) {
     Column(
         modifier = modifier
@@ -217,63 +232,95 @@ fun CheckoutContent(
                     onDetailOrder = { onShowDialog() }
                 )
             }
-            Card(
-                border = BorderStroke(
-                    width = 1.dp,
-                    color = Color.LightGray
-                ),
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.background
-                ),
-                modifier = Modifier
-                    .padding(top = 8.dp)
-                    .fillMaxWidth()
-                    .wrapContentHeight()
-                    .clickable {
-                        onChooseShipping()
-                    }
-            ) {
-                Row(
-                    modifier = Modifier.padding(16.dp),
-                    verticalAlignment = Alignment.CenterVertically
+            if (selectedShippingId == null) {
+                Card(
+                    border = BorderStroke(
+                        width = 1.dp,
+                        color = Color.LightGray
+                    ),
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.background
+                    ),
+                    modifier = Modifier
+                        .padding(top = 8.dp)
+                        .fillMaxWidth()
+                        .wrapContentHeight()
+                        .clickable {
+                            onChooseShipping()
+                        }
                 ) {
-                    Text(
-                        text = "Choose Shipping",
-                        fontSize = 14.sp,
-                        fontFamily = poppinsFontFamily,
-                        fontWeight = FontWeight.Medium,
-                        modifier = Modifier.weight(1f)
-                    )
                     Row(
+                        modifier = Modifier.padding(16.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = "Edit",
+                            text = "Choose Shipping",
                             fontSize = 14.sp,
                             fontFamily = poppinsFontFamily,
+                            fontWeight = FontWeight.Medium,
+                            modifier = Modifier.weight(1f)
                         )
-                        Spacer(modifier = Modifier.size(4.dp))
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
-                            contentDescription = "",
-                            modifier = Modifier
-                                .size(20.dp)
-                        )
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = "Edit",
+                                fontSize = 14.sp,
+                                fontFamily = poppinsFontFamily,
+                            )
+                            Spacer(modifier = Modifier.size(4.dp))
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
+                                contentDescription = "",
+                                modifier = Modifier
+                                    .size(20.dp)
+                            )
+                        }
                     }
                 }
+            } else {
+                val selectedShipping = shippingItem[selectedShippingId]
+                Card(
+                    border = BorderStroke(
+                        width = 1.dp,
+                        color = Color.LightGray
+                    ),
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.background
+                    ),
+                    modifier = Modifier
+                        .padding(top = 8.dp)
+                        .fillMaxWidth()
+                        .wrapContentHeight()
+                        .clickable {
+                            onChooseShipping()
+                        }
+                ) {
+                    ShippingItem(
+                        isChoose = true,
+                        onChoose = { onChooseShipping() },
+                        name = selectedShipping.name,
+                        price = selectedShipping.price,
+                        description = selectedShipping.description
+                    )
+                }
             }
-            Text(
-                modifier = Modifier.padding(
-                    top = 32.dp
-                ),
-                text = "Payment Methods",
-                fontSize = 14.sp,
-                fontFamily = poppinsFontFamily,
-                fontWeight = FontWeight.SemiBold
-            )
-            paymentMethod.forEach { item ->
-                CardPaymentItem(item = item)
-            }
+//            Text(
+//                modifier = Modifier.padding(
+//                    top = 32.dp
+//                ),
+//                text = "Payment Methods",
+//                fontSize = 14.sp,
+//                fontFamily = poppinsFontFamily,
+//                fontWeight = FontWeight.SemiBold
+//            )
+//            paymentMethod.forEachIndexed { index, item ->
+//                CardPaymentItem(
+//                    item = item,
+//                    isChoose = selectedPaymentId == index,
+//                    onChoose = { onChoosePayment(index) }
+//                )
+//            }
         }
         Box(
             modifier = Modifier
@@ -306,8 +353,9 @@ fun CheckoutContent(
                     )
                     Text(
                         fontFamily = poppinsFontFamily,
-                        text = "$5678.00",
-                        fontWeight = FontWeight.SemiBold
+                        text = "$${state?.totalPrice}",
+                        fontWeight = FontWeight.SemiBold,
+                        color = MaterialTheme.colorScheme.primary
                     )
                 }
                 Row(
@@ -320,37 +368,45 @@ fun CheckoutContent(
                         text = "Shipping Charge",
                         color = MaterialTheme.colorScheme.outline
                     )
+                    selectedShippingId?.let {
+                        Text(
+                            fontFamily = poppinsFontFamily,
+                            text = "$${shippingItem[selectedShippingId].price}",
+                            fontWeight = FontWeight.SemiBold,
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                    } ?: run {
+                        Text(
+                            fontFamily = poppinsFontFamily,
+                            text = "$0.00",
+                            fontWeight = FontWeight.SemiBold,
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                    }
+                }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                ) {
+                    Text(
+                        modifier = Modifier.weight(1f),
+                        fontFamily = poppinsFontFamily,
+                        text = "Final Price",
+                        color = MaterialTheme.colorScheme.outline
+                    )
                     Text(
                         fontFamily = poppinsFontFamily,
-                        text = "$13.00",
-                        fontWeight = FontWeight.SemiBold
+                        text = if (selectedShippingId == null) "$${(state?.totalPrice)}"
+                        else "$${(state?.totalPrice)?.plus(shippingItem[selectedShippingId].price)}",
+                        fontWeight = FontWeight.SemiBold,
+                        color = MaterialTheme.colorScheme.primary
                     )
                 }
-            }
-        }
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(85.dp)
-                .background(MaterialTheme.colorScheme.background)
-        ) {
-            Row(
-                modifier = Modifier
-                    .align(Alignment.CenterStart)
-                    .padding(16.dp)
-                    .fillMaxWidth()
-            ) {
-                Text(
-                    modifier = Modifier.weight(1f),
-                    fontFamily = poppinsFontFamily,
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize = 40.sp,
-                    text = "$1234"
-                )
                 Button(
                     modifier = Modifier
+                        .padding(top = 16.dp, bottom = 8.dp)
                         .height(55.dp)
-                        .width(170.dp),
+                        .fillMaxWidth(),
                     shape = RoundedCornerShape(10.dp),
                     onClick = {
                     },
@@ -360,7 +416,7 @@ fun CheckoutContent(
                 ) {
                     Text(
                         fontFamily = poppinsFontFamily,
-                        text = "Pay Now",
+                        text = "Choose Payment",
                         fontSize = 16.sp,
                         color = Color.White
                     )
@@ -426,6 +482,10 @@ fun CartItemDialog(
 fun BottomSheetShipping(
     modifier: Modifier = Modifier,
     onDismiss: () -> Unit,
+    state: List<Shipping>,
+    selectedShippingId: Int?,
+    onChoose: (Int) -> Unit,
+    onConfirmationShipping: () -> Unit
 ) {
     ModalBottomSheet(
         modifier = modifier,
@@ -436,13 +496,25 @@ fun BottomSheetShipping(
         BottomSheetShippingContent(
             modifier = Modifier
                 .navigationBarsPadding()
-                .wrapContentHeight()
+                .wrapContentHeight(),
+            onChoose = onChoose,
+            selectedShippingId = selectedShippingId,
+            state = state,
+            onConfirmationShipping = onConfirmationShipping
         )
     }
 }
 
 @Composable
-fun BottomSheetShippingContent(modifier: Modifier = Modifier) {
+fun BottomSheetShippingContent(
+    modifier: Modifier = Modifier,
+    state: List<Shipping>,
+    selectedShippingId: Int?,
+    onChoose: (Int) -> Unit,
+    onConfirmationShipping: () -> Unit
+) {
+    var temporarySelectedShippingId by rememberSaveable { mutableStateOf(selectedShippingId) }
+
     Box(
         modifier = modifier
             .background(color = MaterialTheme.colorScheme.background)
@@ -452,114 +524,19 @@ fun BottomSheetShippingContent(modifier: Modifier = Modifier) {
                 .padding(
                     start = 16.dp,
                     end = 16.dp,
-                    top = 16.dp,
-                    bottom = 32.dp
+                    bottom = 8.dp
                 )
                 .background(MaterialTheme.colorScheme.background)
                 .align(Alignment.BottomCenter)
         ) {
-            Card(
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.background
-                ),
-                modifier = Modifier
-                    .padding(top = 8.dp)
-                    .fillMaxWidth()
-                    .wrapContentHeight()
-            ) {
-                Row(
-                    modifier = Modifier.padding(16.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Column(
-                        modifier = Modifier.weight(1f)
-                    ) {
-                        Text(
-                            text = "REG ($13.00)",
-                            fontSize = 14.sp,
-                            fontFamily = poppinsFontFamily,
-                            fontWeight = FontWeight.Medium,
-                        )
-                        Text(
-                            text = "Estimated time of arrival 2 - 3 days",
-                            fontSize = 12.sp,
-                            fontFamily = poppinsFontFamily,
-                        )
-
-                    }
-                    RadioButton(
-                        selected = false,
-                        onClick = {}
-                    )
-                }
-            }
-            Card(
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.background
-                ),
-                modifier = Modifier
-                    .padding(top = 8.dp)
-                    .fillMaxWidth()
-                    .wrapContentHeight()
-            ) {
-                Row(
-                    modifier = Modifier.padding(16.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Column(
-                        modifier = Modifier.weight(1f)
-                    ) {
-                        Text(
-                            text = "REG ($13.00)",
-                            fontSize = 14.sp,
-                            fontFamily = poppinsFontFamily,
-                            fontWeight = FontWeight.Medium,
-                        )
-                        Text(
-                            text = "Estimated time of arrival 2 - 3 days",
-                            fontSize = 12.sp,
-                            fontFamily = poppinsFontFamily,
-                        )
-
-                    }
-                    RadioButton(
-                        selected = false,
-                        onClick = {}
-                    )
-                }
-            }
-            Card(
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.background
-                ),
-                modifier = Modifier
-                    .padding(top = 8.dp)
-                    .fillMaxWidth()
-                    .wrapContentHeight()
-            ) {
-                Row(
-                    modifier = Modifier.padding(16.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Column(
-                        modifier = Modifier.weight(1f)
-                    ) {
-                        Text(
-                            text = "REG ($13.00)",
-                            fontSize = 14.sp,
-                            fontFamily = poppinsFontFamily,
-                            fontWeight = FontWeight.Medium,
-                        )
-                        Text(
-                            text = "Estimated time of arrival 2 - 3 days",
-                            fontSize = 12.sp,
-                            fontFamily = poppinsFontFamily,
-                        )
-
-                    }
-                    RadioButton(
-                        selected = false,
-                        onClick = {}
+            LazyColumn {
+                itemsIndexed(items = state) { index, shipping ->
+                    ShippingItem(
+                        isChoose = temporarySelectedShippingId == index,
+                        onChoose = { temporarySelectedShippingId = index },
+                        name = shipping.name,
+                        price = shipping.price,
+                        description = shipping.description
                     )
                 }
             }
@@ -568,7 +545,10 @@ fun BottomSheetShippingContent(modifier: Modifier = Modifier) {
                     .height(55.dp)
                     .fillMaxWidth(),
                 shape = RoundedCornerShape(10.dp),
-                onClick = {},
+                onClick = {
+                    onChoose(temporarySelectedShippingId!!)
+                    onConfirmationShipping()
+                },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.primary
                 )
@@ -588,7 +568,12 @@ fun BottomSheetShippingContent(modifier: Modifier = Modifier) {
 @Composable
 private fun BottomSheetShippingContentPreview() {
     VibeStoreTheme {
-        BottomSheetShippingContent()
+        BottomSheetShippingContent(
+            state = DataDummy.dummyShipping,
+            selectedShippingId = 0,
+            onChoose = {},
+            onConfirmationShipping = {}
+        )
     }
 }
 
@@ -675,7 +660,11 @@ private fun CheckoutContentPreview() {
             paymentMethod = DataDummy.dummyPaymentMethod,
             onChooseShipping = {},
             selectedLocation = UserLocation(0, "", ""),
-            selectedLocationId = 0
+            selectedLocationId = -1,
+            selectedPaymentId = 0,
+            onChoosePayment = {},
+            selectedShippingId = 2,
+            shippingItem = DataDummy.dummyShipping
         )
     }
 }

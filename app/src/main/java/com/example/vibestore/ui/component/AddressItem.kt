@@ -127,6 +127,7 @@ fun AddressItemScreen2(
             containerColor = MaterialTheme.colorScheme.background
         ),
         modifier = modifier
+            .clickable { onChooseClick() }
             .fillMaxWidth()
             .height(125.dp)
     ) {
