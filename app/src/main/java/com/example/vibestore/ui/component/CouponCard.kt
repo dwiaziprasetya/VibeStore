@@ -25,6 +25,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.vibestore.ui.theme.VibeStoreTheme
@@ -37,6 +38,10 @@ fun CouponCard(
     description: String,
     expiredDate: String,
     color1: Color,
+    fontSizeDiscount: Int = 40,
+    fontSizeExpiredDate: Int = 12,
+    fontSizeDescription: Int = 12,
+    height: Dp = 200.dp,
     color2: Color
 ) {
     val gradient = Brush.linearGradient(
@@ -48,9 +53,8 @@ fun CouponCard(
 
     Card(
         modifier = modifier
-            .height(200.dp)
-            .fillMaxWidth()
-            .padding(16.dp),
+            .height(height)
+            .fillMaxWidth(),
         shape = RoundedCornerShape(12.dp)
     ) {
         Box(
@@ -59,7 +63,7 @@ fun CouponCard(
                 .background(gradient)
         ) {
             Text(
-                fontSize = 40.sp,
+                fontSize = fontSizeDiscount.sp,
                 text = discount,
                 fontFamily = poppinsFontFamily,
                 fontWeight = FontWeight.SemiBold,
@@ -81,12 +85,14 @@ fun CouponCard(
                     fontFamily = poppinsFontFamily,
                     fontWeight = FontWeight.Medium,
                     color = Color.White,
+                    fontSize = fontSizeDescription.sp
                 )
                 Text(
                     text = "Valid until $expiredDate",
                     fontWeight = FontWeight.Light,
                     fontFamily = poppinsFontFamily,
                     color = Color.White,
+                    fontSize = fontSizeExpiredDate.sp
                 )
             }
             Icon(

@@ -14,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -22,13 +23,15 @@ import com.example.vibestore.ui.theme.VibeStoreTheme
 import com.example.vibestore.ui.theme.poppinsFontFamily
 
 @Composable
-fun ShippingItem(
+fun CouponItem(
     modifier: Modifier = Modifier,
-    isChoose: Boolean,
     onChoose: () -> Unit,
-    name: String,
-    price: Double,
-    description: String
+    isChoose: Boolean,
+    discount: String,
+    description: String,
+    expiredDate: String,
+    color1: Color,
+    color2: Color
 ) {
     Card(
         colors = CardDefaults.cardColors(
@@ -47,7 +50,7 @@ fun ShippingItem(
                 modifier = Modifier.weight(1f)
             ) {
                 Text(
-                    text = "$name ($$price)",
+                    text = discount,
                     fontSize = 14.sp,
                     fontFamily = poppinsFontFamily,
                     fontWeight = FontWeight.SemiBold,
@@ -69,14 +72,16 @@ fun ShippingItem(
 
 @Preview(showBackground = true)
 @Composable
-private fun ShippingItemPreview() {
+private fun CouponItemPreview() {
     VibeStoreTheme {
-        ShippingItem(
-            isChoose = false,
+        CouponItem(
             onChoose = {},
-            name = "REG",
-            price = 13.00,
-            description = "Estimated time of arrival 2 - 3 days"
+            isChoose = false,
+            discount = "25%",
+            description = "Applies to get 25% off",
+            expiredDate = "31 Desember 2024",
+            color1 = Color(0xFFFFA726),
+            color2 = Color(0xFFFFD54F)
         )
     }
 }

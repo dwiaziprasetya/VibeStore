@@ -15,11 +15,12 @@ class CheckoutViewModel(
     private val _selectedShippingId = MutableLiveData<Int?>()
     val selectedShippingId: LiveData<Int?> get() = _selectedShippingId
 
-    private val _selectedPaymentId = MutableLiveData<Int?>()
-    val selectedPaymentId: LiveData<Int?> get() = _selectedPaymentId
+    private val _selectedCouponId = MutableLiveData<Int?>()
+    val selectedCouponId: LiveData<Int?> get() = _selectedCouponId
 
-    fun selectPayment(id: Int) {
-        _selectedPaymentId.value = id
+
+    fun selectCoupon(id: Int) {
+        _selectedCouponId.value = id
     }
 
     fun selectShipping(id: Int) {

@@ -7,6 +7,7 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
@@ -102,7 +103,11 @@ fun CouponContent(
     }
 
     LazyColumn(
+        verticalArrangement = Arrangement.spacedBy(16.dp),
         modifier = Modifier
+            .padding(
+                horizontal = 16.dp
+            )
             .background(MaterialTheme.colorScheme.background)
     ) {
         items(items = state) { coupon ->

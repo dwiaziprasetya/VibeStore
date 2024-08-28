@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -53,6 +54,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -63,10 +65,13 @@ import com.example.vibestore.data.local.entity.Cart
 import com.example.vibestore.data.local.entity.Order
 import com.example.vibestore.data.local.entity.UserLocation
 import com.example.vibestore.helper.ViewModelFactory
-import com.example.vibestore.model.PaymentMethod
+import com.example.vibestore.model.Coupon
 import com.example.vibestore.model.Shipping
 import com.example.vibestore.ui.component.AddressItemScreen
 import com.example.vibestore.ui.component.CartItemMini
+import com.example.vibestore.ui.component.CouponInactiveSelected
+import com.example.vibestore.ui.component.CouponItem
+import com.example.vibestore.ui.component.CouponItemSelected
 import com.example.vibestore.ui.component.ShippingItem
 import com.example.vibestore.ui.navigation.model.Screen
 import com.example.vibestore.ui.theme.VibeStoreTheme
@@ -86,20 +91,31 @@ fun CheckoutScreen(
 
     val latestOrder by viewModel.orderItems.observeAsState()
     var showDialog by remember { mutableStateOf(false) }
-    val paymentMethod = DataDummy.dummyPaymentMethod
-    var isSheetOpen by rememberSaveable { mutableStateOf(false) }
+    var isSheetShippingOpen by remember { mutableStateOf(false) }
+    var isSheetCouponOpen by remember { mutableStateOf(false) }
     val selectedLocation by viewModel.getUserLocationById(selectedLocationId).observeAsState()
     val shippingItem = DataDummy.dummyShipping
+    val couponItem = DataDummy.dummyCoupon
+    val selectedCouponId by viewModel.selectedCouponId.observeAsState()
     val selectedShippingId by viewModel.selectedShippingId.observeAsState()
-    val selectedPaymentId by viewModel.selectedPaymentId.observeAsState()
 
-    if (isSheetOpen) {
+    if (isSheetShippingOpen) {
         BottomSheetShipping(
-            onDismiss = { isSheetOpen = false },
+            onDismiss = { isSheetShippingOpen = false },
             state = shippingItem,
             selectedShippingId = selectedShippingId,
             onChoose = { id -> viewModel.selectShipping(id) },
-            onConfirmationShipping = { isSheetOpen = false }
+            onConfirmationShipping = { isSheetShippingOpen = false }
+        )
+    }
+
+    if (isSheetCouponOpen) {
+        BottomSheetCoupon(
+            onDismiss = { isSheetCouponOpen = false },
+            state = couponItem,
+            selectedCouponId = selectedCouponId,
+            onChoose = { id -> viewModel.selectCoupon(id) },
+            onConfirmationCoupon = { isSheetCouponOpen = false }
         )
     }
 
@@ -140,14 +156,14 @@ fun CheckoutScreen(
             },
             state = latestOrder,
             onShowDialog = { showDialog = true },
-            paymentMethod = paymentMethod,
-            onChooseShipping = { isSheetOpen = true },
+            onChooseShipping = { isSheetShippingOpen = true },
             selectedLocation = selectedLocation ?: UserLocation(0, "", ""),
             selectedLocationId = selectedLocationId,
-            onChoosePayment = { id -> viewModel.selectPayment(id) },
-            selectedPaymentId = selectedPaymentId,
             selectedShippingId = selectedShippingId,
-            shippingItem = shippingItem
+            shippingItem = shippingItem,
+            onChooseCoupon = { isSheetCouponOpen = true },
+            selectedCouponId = selectedCouponId,
+            couponItem = couponItem
         )
 
         if (showDialog) {
@@ -167,13 +183,25 @@ fun CheckoutContent(
     selectedLocationId: Int?,
     selectedLocation: UserLocation,
     onShowDialog: () -> Unit,
-    paymentMethod: List<PaymentMethod>,
     onChooseShipping: () -> Unit,
-    onChoosePayment: (Int) -> Unit,
-    selectedPaymentId: Int?,
+    onChooseCoupon: () -> Unit,
     selectedShippingId: Int?,
-    shippingItem: List<Shipping>
+    shippingItem: List<Shipping>,
+    selectedCouponId: Int?,
+    couponItem: List<Coupon>
 ) {
+    val subTotal = state?.totalPrice ?: 0.0
+    val shippingCost = selectedShippingId?.let {
+        shippingItem[it].price
+    } ?: 0.0
+
+    val selectedCoupon = selectedCouponId?.let { couponItem[it] }
+    val finalPrice = calculateFinalPrice(
+        subTotal = subTotal,
+        shippingPrice = shippingCost,
+        coupon = selectedCoupon
+    )
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -181,7 +209,6 @@ fun CheckoutContent(
         Column(
             modifier = Modifier
                 .padding(
-                    vertical = 8.dp,
                     horizontal = 16.dp
                 )
                 .fillMaxSize()
@@ -191,31 +218,48 @@ fun CheckoutContent(
                 )
                 .weight(1f)
         ) {
-            Card(
-                border = BorderStroke(
-                    width = 1.dp,
-                    color = Color.LightGray
-                ),
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.background
-                ),
-                modifier = Modifier
-                    .padding(bottom = 16.dp)
-                    .fillMaxWidth()
-                    .clickable { onEditAddress() }
-                    .height(125.dp)
-            ) {
-                if (selectedLocationId == -1) {
-                    Box(modifier = Modifier.fillMaxSize()) {
+            if (selectedLocationId == -1) {
+                Card(
+                    border = BorderStroke(
+                        width = 1.dp,
+                        color = Color.LightGray
+                    ),
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.background
+                    ),
+                    modifier = Modifier
+                        .padding(bottom = 8.dp)
+                        .fillMaxWidth()
+                        .clickable { onEditAddress() }
+                        .wrapContentHeight()
+                ) {
+                    Box(modifier = Modifier.fillMaxWidth()) {
                         Text(
-                            modifier = Modifier.align(Alignment.Center),
-                            text = "Add New Address",
+                            modifier = Modifier
+                                .padding(16.dp)
+                                .align(Alignment.Center),
+                            text = "Choose Address",
                             fontSize = 14.sp,
                             fontFamily = poppinsFontFamily,
                             fontWeight = FontWeight.Medium,
                         )
                     }
-                } else {
+                }
+            } else {
+                Card(
+                    border = BorderStroke(
+                        width = 1.dp,
+                        color = Color.LightGray
+                    ),
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.background
+                    ),
+                    modifier = Modifier
+                        .padding(bottom = 16.dp)
+                        .fillMaxWidth()
+                        .clickable { onEditAddress() }
+                        .height(125.dp)
+                ) {
                     AddressItemScreen(
                         name = selectedLocation.name,
                         address = selectedLocation.address
@@ -305,22 +349,20 @@ fun CheckoutContent(
                     )
                 }
             }
-//            Text(
-//                modifier = Modifier.padding(
-//                    top = 32.dp
-//                ),
-//                text = "Payment Methods",
-//                fontSize = 14.sp,
-//                fontFamily = poppinsFontFamily,
-//                fontWeight = FontWeight.SemiBold
-//            )
-//            paymentMethod.forEachIndexed { index, item ->
-//                CardPaymentItem(
-//                    item = item,
-//                    isChoose = selectedPaymentId == index,
-//                    onChoose = { onChoosePayment(index) }
-//                )
-//            }
+            if (selectedCouponId == null) {
+                CouponInactiveSelected(
+                    modifier = Modifier
+                        .clickable { onChooseCoupon() }
+                )
+            } else {
+                val selectedCouponChoose = couponItem[selectedCouponId]
+                CouponItemSelected(
+                    modifier = Modifier
+                        .padding(top = 8.dp)
+                        .clickable { onChooseCoupon() },
+                    discountTittle = selectedCouponChoose.discountedPrice
+                )
+            }
         }
         Box(
             modifier = Modifier
@@ -328,7 +370,6 @@ fun CheckoutContent(
                 .wrapContentHeight()
                 .background(MaterialTheme.colorScheme.background)
         ) {
-            Divider()
             Column(
                 modifier = Modifier.padding(
                     top = 16.dp,
@@ -394,17 +435,33 @@ fun CheckoutContent(
                         text = "Final Price",
                         color = MaterialTheme.colorScheme.outline
                     )
-                    Text(
-                        fontFamily = poppinsFontFamily,
-                        text = if (selectedShippingId == null) "$${(state?.totalPrice)}"
-                        else "$${(state?.totalPrice)?.plus(shippingItem[selectedShippingId].price)}",
-                        fontWeight = FontWeight.SemiBold,
-                        color = MaterialTheme.colorScheme.primary
-                    )
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        if (selectedCouponId != null) {
+                            Text(
+                                text = if (selectedShippingId == null) "$${(state?.totalPrice)}"
+                                else "$${(state?.totalPrice)?.plus(shippingItem[selectedShippingId].price)}",
+                                fontFamily = poppinsFontFamily,
+                                textDecoration = TextDecoration.LineThrough,
+                                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+                            )
+                        }
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(
+                            fontFamily = poppinsFontFamily,
+                            text = "$${"%.2f".format(finalPrice)}",
+                            fontWeight = FontWeight.SemiBold,
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                    }
                 }
+                Divider(
+                    modifier = Modifier.padding(vertical = 8.dp)
+                )
                 Button(
                     modifier = Modifier
-                        .padding(top = 16.dp, bottom = 8.dp)
+                        .padding(top = 8.dp, bottom = 8.dp)
                         .height(55.dp)
                         .fillMaxWidth(),
                     shape = RoundedCornerShape(10.dp),
@@ -479,6 +536,34 @@ fun CartItemDialog(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
+fun BottomSheetCoupon(
+    modifier: Modifier = Modifier,
+    onDismiss: () -> Unit,
+    state: List<Coupon>,
+    selectedCouponId: Int?,
+    onChoose: (Int) -> Unit,
+    onConfirmationCoupon: () -> Unit
+) {
+    ModalBottomSheet(
+        onDismissRequest = onDismiss,
+        modifier = modifier,
+        containerColor = MaterialTheme.colorScheme.background,
+        windowInsets = WindowInsets(0, 0, 0, 0)
+    ) {
+        BottomSheetCouponContent(
+            modifier = Modifier
+                .navigationBarsPadding()
+                .wrapContentHeight(),
+            state = state,
+            selectedCouponId = selectedCouponId,
+            onChoose = onChoose,
+            onConfirmationCoupon = onConfirmationCoupon
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
 fun BottomSheetShipping(
     modifier: Modifier = Modifier,
     onDismiss: () -> Unit,
@@ -502,6 +587,69 @@ fun BottomSheetShipping(
             state = state,
             onConfirmationShipping = onConfirmationShipping
         )
+    }
+}
+
+@Composable
+fun BottomSheetCouponContent(
+    modifier: Modifier = Modifier,
+    state: List<Coupon>,
+    selectedCouponId: Int?,
+    onChoose: (Int) -> Unit,
+    onConfirmationCoupon: () -> Unit
+) {
+    var temporarySelectedCouponId by rememberSaveable { mutableStateOf(selectedCouponId) }
+
+    Box(modifier = modifier
+        .background(
+            color = MaterialTheme.colorScheme.background
+        )
+    ) {
+        Column(
+            modifier = Modifier
+                .padding(
+                    start = 16.dp,
+                    end = 16.dp,
+                    bottom = 8.dp
+                )
+                .background(MaterialTheme.colorScheme.background)
+                .align(Alignment.BottomCenter)
+        ) {
+            LazyColumn {
+                itemsIndexed(items = state) { index, coupon ->
+                    CouponItem(
+                        isChoose = temporarySelectedCouponId == index,
+                        onChoose = { temporarySelectedCouponId = index },
+                        discount = coupon.discountedPrice,
+                        description = coupon.description,
+                        color1 = coupon.color1,
+                        color2 = coupon.color2,
+                        expiredDate = coupon.expiredDate
+                    )
+                }
+            }
+            Button(
+                modifier = Modifier
+                    .padding(top = 8.dp)
+                    .height(55.dp)
+                    .fillMaxWidth(),
+                shape = RoundedCornerShape(10.dp),
+                onClick = {
+                    onChoose(temporarySelectedCouponId!!)
+                    onConfirmationCoupon()
+                },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.primary
+                )
+            ) {
+                Text(
+                    fontFamily = poppinsFontFamily,
+                    text = "Confirmation",
+                    fontSize = 14.sp,
+                    color = Color.White
+                )
+            }
+        }
     }
 }
 
@@ -561,6 +709,45 @@ fun BottomSheetShippingContent(
                 )
             }
         }
+    }
+}
+
+fun calculateFinalPrice(
+    subTotal: Double,
+    shippingPrice: Double?,
+    coupon: Coupon?
+) : Double {
+    var finalPrice = subTotal
+
+    val shippingCost = if (coupon?.discountedPrice == "FREE SHIPPING") {
+        0.0
+    } else {
+        shippingPrice ?: 0.0
+    }
+
+    finalPrice += shippingCost
+
+    coupon?.discountedPrice?.let { discount ->
+        if (discount.endsWith("%")) {
+            val discountPercentage = discount.replace("%","")
+                .toDoubleOrNull() ?: 0.0
+            finalPrice -= (finalPrice * (discountPercentage / 100))
+        }
+    }
+
+    return finalPrice
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun BottomSheetCouponContentPreview() {
+    VibeStoreTheme(dynamicColor = false) {
+        BottomSheetCouponContent(
+            state = DataDummy.dummyCoupon,
+            selectedCouponId = 0,
+            onChoose = {},
+            onConfirmationCoupon = {}
+        )
     }
 }
 
@@ -657,14 +844,14 @@ private fun CheckoutContentPreview() {
         CheckoutContent(
             onEditAddress = {},
             onShowDialog = {},
-            paymentMethod = DataDummy.dummyPaymentMethod,
             onChooseShipping = {},
             selectedLocation = UserLocation(0, "", ""),
             selectedLocationId = -1,
-            selectedPaymentId = 0,
-            onChoosePayment = {},
             selectedShippingId = 2,
-            shippingItem = DataDummy.dummyShipping
+            shippingItem = DataDummy.dummyShipping,
+            onChooseCoupon = {},
+            selectedCouponId = 2,
+            couponItem = DataDummy.dummyCoupon
         )
     }
 }
