@@ -98,6 +98,7 @@ fun CheckoutScreen(
     val couponItem = DataDummy.dummyCoupon
     val selectedCouponId by viewModel.selectedCouponId.observeAsState()
     val selectedShippingId by viewModel.selectedShippingId.observeAsState()
+    val isButtonEnabled = (selectedLocationId != -1 && selectedShippingId != null)
 
     if (isSheetShippingOpen) {
         BottomSheetShipping(
@@ -163,7 +164,8 @@ fun CheckoutScreen(
             shippingItem = shippingItem,
             onChooseCoupon = { isSheetCouponOpen = true },
             selectedCouponId = selectedCouponId,
-            couponItem = couponItem
+            couponItem = couponItem,
+            isButtonEnabled = isButtonEnabled
         )
 
         if (showDialog) {
@@ -188,7 +190,8 @@ fun CheckoutContent(
     selectedShippingId: Int?,
     shippingItem: List<Shipping>,
     selectedCouponId: Int?,
-    couponItem: List<Coupon>
+    couponItem: List<Coupon>,
+    isButtonEnabled: Boolean = false,
 ) {
     val subTotal = state?.totalPrice ?: 0.0
     val shippingCost = selectedShippingId?.let {
@@ -460,6 +463,7 @@ fun CheckoutContent(
                     modifier = Modifier.padding(vertical = 8.dp)
                 )
                 Button(
+                    enabled = isButtonEnabled,
                     modifier = Modifier
                         .padding(top = 8.dp, bottom = 8.dp)
                         .height(55.dp)

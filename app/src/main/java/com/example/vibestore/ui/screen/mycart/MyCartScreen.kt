@@ -87,6 +87,7 @@ fun MyCartScreen(
     var checkedAllValue by remember { mutableStateOf(false) }
     val selectedCartItems by viewModel.selectedCartItems.observeAsState(emptySet())
     val context = LocalContext.current
+    val isCheckoutEnabled = selectedCartItems.isNotEmpty()
 
     LaunchedEffect(cartItems.size, selectedCartItems.size) {
         checkedAllValue = if (cartItems.isNotEmpty()) {
@@ -159,7 +160,8 @@ fun MyCartScreen(
                             viewModel.updateCheckedItem(item, isChecked)
                         }
                         checkedValue = isChecked
-                    }
+                    },
+                    isCheckoutEnabled = isCheckoutEnabled
                 )
             }
         }
@@ -179,6 +181,7 @@ fun MyCartContent(
     onCheckedChange: (Cart, Boolean) -> Unit,
     onCheckedAllChange: (Boolean) -> Unit,
     addOrder: () -> Unit,
+    isCheckoutEnabled: Boolean = false
 ) {
 
     Column(
@@ -264,6 +267,7 @@ fun MyCartContent(
                 }
                 Spacer(modifier = Modifier.size(16.dp))
                 Button(
+                    enabled = isCheckoutEnabled,
                     modifier = Modifier
                         .height(55.dp)
                         .width(120.dp),
