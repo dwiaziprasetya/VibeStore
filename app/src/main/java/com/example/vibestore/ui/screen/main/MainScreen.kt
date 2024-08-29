@@ -41,7 +41,8 @@ fun MainScreen(
                     Screen.Notification.route,
                     Screen.Checkout.route,
                     Screen.Address.route,
-                    Screen.AddAddress.route
+                    Screen.AddAddress.route,
+                    Screen.Payment.route
                 )
             ) {
                 BottomNavigation(

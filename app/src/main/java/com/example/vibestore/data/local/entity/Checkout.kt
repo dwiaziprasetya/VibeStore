@@ -25,6 +25,9 @@ data class Checkout(
     @ColumnInfo(name = "shipping_method")
     val shippingMethod: String,
 
+    @ColumnInfo(name = "checkout_date")
+    val checkoutDate: Long = System.currentTimeMillis(),
+
     @ColumnInfo(name = "shipping_cost")
     val shippingCost: Double,
 
@@ -32,7 +35,7 @@ data class Checkout(
     val shippingDescription: String,
 
     @ColumnInfo(name = "payment_method")
-    val paymentMethod: String,
+    val paymentMethod: String = "",
 
     @ColumnInfo(name = "total_price")
     val totalPrice: Double,

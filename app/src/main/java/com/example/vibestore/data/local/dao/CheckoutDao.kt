@@ -15,5 +15,9 @@ interface CheckoutDao {
     @Query("SELECT * FROM checkout")
     fun getAllCheckouts(): LiveData<List<Checkout>>
 
+    @Query("SELECT * FROM checkout ORDER BY checkout_date DESC LIMIT 1")
+    fun getLatestCheckout(): LiveData<Checkout>
 
+    @Query("UPDATE checkout SET payment_method = :paymentMethod WHERE id = :id")
+    suspend fun updatePaymentMethod(id: Int, paymentMethod: String)
 }

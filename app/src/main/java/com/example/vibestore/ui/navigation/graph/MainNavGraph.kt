@@ -25,6 +25,7 @@ import com.example.vibestore.ui.screen.home.HomeScreen
 import com.example.vibestore.ui.screen.mycart.MyCartScreen
 import com.example.vibestore.ui.screen.notification.NotificationScreen
 import com.example.vibestore.ui.screen.ourproduct.OurProductScreen
+import com.example.vibestore.ui.screen.payment.PaymentScreen
 import com.example.vibestore.ui.screen.profile.ProfileScreen
 
 @Composable
@@ -156,6 +157,35 @@ fun MainNavGraph(
             }
         ) {
             AddressScreen(navHostController = navController)
+        }
+        composable(
+            route = Screen.Payment.route,
+            exitTransition = {
+                slideOutOfContainer(
+                    AnimatedContentTransitionScope.SlideDirection.Left,
+                    tween(500)
+                )
+            },
+            enterTransition = {
+                slideIntoContainer(
+                    AnimatedContentTransitionScope.SlideDirection.Left,
+                    tween(500)
+                )
+            },
+            popExitTransition = {
+                slideOutOfContainer(
+                    AnimatedContentTransitionScope.SlideDirection.Right,
+                    tween(500)
+                )
+            },
+            popEnterTransition = {
+                slideIntoContainer(
+                    AnimatedContentTransitionScope.SlideDirection.Right,
+                    tween(500)
+                )
+            }
+        ) {
+            PaymentScreen(navController = navController)
         }
         composable(
             route = Screen.AddAddress.route,

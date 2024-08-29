@@ -100,6 +100,17 @@ fun CheckoutScreen(
     val selectedShippingId by viewModel.selectedShippingId.observeAsState()
     val isButtonEnabled = (selectedLocationId != -1 && selectedShippingId != null)
 
+    val subTotal = latestOrder?.totalPrice ?: 0.0
+    val shippingCost = selectedShippingId?.let {
+        shippingItem[it].price
+    } ?: 0.0
+    val selectedCoupon = selectedCouponId?.let { couponItem[it] }
+    val finalPrice = calculateFinalPrice(
+        subTotal = subTotal,
+        shippingPrice = shippingCost,
+        coupon = selectedCoupon
+    )
+
     if (isSheetShippingOpen) {
         BottomSheetShipping(
             onDismiss = { isSheetShippingOpen = false },
@@ -165,7 +176,23 @@ fun CheckoutScreen(
             onChooseCoupon = { isSheetCouponOpen = true },
             selectedCouponId = selectedCouponId,
             couponItem = couponItem,
-            isButtonEnabled = isButtonEnabled
+            isButtonEnabled = isButtonEnabled,
+            finalPrice = finalPrice,
+            onChoosePayment = {
+                if (selectedLocationId != -1 && selectedShippingId != null) {
+                    viewModel.addToCheckout(
+                        receiverName = selectedLocation?.name ?: "",
+                        receiverAddress = selectedLocation?.address ?: "",
+                        orderItems = latestOrder?.items ?: emptyList(),
+                        shippingMethod = shippingItem[selectedShippingId!!].name,
+                        shippingCost = shippingItem[selectedShippingId!!].price,
+                        shippingDescription = shippingItem[selectedShippingId!!].description,
+                        paymentMethod = "Cash On Delivery",
+                        totalPrice = finalPrice
+                    )
+                    navController.navigate(Screen.Payment.route)
+                }
+            }
         )
 
         if (showDialog) {
@@ -192,19 +219,9 @@ fun CheckoutContent(
     selectedCouponId: Int?,
     couponItem: List<Coupon>,
     isButtonEnabled: Boolean = false,
+    onChoosePayment: () -> Unit,
+    finalPrice: Double,
 ) {
-    val subTotal = state?.totalPrice ?: 0.0
-    val shippingCost = selectedShippingId?.let {
-        shippingItem[it].price
-    } ?: 0.0
-
-    val selectedCoupon = selectedCouponId?.let { couponItem[it] }
-    val finalPrice = calculateFinalPrice(
-        subTotal = subTotal,
-        shippingPrice = shippingCost,
-        coupon = selectedCoupon
-    )
-
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -397,7 +414,7 @@ fun CheckoutContent(
                     )
                     Text(
                         fontFamily = poppinsFontFamily,
-                        text = "$${state?.totalPrice}",
+                        text = "$${"%.2f".format(state?.totalPrice)}",
                         fontWeight = FontWeight.SemiBold,
                         color = MaterialTheme.colorScheme.primary
                     )
@@ -443,8 +460,10 @@ fun CheckoutContent(
                     ) {
                         if (selectedCouponId != null) {
                             Text(
-                                text = if (selectedShippingId == null) "$${(state?.totalPrice)}"
-                                else "$${(state?.totalPrice)?.plus(shippingItem[selectedShippingId].price)}",
+                                text = if (selectedShippingId == null) "$${"%.2f".format(state?.totalPrice)}"
+                                else "$${"%.2f".format(
+                                    (state?.totalPrice)?.plus(shippingItem[selectedShippingId].price)
+                                )}",
                                 fontFamily = poppinsFontFamily,
                                 textDecoration = TextDecoration.LineThrough,
                                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
@@ -469,8 +488,7 @@ fun CheckoutContent(
                         .height(55.dp)
                         .fillMaxWidth(),
                     shape = RoundedCornerShape(10.dp),
-                    onClick = {
-                    },
+                    onClick = onChoosePayment,
                     colors = ButtonDefaults.buttonColors(
                         containerColor = MaterialTheme.colorScheme.primary
                     )
@@ -855,7 +873,9 @@ private fun CheckoutContentPreview() {
             shippingItem = DataDummy.dummyShipping,
             onChooseCoupon = {},
             selectedCouponId = 2,
-            couponItem = DataDummy.dummyCoupon
+            couponItem = DataDummy.dummyCoupon,
+            onChoosePayment = {},
+            finalPrice = 0.0
         )
     }
 }

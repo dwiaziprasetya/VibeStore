@@ -6,10 +6,12 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.vibestore.data.local.dao.CartDao
+import com.example.vibestore.data.local.dao.CheckoutDao
 import com.example.vibestore.data.local.dao.FavouriteDao
 import com.example.vibestore.data.local.dao.OrderDao
 import com.example.vibestore.data.local.dao.UserLocationDao
 import com.example.vibestore.data.local.entity.Cart
+import com.example.vibestore.data.local.entity.Checkout
 import com.example.vibestore.data.local.entity.Favourite
 import com.example.vibestore.data.local.entity.Order
 import com.example.vibestore.data.local.entity.UserLocation
@@ -31,12 +33,26 @@ class VibeStoreRepository private constructor(
     private val cartDao: CartDao,
     private val favouriteDao: FavouriteDao,
     private val orderDao: OrderDao,
+    private val checkoutDao: CheckoutDao,
     private val userLocationDao: UserLocationDao,
     private val fusedLocationClient: FusedLocationProviderClient,
     private val geocoder: Geocoder
 ){
+
     fun getSession() : Flow<LoginResponse> {
         return pref.getSession()
+    }
+
+    suspend fun addCheckout(checkout: Checkout) {
+        return checkoutDao.insert(checkout)
+    }
+
+    fun getLatestCheckout(): LiveData<Checkout> {
+        return checkoutDao.getLatestCheckout()
+    }
+
+    suspend fun updatePaymentMethodCheckout(checkoutId: Int, paymentMethod: String) {
+        return checkoutDao.updatePaymentMethod(checkoutId, paymentMethod)
     }
 
     suspend fun addUsersLocation(userLocation: UserLocation) {
@@ -185,6 +201,7 @@ class VibeStoreRepository private constructor(
             cartDao: CartDao,
             favouriteDao: FavouriteDao,
             orderDao: OrderDao,
+            checkoutDao: CheckoutDao,
             userLocationDao: UserLocationDao,
             fusedLocationClient: FusedLocationProviderClient,
             geocoder: Geocoder
@@ -194,6 +211,7 @@ class VibeStoreRepository private constructor(
             cartDao,
             favouriteDao,
             orderDao,
+            checkoutDao,
             userLocationDao,
             fusedLocationClient,
             geocoder,

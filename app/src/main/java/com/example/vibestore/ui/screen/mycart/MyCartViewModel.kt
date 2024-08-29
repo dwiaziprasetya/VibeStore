@@ -23,8 +23,6 @@ class MyCartViewModel(
         items.sumOf { it.productPrice.toDouble() * it.productQuantity }
     }
 
-
-
     fun updateQuantity(cart: Cart, quantity: Int) {
         viewModelScope.launch {
             if (quantity > 0) {

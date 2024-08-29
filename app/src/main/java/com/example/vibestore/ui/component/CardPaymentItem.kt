@@ -19,14 +19,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.vibestore.data.local.DataDummy
-import com.example.vibestore.model.PaymentMethod
+import com.example.vibestore.R
 import com.example.vibestore.ui.theme.VibeStoreTheme
 
 @Composable
 fun CardPaymentItem(
     modifier: Modifier = Modifier,
-    item: PaymentMethod,
+    icon: Int,
+    name: String,
     isChoose: Boolean,
     onChoose: () -> Unit
 ) {
@@ -50,8 +50,8 @@ fun CardPaymentItem(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
-                painter = painterResource(item.icon),
-                contentDescription = "",
+                painter = painterResource(icon),
+                contentDescription = name,
                 tint = Color.Unspecified,
             )
             Spacer(modifier = Modifier.weight(1f))
@@ -63,12 +63,13 @@ fun CardPaymentItem(
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 private fun CardPaymentItemPreview() {
     VibeStoreTheme(dynamicColor = false) {
         CardPaymentItem(
-            item = DataDummy.dummyPaymentMethod.first(),
+            icon = R.drawable.icon_alfamart,
+            name = "Cash On Delivery",
             isChoose = true,
             onChoose = {}
         )
