@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -53,6 +54,11 @@ fun CardPaymentItem(
                 painter = painterResource(icon),
                 contentDescription = name,
                 tint = Color.Unspecified,
+                modifier = Modifier
+                    .size(
+                        width = 100.dp,
+                        height = 60.dp
+                    )
             )
             Spacer(modifier = Modifier.weight(1f))
             RadioButton(
@@ -68,7 +74,7 @@ fun CardPaymentItem(
 private fun CardPaymentItemPreview() {
     VibeStoreTheme(dynamicColor = false) {
         CardPaymentItem(
-            icon = R.drawable.icon_alfamart,
+            icon = R.drawable.icon_master_card,
             name = "Cash On Delivery",
             isChoose = true,
             onChoose = {}

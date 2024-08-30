@@ -43,13 +43,21 @@ object DataDummy {
     )
     val dummyPaymentMethod = listOf(
         PaymentMethod(
-            icon = R.drawable.icon_alfamart,
-            name = "Alfamart"
+            icon = R.drawable.icon_discover,
+            name = "Discover"
         ),
         PaymentMethod(
-            icon = R.drawable.icon_brimo,
-            name = "BRI Mobile"
-        )
+            icon = R.drawable.icon_master_card,
+            name = "Master Card"
+        ),
+        PaymentMethod(
+            icon = R.drawable.icon_paypal,
+            name = "Paypal"
+        ),
+        PaymentMethod(
+            icon = R.drawable.icon_visa,
+            name = "Visa"
+        ),
     )
     val dummyCoupon = listOf(
         Coupon(
