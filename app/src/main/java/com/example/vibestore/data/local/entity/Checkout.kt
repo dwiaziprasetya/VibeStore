@@ -5,6 +5,10 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+import java.util.TimeZone
 
 @Entity
 @Parcelize
@@ -25,6 +29,15 @@ data class Checkout(
     @ColumnInfo(name = "shipping_method")
     val shippingMethod: String,
 
+    @ColumnInfo(name = "coupon")
+    val coupon: String,
+
+    @ColumnInfo(name = "formatted_order_date")
+    val formattedCheckoutDate: String = getCurrentFormattedDate(),
+
+    @ColumnInfo(name = "formatted_order_time")
+    val formattedCheckoutTime: String = getCurrentFormattedTime(),
+
     @ColumnInfo(name = "checkout_date")
     val checkoutDate: Long = System.currentTimeMillis(),
 
@@ -40,3 +53,15 @@ data class Checkout(
     @ColumnInfo(name = "total_price")
     val totalPrice: Double,
 ) : Parcelable
+
+fun getCurrentFormattedDate(): String {
+    val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+    dateFormat.timeZone = TimeZone.getTimeZone("Asia/Jakarta")
+    return dateFormat.format(Date())
+}
+
+fun getCurrentFormattedTime(): String {
+    val timeFormat = SimpleDateFormat("hh:mm a", Locale.getDefault())
+    timeFormat.timeZone = TimeZone.getTimeZone("Asia/Jakarta")
+    return timeFormat.format(Date())
+}

@@ -26,7 +26,7 @@ import com.example.vibestore.ui.screen.mycart.MyCartScreen
 import com.example.vibestore.ui.screen.notification.NotificationScreen
 import com.example.vibestore.ui.screen.ourproduct.OurProductScreen
 import com.example.vibestore.ui.screen.payment.PaymentScreen
-import com.example.vibestore.ui.screen.payment.success_payment.SuccessPayment
+import com.example.vibestore.ui.screen.payment.success_payment.SuccessPaymentScreen
 import com.example.vibestore.ui.screen.profile.ProfileScreen
 
 @Composable
@@ -145,7 +145,7 @@ fun MainNavGraph(
                 )
             }
         ) {
-            SuccessPayment(navController = navController)
+            SuccessPaymentScreen(navController = navController)
         }
         composable(
             route = Screen.Address.route,

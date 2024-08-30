@@ -34,6 +34,7 @@ class CheckoutViewModel(
         shippingCost: Double,
         shippingDescription: String,
         paymentMethod: String = "",
+        coupon: String = "",
         totalPrice: Double
     ) {
         val checkout = Checkout(
@@ -44,7 +45,8 @@ class CheckoutViewModel(
             shippingCost = shippingCost,
             shippingDescription = shippingDescription,
             paymentMethod = paymentMethod,
-            totalPrice = totalPrice
+            totalPrice = totalPrice,
+            coupon = coupon
         )
 
         viewModelScope.launch {

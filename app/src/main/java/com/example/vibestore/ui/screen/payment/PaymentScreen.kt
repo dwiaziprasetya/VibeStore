@@ -272,6 +272,7 @@ private fun PaymentScreenPreview() {
                 shippingDescription = "",
                 paymentMethod = "",
                 totalPrice = 0.0,
+                coupon = ""
             ),
             onChoosePaymentMethod = {},
             onChooseCardPayment = {}

@@ -180,16 +180,30 @@ fun CheckoutScreen(
             finalPrice = finalPrice,
             onChoosePayment = {
                 if (selectedLocationId != -1 && selectedShippingId != null) {
-                    viewModel.addToCheckout(
-                        receiverName = selectedLocation?.name ?: "",
-                        receiverAddress = selectedLocation?.address ?: "",
-                        orderItems = latestOrder?.items ?: emptyList(),
-                        shippingMethod = shippingItem[selectedShippingId!!].name,
-                        shippingCost = shippingItem[selectedShippingId!!].price,
-                        shippingDescription = shippingItem[selectedShippingId!!].description,
-                        paymentMethod = "Cash On Delivery",
-                        totalPrice = finalPrice
-                    )
+                    if (selectedCouponId != null) {
+                        viewModel.addToCheckout(
+                            receiverName = selectedLocation?.name ?: "",
+                            receiverAddress = selectedLocation?.address ?: "",
+                            orderItems = latestOrder?.items ?: emptyList(),
+                            shippingMethod = shippingItem[selectedShippingId!!].name,
+                            shippingCost = shippingItem[selectedShippingId!!].price,
+                            shippingDescription = shippingItem[selectedShippingId!!].description,
+                            paymentMethod = "Cash On Delivery",
+                            coupon = couponItem[selectedCouponId!!].discountedPrice,
+                            totalPrice = finalPrice
+                        )
+                    } else {
+                        viewModel.addToCheckout(
+                            receiverName = selectedLocation?.name ?: "",
+                            receiverAddress = selectedLocation?.address ?: "",
+                            orderItems = latestOrder?.items ?: emptyList(),
+                            shippingMethod = shippingItem[selectedShippingId!!].name,
+                            shippingCost = shippingItem[selectedShippingId!!].price,
+                            shippingDescription = shippingItem[selectedShippingId!!].description,
+                            paymentMethod = "Cash On Delivery",
+                            totalPrice = finalPrice
+                        )
+                    }
                     navController.navigate(Screen.Payment.route)
                 }
             }
