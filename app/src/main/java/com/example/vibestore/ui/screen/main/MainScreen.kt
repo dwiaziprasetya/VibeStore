@@ -42,7 +42,8 @@ fun MainScreen(
                     Screen.Checkout.route,
                     Screen.Address.route,
                     Screen.AddAddress.route,
-                    Screen.Payment.route
+                    Screen.Payment.route,
+                    Screen.SuccessPayment.route
                 )
             ) {
                 BottomNavigation(

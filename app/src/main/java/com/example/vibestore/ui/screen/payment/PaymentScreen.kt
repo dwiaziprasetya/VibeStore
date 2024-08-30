@@ -36,6 +36,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -45,13 +46,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import cn.pedant.SweetAlert.SweetAlertDialog
 import com.example.vibestore.data.local.DataDummy
 import com.example.vibestore.data.local.entity.Checkout
+import com.example.vibestore.helper.DialogHelper
 import com.example.vibestore.helper.ViewModelFactory
 import com.example.vibestore.model.PaymentMethod
 import com.example.vibestore.ui.component.CardPaymentItem
+import com.example.vibestore.ui.navigation.model.Screen
 import com.example.vibestore.ui.theme.VibeStoreTheme
 import com.example.vibestore.ui.theme.poppinsFontFamily
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -67,6 +73,9 @@ fun PaymentScreen(
     val latestCeckout by viewModel.latestCheckout.observeAsState()
     val paymentMethod = DataDummy.dummyPaymentMethod
     val selectedPaymentId by viewModel.selectedPaymentId.observeAsState()
+    var dialog by remember { mutableStateOf<SweetAlertDialog?>(null) }
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
 
     Scaffold(
         topBar = {
@@ -112,6 +121,15 @@ fun PaymentScreen(
                     viewModel.addPaymentMethodToCheckout(
                         paymentMethod[selectedPaymentId!!].name
                     )
+                    dialog = DialogHelper.showDialogLoading(
+                        context = context,
+                        textContent = "Please wait"
+                    )
+                    scope.launch {
+                        delay(2000)
+                        dialog?.dismissWithAnimation()
+                        navController.navigate(Screen.SuccessPayment.route)
+                    }
                 },
                 onChooseCardPayment = {
                     viewModel.selectPayment(it)
