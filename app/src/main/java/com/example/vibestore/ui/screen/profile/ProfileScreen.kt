@@ -17,11 +17,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForwardIos
-import androidx.compose.material.icons.automirrored.filled.Help
 import androidx.compose.material.icons.automirrored.filled.Logout
-import androidx.compose.material.icons.filled.LocationOn
-import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.ShoppingBag
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.Divider
@@ -43,7 +39,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -133,8 +128,8 @@ fun ProfileScreen(
                         .padding(bottom = 16.dp)
                         .fillMaxWidth()
                 ) {
-                    Image(
-                        painter = painterResource(R.drawable.image_user),
+                    Icon(
+                        painter = painterResource(R.drawable.icon_profile_filled),
                         contentDescription = "profile",
                         modifier = Modifier
                             .size(100.dp)
@@ -144,7 +139,7 @@ fun ProfileScreen(
                                 color = MaterialTheme.colorScheme.primary,
                                 shape = CircleShape
                             ),
-                        contentScale = ContentScale.Crop
+                        tint = MaterialTheme.colorScheme.outline
                     )
                     Column(
                         modifier = Modifier
@@ -163,17 +158,11 @@ fun ProfileScreen(
                             text = "$ 2.341.000",
                             fontFamily = poppinsFontFamily,
                             fontSize = 14.sp,
+                            fontWeight = FontWeight.Medium,
                             color = MaterialTheme.colorScheme.outline,
                             modifier = Modifier
                         )
                     }
-                    Icon(
-                        imageVector = Icons.Default.Settings,
-                        contentDescription = "settings",
-                        tint = MaterialTheme.colorScheme.outline,
-                        modifier = Modifier
-                            .size(20.dp)
-                    )
                 }
             }
             AnimatedVisibility(
@@ -209,111 +198,6 @@ fun ProfileScreen(
                     )
                     Text(
                         text = stringResource(R.string.my_orders),
-                        fontFamily = poppinsFontFamily,
-                        modifier = Modifier
-                            .padding(start = 16.dp)
-                            .weight(1f),
-                        fontSize = 14.sp,
-                    )
-                    Icon(
-                        tint = MaterialTheme.colorScheme.outline,
-                        modifier = Modifier.size(20.dp),
-                        imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
-                        contentDescription = "forward"
-                    )
-                }
-            }
-            AnimatedVisibility(
-                visible = visible,
-                enter = slideInVertically(
-                    initialOffsetY = { -it },
-                    animationSpec = tween(durationMillis = 300)
-                ) + fadeIn(animationSpec = tween(durationMillis = 300))
-            ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Icon(
-                        tint = MaterialTheme.colorScheme.outline,
-                        imageVector = Icons.Default.LocationOn,
-                        contentDescription = "location",
-                        modifier = Modifier
-                            .padding(vertical = 16.dp)
-                            .size(20.dp)
-                    )
-                    Text(
-                        text = stringResource(R.string.address),
-                        fontFamily = poppinsFontFamily,
-                        modifier = Modifier
-                            .padding(start = 16.dp)
-                            .weight(1f),
-                        fontSize = 14.sp,
-                    )
-                    Icon(
-                        tint = MaterialTheme.colorScheme.outline,
-                        modifier = Modifier.size(20.dp),
-                        imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
-                        contentDescription = "forward"
-                    )
-                }
-            }
-            AnimatedVisibility(
-                visible = visible,
-                enter = slideInVertically(
-                    initialOffsetY = { -it },
-                    animationSpec = tween(durationMillis = 300)
-                ) + fadeIn(animationSpec = tween(durationMillis = 300))
-            ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Icon(
-                        tint = MaterialTheme.colorScheme.outline,
-                        imageVector = Icons.Default.Lock,
-                        contentDescription = "lock",
-                        modifier = Modifier
-                            .padding(vertical = 16.dp)
-                            .size(20.dp)
-                    )
-                    Text(
-                        text = stringResource(R.string.change_password),
-                        fontFamily = poppinsFontFamily,
-                        modifier = Modifier
-                            .padding(start = 16.dp)
-                            .weight(1f),
-                        fontSize = 14.sp,
-                    )
-                    Icon(
-                        tint = MaterialTheme.colorScheme.outline,
-                        modifier = Modifier.size(20.dp),
-                        imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
-                        contentDescription = "forward"
-                    )
-                }
-            }
-            AnimatedVisibility(
-                visible = visible,
-                enter = slideInVertically(
-                    initialOffsetY = { -it },
-                    animationSpec = tween(durationMillis = 300)
-                ) + fadeIn(animationSpec = tween(durationMillis = 300))
-            ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Icon(
-                        tint = MaterialTheme.colorScheme.outline,
-                        imageVector = Icons.AutoMirrored.Filled.Help,
-                        contentDescription = "help",
-                        modifier = Modifier
-                            .padding(vertical = 16.dp)
-                            .size(20.dp)
-                    )
-                    Text(
-                        text = stringResource(R.string.help_and_support),
                         fontFamily = poppinsFontFamily,
                         modifier = Modifier
                             .padding(start = 16.dp)

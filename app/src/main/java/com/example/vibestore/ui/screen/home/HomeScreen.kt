@@ -65,7 +65,6 @@ fun HomeScreen(
         modifier = Modifier.statusBarsPadding(),
         topBar = {
             CenterAlignedTopAppBar(
-                modifier = Modifier.padding(horizontal = 16.dp),
                 title = {
                     Text(
                         text = "",
@@ -73,7 +72,8 @@ fun HomeScreen(
                 },
                 navigationIcon = {
                     Row(
-                        verticalAlignment = Alignment.CenterVertically
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.padding(start = 16.dp)
                     ) {
                         Image(
                             painter = painterResource(R.drawable.logo),
@@ -96,13 +96,36 @@ fun HomeScreen(
                 },
                 actions = {
                     BadgedBox(badge = {
+                        Badge(
+                            containerColor = Color.Red,
+                            modifier = Modifier
+                                .size(10.dp)
+                                .offset(
+                                    x = (-6).dp,
+                                    y = 7.dp
+                                )
+                            )
+                        }
+                    ) {
+                        Icon(
+                            painter = painterResource(R.drawable.icon_notification_outlined),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .clickable {
+                                    navcontroller.navigate(Screen.Notification.route)
+                                }
+                        )
+                    }
+                    Spacer(modifier = Modifier.width(16.dp))
+                    BadgedBox(
+                        badge = {
                         if (cartItems.value.isNotEmpty()){
                             Badge(
                                 containerColor = Color.Red,
                                 contentColor = Color.White,
                                 modifier = Modifier
                                     .offset(
-                                        x = (-7).dp,
+                                        x = (-20).dp,
                                         y = 7.dp
                                     )
                             ) {
@@ -114,20 +137,12 @@ fun HomeScreen(
                             painter = painterResource(R.drawable.icon_cart_outlined),
                             contentDescription = "Cart",
                             modifier = Modifier
+                                .padding(end = 16.dp)
                                 .clickable {
                                     navcontroller.navigate(Screen.MyCart.route)
                                 }
                         )
                     }
-                    Spacer(modifier = Modifier.width(16.dp))
-                    Icon(
-                        painter = painterResource(R.drawable.icon_notification_outlined),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .clickable { 
-                                navcontroller.navigate(Screen.Notification.route)
-                            }
-                    )
                 },
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                     scrolledContainerColor = MaterialTheme.colorScheme.background,

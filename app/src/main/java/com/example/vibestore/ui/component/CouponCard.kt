@@ -39,9 +39,9 @@ fun CouponCard(
     expiredDate: String,
     color1: Color,
     fontSizeDiscount: Int = 40,
-    fontSizeExpiredDate: Int = 12,
-    fontSizeDescription: Int = 12,
-    height: Dp = 200.dp,
+    fontSizeExpiredDate: Int = 14,
+    fontSizeDescription: Int = 14,
+    height: Dp = 170.dp,
     color2: Color
 ) {
     val gradient = Brush.linearGradient(
