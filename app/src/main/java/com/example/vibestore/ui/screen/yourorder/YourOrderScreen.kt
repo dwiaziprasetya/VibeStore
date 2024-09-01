@@ -91,13 +91,16 @@ fun YourOrderScreen(
                     modifier = Modifier
                         .background(MaterialTheme.colorScheme.background)
                 ) {
-                    items(items = checkoutItems) { checkout ->
+                    items(
+                        items = checkoutItems,
+                    ) { checkout ->
                         OrderItem(
                             date = checkout.formattedCheckoutDate,
                             firstOrderItemName = checkout.orderItems.firstOrNull()?.productName ?: "",
                             firstOrderItemImage = checkout.orderItems.firstOrNull()?.productImage ?: "",
                             otherOrderQuantity = checkout.orderItems.size - 1,
-                            totalPrice = checkout.totalPrice
+                            totalPrice = checkout.totalPrice,
+                            modifier = Modifier
                         )
                     }
                 }

@@ -20,7 +20,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -49,7 +48,7 @@ fun OurProductScreen(
         factory = ViewModelFactory
             .getInstance(LocalContext.current))
 ) {
-    var sortValue by remember { mutableStateOf("asc") }
+    val sortValue by remember { mutableStateOf("asc") }
     val uiState by viewModel.uiState.observeAsState(initial = UiState.Loading)
 
     Scaffold(
@@ -64,10 +63,10 @@ fun OurProductScreen(
                         viewModel.searchProduct(query)
                     }
                 },
-                onSortChange = { sort ->
-                    sortValue = if (sort == "asc") "asc" else "desc"
-                    viewModel.sortProduct(sort)
-                }
+//                onSortChange = { sort ->
+//                    sortValue = if (sort == "asc") "asc" else "desc"
+//                    viewModel.sortProduct(sort)
+//                }
             )
         }
     ) { innerPadding ->
