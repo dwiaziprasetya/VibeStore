@@ -20,4 +20,7 @@ interface CheckoutDao {
 
     @Query("UPDATE checkout SET payment_method = :paymentMethod WHERE id = :id")
     suspend fun updatePaymentMethod(id: Int, paymentMethod: String)
+
+    @Query("DELETE FROM checkout")
+    suspend fun deleteAllitems()
 }

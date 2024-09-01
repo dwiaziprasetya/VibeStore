@@ -9,6 +9,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -45,6 +46,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.vibestore.R
 import com.example.vibestore.data.local.entity.Favourite
 import com.example.vibestore.helper.ViewModelFactory
+import com.example.vibestore.ui.component.BoxEmptyAnimation
 import com.example.vibestore.ui.component.FavouriteItem
 import com.example.vibestore.ui.navigation.model.Screen
 import com.example.vibestore.ui.theme.VibeStoreTheme
@@ -98,11 +100,20 @@ fun FavouriteScreen(
                 .fillMaxSize()
         ) {
             if (favouriteItems.isEmpty()) {
-                Text(
-                    text = "Favourite is empty",
-                    modifier = Modifier.align(Alignment.Center),
-                    fontFamily = poppinsFontFamily
-                )
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                ) {
+                    BoxEmptyAnimation(
+                        modifier = Modifier.size(200.dp)
+                    )
+                    Text(
+                        text = "You don't have any favourite items",
+                        fontFamily = poppinsFontFamily,
+                        color = MaterialTheme.colorScheme.outline
+                    )
+                }
             } else {
                 FavouriteContent(
                     state = favouriteItems,

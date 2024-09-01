@@ -185,7 +185,9 @@ fun ProfileScreen(
                 ) + fadeIn(animationSpec = tween(durationMillis = 300))
             ) {
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { navController.navigate(Screen.YourOrder.route) },
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Icon(

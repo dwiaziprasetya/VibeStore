@@ -23,5 +23,4 @@ interface OrderDao {
 
     @Query("DELETE FROM `order`")
     suspend fun deleteAllOrders()
-
 }

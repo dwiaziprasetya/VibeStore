@@ -65,6 +65,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.vibestore.R
 import com.example.vibestore.data.local.entity.Cart
 import com.example.vibestore.helper.ViewModelFactory
+import com.example.vibestore.ui.component.CartEmptyAnimation
 import com.example.vibestore.ui.component.CartItem
 import com.example.vibestore.ui.navigation.model.Screen
 import com.example.vibestore.ui.theme.VibeStoreTheme
@@ -133,11 +134,26 @@ fun MyCartScreen(
                 .fillMaxSize()
         ) {
             if (cartItems.isEmpty()) {
-                Text(
-                    text = "Cart is empty",
-                    modifier = Modifier.align(Alignment.Center),
-                    fontFamily = poppinsFontFamily
-                )
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                ) {
+                    CartEmptyAnimation(
+                        modifier = Modifier
+                            .size(100.dp)
+                    )
+                    Text(
+                        text = "Cart is empty",
+                        fontFamily = poppinsFontFamily,
+                        color = MaterialTheme.colorScheme.outline
+                    )
+                    Text(
+                        text = "C'mon add some items",
+                        fontFamily = poppinsFontFamily,
+                        color = MaterialTheme.colorScheme.outline
+                    )
+                }
             } else {
                 MyCartContent(
                     selectedCartItems = selectedCartItems,

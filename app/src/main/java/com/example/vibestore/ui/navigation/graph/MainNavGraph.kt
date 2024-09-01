@@ -28,6 +28,7 @@ import com.example.vibestore.ui.screen.ourproduct.OurProductScreen
 import com.example.vibestore.ui.screen.payment.PaymentScreen
 import com.example.vibestore.ui.screen.payment.success_payment.SuccessPaymentScreen
 import com.example.vibestore.ui.screen.profile.ProfileScreen
+import com.example.vibestore.ui.screen.yourorder.YourOrderScreen
 
 @Composable
 fun MainNavGraph(
@@ -129,6 +130,35 @@ fun MainNavGraph(
                 navController = navController,
                 selectedLocationId = id
             )
+        }
+        composable(
+            route = Screen.YourOrder.route,
+            exitTransition = {
+                slideOutOfContainer(
+                    AnimatedContentTransitionScope.SlideDirection.Left,
+                    tween(500)
+                )
+            },
+            enterTransition = {
+                slideIntoContainer(
+                    AnimatedContentTransitionScope.SlideDirection.Left,
+                    tween(500)
+                )
+            },
+            popExitTransition = {
+                slideOutOfContainer(
+                    AnimatedContentTransitionScope.SlideDirection.Right,
+                    tween(500)
+                )
+            },
+            popEnterTransition = {
+                slideIntoContainer(
+                    AnimatedContentTransitionScope.SlideDirection.Right,
+                    tween(500)
+                )
+            }
+        ) {
+            YourOrderScreen(navController = navController)
         }
         composable(
             route = Screen.SuccessPayment.route,
@@ -290,7 +320,7 @@ fun MainNavGraph(
                 )
             }
         ){
-            NotificationScreen()
+            NotificationScreen(navController = navController)
         }
         composable(Screen.Coupon.route){ CouponScreen() }
         composable(Screen.Favourite.route){ FavouriteScreen(navController) }

@@ -20,4 +20,7 @@ interface UserLocationDao {
 
     @Query("DELETE FROM userlocation WHERE id = :id")
     suspend fun deleteUserLocation(id: Int)
+
+    @Query("DELETE FROM userlocation")
+    suspend fun deleteAllItems()
 }

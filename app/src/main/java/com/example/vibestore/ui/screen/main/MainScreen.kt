@@ -43,7 +43,8 @@ fun MainScreen(
                     Screen.Address.route,
                     Screen.AddAddress.route,
                     Screen.Payment.route,
-                    Screen.SuccessPayment.route
+                    Screen.SuccessPayment.route,
+                    Screen.YourOrder.route
                 )
             ) {
                 BottomNavigation(

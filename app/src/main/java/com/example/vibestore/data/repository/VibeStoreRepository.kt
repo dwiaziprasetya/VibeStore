@@ -51,6 +51,10 @@ class VibeStoreRepository private constructor(
         return checkoutDao.getLatestCheckout()
     }
 
+    fun getAllCheckout() : LiveData<List<Checkout>> {
+        return checkoutDao.getAllCheckouts()
+    }
+
     suspend fun updatePaymentMethodCheckout(checkoutId: Int, paymentMethod: String) {
         return checkoutDao.updatePaymentMethod(checkoutId, paymentMethod)
     }
@@ -151,6 +155,9 @@ class VibeStoreRepository private constructor(
         pref.logout()
         cartDao.deleteAllItems()
         favouriteDao.deleteAllItems()
+        orderDao.deleteAllOrders()
+        checkoutDao.deleteAllitems()
+        userLocationDao.deleteAllItems()
     }
 
     suspend fun login(

@@ -25,6 +25,7 @@
     <string name="product_detail">Product Detail</string>
     <string name="description_product">Description Product</string>
     <string name="checkout">Checkout</string>
+    <string name="your_order">Your Order</string>
     <string name="notification">Notification</string>
     <string name="add_to_cart">Add to Cart</string>
     <string name="for_you">For You</string>

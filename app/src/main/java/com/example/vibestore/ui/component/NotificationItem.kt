@@ -26,7 +26,8 @@ import com.example.vibestore.ui.theme.VibeStoreTheme
 import com.example.vibestore.ui.theme.poppinsFontFamily
 
 @Composable
-fun NotificationItem(modifier: Modifier = Modifier) {
+fun NotificationItem(
+) {
     Row(
         modifier = Modifier
             .padding(
@@ -36,7 +37,7 @@ fun NotificationItem(modifier: Modifier = Modifier) {
             .fillMaxWidth()
     ) {
         Icon(
-            painter = painterResource(R.drawable.icon_cart_filled),
+            painter = painterResource(R.drawable.icon_shopping_bag_filled),
             contentDescription = "",
             tint = MaterialTheme.colorScheme.primary
         )

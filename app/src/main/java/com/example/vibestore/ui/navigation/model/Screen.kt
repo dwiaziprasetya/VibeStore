@@ -19,6 +19,7 @@ sealed class Screen(val route: String) {
     data object Payment : Screen("payment")
     data object SuccessPayment : Screen("successpayment")
     data object Address : Screen("address")
+    data object YourOrder : Screen("yourorder")
     data object AddAddress : Screen("addaddress")
     data object MyCart : Screen("mycart")
     data object Notification : Screen("notification")

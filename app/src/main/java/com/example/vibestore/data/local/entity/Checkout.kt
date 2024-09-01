@@ -55,7 +55,7 @@ data class Checkout(
 ) : Parcelable
 
 fun getCurrentFormattedDate(): String {
-    val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+    val dateFormat = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
     dateFormat.timeZone = TimeZone.getTimeZone("Asia/Jakarta")
     return dateFormat.format(Date())
 }
