@@ -8,11 +8,13 @@ import androidx.lifecycle.MutableLiveData
 import com.example.vibestore.data.local.dao.CartDao
 import com.example.vibestore.data.local.dao.CheckoutDao
 import com.example.vibestore.data.local.dao.FavouriteDao
+import com.example.vibestore.data.local.dao.NotificationDao
 import com.example.vibestore.data.local.dao.OrderDao
 import com.example.vibestore.data.local.dao.UserLocationDao
 import com.example.vibestore.data.local.entity.Cart
 import com.example.vibestore.data.local.entity.Checkout
 import com.example.vibestore.data.local.entity.Favourite
+import com.example.vibestore.data.local.entity.Notification
 import com.example.vibestore.data.local.entity.Order
 import com.example.vibestore.data.local.entity.UserLocation
 import com.example.vibestore.data.remote.retrofit.ApiService
@@ -34,6 +36,7 @@ class VibeStoreRepository private constructor(
     private val favouriteDao: FavouriteDao,
     private val orderDao: OrderDao,
     private val checkoutDao: CheckoutDao,
+    private val notificationDao: NotificationDao,
     private val userLocationDao: UserLocationDao,
     private val fusedLocationClient: FusedLocationProviderClient,
     private val geocoder: Geocoder
@@ -45,6 +48,22 @@ class VibeStoreRepository private constructor(
 
     suspend fun addCheckout(checkout: Checkout) {
         return checkoutDao.insert(checkout)
+    }
+
+    suspend fun addNotification(notification: Notification) {
+        return notificationDao.insert(notification)
+    }
+
+    fun getUnReadNotification(): LiveData<Int> {
+        return notificationDao.getUnreadNotificationCount()
+    }
+
+    suspend fun markAsRead(notificationId: Int) {
+        notificationDao.markAsRead(notificationId)
+    }
+
+    fun getAllNotifications(): LiveData<List<Notification>> {
+        return notificationDao.getAllNotifications()
     }
 
     fun getLatestCheckout(): LiveData<Checkout> {
@@ -209,6 +228,7 @@ class VibeStoreRepository private constructor(
             favouriteDao: FavouriteDao,
             orderDao: OrderDao,
             checkoutDao: CheckoutDao,
+            notificationDao: NotificationDao,
             userLocationDao: UserLocationDao,
             fusedLocationClient: FusedLocationProviderClient,
             geocoder: Geocoder
@@ -219,6 +239,7 @@ class VibeStoreRepository private constructor(
             favouriteDao,
             orderDao,
             checkoutDao,
+            notificationDao,
             userLocationDao,
             fusedLocationClient,
             geocoder,

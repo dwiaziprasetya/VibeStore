@@ -24,6 +24,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -59,6 +60,7 @@ fun HomeScreen(
 ) {
 
     val cartItems = viewModel.cartItems.observeAsState(emptyList())
+    val unreadNotification by viewModel.unreadNotificationCount.observeAsState(0)
 
     Scaffold(
         contentWindowInsets = WindowInsets(0, 0, 0, 0),
@@ -96,17 +98,18 @@ fun HomeScreen(
                 },
                 actions = {
                     BadgedBox(badge = {
-                        Badge(
-                            containerColor = Color.Red,
-                            modifier = Modifier
-                                .size(10.dp)
-                                .offset(
-                                    x = (-6).dp,
-                                    y = 7.dp
-                                )
+                        if (unreadNotification > 0) {
+                            Badge(
+                                containerColor = Color.Red,
+                                modifier = Modifier
+                                    .size(10.dp)
+                                    .offset(
+                                        x = (-6).dp,
+                                        y = 7.dp
+                                    )
                             )
                         }
-                    ) {
+                    }) {
                         Icon(
                             painter = painterResource(R.drawable.icon_notification_outlined),
                             contentDescription = null,

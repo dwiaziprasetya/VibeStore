@@ -180,6 +180,13 @@ fun CheckoutScreen(
             finalPrice = finalPrice,
             onChoosePayment = {
                 if (selectedLocationId != -1 && selectedShippingId != null) {
+                    viewModel.addNotification(
+                        message = "Your order has been placed",
+                        notificationType = "Shopping",
+                        firstProductName = latestOrder?.items?.firstOrNull()?.productName ?: "",
+                        quantityCheckout = latestOrder?.items?.size ?: 0,
+                        firstProductImage = latestOrder?.items?.firstOrNull()?.productImage ?: "",
+                    )
                     if (selectedCouponId != null) {
                         viewModel.addToCheckout(
                             receiverName = selectedLocation?.name ?: "",

@@ -8,11 +8,13 @@ import androidx.room.TypeConverters
 import com.example.vibestore.data.local.dao.CartDao
 import com.example.vibestore.data.local.dao.CheckoutDao
 import com.example.vibestore.data.local.dao.FavouriteDao
+import com.example.vibestore.data.local.dao.NotificationDao
 import com.example.vibestore.data.local.dao.OrderDao
 import com.example.vibestore.data.local.dao.UserLocationDao
 import com.example.vibestore.data.local.entity.Cart
 import com.example.vibestore.data.local.entity.Checkout
 import com.example.vibestore.data.local.entity.Favourite
+import com.example.vibestore.data.local.entity.Notification
 import com.example.vibestore.data.local.entity.Order
 import com.example.vibestore.data.local.entity.UserLocation
 
@@ -23,8 +25,9 @@ import com.example.vibestore.data.local.entity.UserLocation
         Order::class,
         UserLocation::class,
         Checkout::class,
+        Notification::class
     ],
-    version = 5
+    version = 4
 )
 @TypeConverters(Converter::class)
 abstract class VibeStoreRoomDatabase : RoomDatabase(){
@@ -33,6 +36,7 @@ abstract class VibeStoreRoomDatabase : RoomDatabase(){
     abstract fun orderDao(): OrderDao
     abstract fun checkoutDao(): CheckoutDao
     abstract fun userLocationDao(): UserLocationDao
+    abstract fun notificationDao(): NotificationDao
 
     companion object {
         @Volatile

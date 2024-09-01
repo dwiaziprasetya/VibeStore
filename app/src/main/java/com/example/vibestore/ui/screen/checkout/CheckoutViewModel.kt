@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.vibestore.data.local.entity.Cart
 import com.example.vibestore.data.local.entity.Checkout
+import com.example.vibestore.data.local.entity.Notification
 import com.example.vibestore.data.local.entity.Order
 import com.example.vibestore.data.local.entity.UserLocation
 import com.example.vibestore.data.repository.VibeStoreRepository
@@ -24,6 +25,24 @@ class CheckoutViewModel(
 
     fun selectCoupon(id: Int) {
         _selectedCouponId.value = id
+    }
+
+    fun addNotification(
+        message: String,
+        notificationType: String,
+        firstProductImage: String,
+        firstProductName: String,
+        quantityCheckout: Int,
+    ) {
+        val notification = Notification(
+            message = message,
+            notificationType = notificationType,
+            firstProductImage = firstProductImage,
+            firstProductName = firstProductName,
+            quantityCheckout = quantityCheckout
+        )
+
+        viewModelScope.launch { repository.addNotification(notification) }
     }
 
     fun addToCheckout(

@@ -14,6 +14,7 @@ import com.example.vibestore.ui.screen.foryou.ForYouViewModel
 import com.example.vibestore.ui.screen.home.HomeViewModel
 import com.example.vibestore.ui.screen.main.MainViewModel
 import com.example.vibestore.ui.screen.mycart.MyCartViewModel
+import com.example.vibestore.ui.screen.notification.NotificationViewModel
 import com.example.vibestore.ui.screen.ourproduct.OurProductViewModel
 import com.example.vibestore.ui.screen.payment.PaymentViewModel
 import com.example.vibestore.ui.screen.payment.success_payment.SuccessPaymentViewModel
@@ -78,8 +79,10 @@ class ViewModelFactory(
             PaymentViewModel(repository) as T
         } else if (modelClass.isAssignableFrom(SuccessPaymentViewModel::class.java)) {
             SuccessPaymentViewModel(repository) as T
-        } else {
+        } else if (modelClass.isAssignableFrom(YourOrderViewModel::class.java)) {
             YourOrderViewModel(repository) as T
+        } else {
+            NotificationViewModel(repository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
     }

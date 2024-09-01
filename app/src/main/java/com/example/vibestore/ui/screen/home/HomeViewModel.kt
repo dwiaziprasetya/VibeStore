@@ -9,4 +9,5 @@ class HomeViewModel(
     private val repository: VibeStoreRepository
 ) : ViewModel(){
     val cartItems: LiveData<List<Cart>> = repository.getAllCartItems()
+    val unreadNotificationCount: LiveData<Int> = repository.getUnReadNotification()
 }

@@ -61,10 +61,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.example.vibestore.R
+import com.example.vibestore.data.local.entity.Notification
 import com.example.vibestore.helper.DialogHelper
 import com.example.vibestore.helper.ViewModelFactory
 import com.example.vibestore.ui.navigation.model.Screen
-import com.example.vibestore.ui.screen.registration.login.LoginViewModel
 import com.example.vibestore.ui.theme.VibeStoreTheme
 import com.example.vibestore.ui.theme.poppinsFontFamily
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -74,7 +74,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun WelcomeScreen(
     navController: NavHostController,
-    viewModel: LoginViewModel = viewModel(
+    viewModel: WelcomeViewModel = viewModel(
         factory = ViewModelFactory.getInstance(
             context = LocalContext.current
         )
@@ -125,6 +125,14 @@ fun WelcomeScreen(
                         textContent = "Please wait"
                     )
                     delay(1000)
+                    viewModel.addNotification(
+                        notification = Notification(
+                            notificationType = "Info",
+                            message = "Welcome to Vibe Store🎇",
+                            messageDetail = "We’re thrilled to have you on board! " +
+                                    "Explore amazing deals and start shopping now."
+                        )
+                    )
                     dialog?.dismissWithAnimation()
                     dialog = DialogHelper.showDialogSuccess(
                         context = context,

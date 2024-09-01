@@ -5,7 +5,6 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.slideInVertically
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -91,21 +90,12 @@ fun ProfileScreen(
                     containerColor = MaterialTheme.colorScheme.background
                 ),
                 title = {
-                    Row {
-                        Text(
-                            text = stringResource(R.string.your_profile),
-                            fontFamily = poppinsFontFamily,
-                            fontSize = 20.sp,
-                            fontWeight = FontWeight.SemiBold
-                        )
-                        Image(
-                            painter = painterResource(R.drawable.logo),
-                            contentDescription = null,
-                            modifier = Modifier
-                                .padding(start = 8.dp)
-                                .size(30.dp)
-                        )
-                    }
+                    Text(
+                        text = stringResource(R.string.your_profile),
+                        fontFamily = poppinsFontFamily,
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.SemiBold
+                    )
                 }
             )
         }
