@@ -19,7 +19,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.vibestore.helper.ViewModelFactory
 import com.example.vibestore.ui.common.UiState
 import com.example.vibestore.ui.component.AnimatedShimmerProduct
-import com.example.vibestore.ui.component.ProductCard
+import com.example.vibestore.ui.component.ProductCard2
 
 @Composable
 fun ElectronicProductScreen(
@@ -59,12 +59,20 @@ fun ElectronicProductScreen(
                     modifier = Modifier.heightIn(min = gridHeight, max = gridHeight),
                 ) {
                     items(product){
-                        ProductCard(
+                        ProductCard2(
                             image = it.image,
                             title = it.title,
                             modifier = Modifier.clickable {
                                 navigateToDetail(it.id)
-                            }
+                            },
+                            addToCart = {
+                                viewModel.addToCart(
+                                    product = it
+                                )
+                            },
+                            category = it.category,
+                            price = it.price.toString(),
+                            rating = it.rating.rate.toString()
                         )
                     }
                 }

@@ -23,6 +23,7 @@ import com.example.vibestore.helper.ViewModelFactory
 import com.example.vibestore.ui.common.UiState
 import com.example.vibestore.ui.component.AnimatedShimmerProduct
 import com.example.vibestore.ui.component.ProductCard
+import com.example.vibestore.ui.component.ProductCard2
 import com.example.vibestore.ui.theme.VibeStoreTheme
 
 @Composable
@@ -63,11 +64,19 @@ fun AllProductScreen(
                     modifier = Modifier.heightIn(min = gridHeight, max = gridHeight)
                 ) {
                     items(product){
-                        ProductCard(
+                        ProductCard2(
                             image = it.image,
                             title = it.title,
+                            category = it.category,
+                            price = it.price.toString(),
+                            rating = it.rating.rate.toString(),
                             modifier = Modifier.clickable {
                                 navigateToDetail(it.id)
+                            },
+                            addToCart = {
+                                viewModel.addToCart(
+                                    product = it
+                                )
                             }
                         )
                     }

@@ -18,7 +18,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.vibestore.helper.ViewModelFactory
 import com.example.vibestore.ui.common.UiState
 import com.example.vibestore.ui.component.AnimatedShimmerProduct
-import com.example.vibestore.ui.component.ProductCard
+import com.example.vibestore.ui.component.ProductCard2
 import com.example.vibestore.ui.theme.VibeStoreTheme
 
 @Composable
@@ -49,12 +49,16 @@ fun ForYouScreen(
                 val forYouProduct = uiState.data
                 LazyRow {
                     items(forYouProduct) { product ->
-                        ProductCard(
+                        ProductCard2(
                             image = product.image,
                             title = product.title,
                             modifier = Modifier.clickable {
                                 navigateToDetail(product.id)
-                            }
+                            },
+                            rating = product.rating.rate.toString(),
+                            price = product.price.toString(),
+                            category = product.category,
+                            addToCart = { viewModel.addToCart(product) }
                         )
                     }
                 }

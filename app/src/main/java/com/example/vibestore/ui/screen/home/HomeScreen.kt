@@ -169,7 +169,7 @@ fun HomeScreen(
                 title = stringResource(R.string.categories),
                 content = {
                     TabCategory(
-                        gridHeight = 548.dp,
+                        gridHeight = 640.dp,
                         limit = 4,
                         navigateToDetail = { productId ->
                             navcontroller.navigate(Screen.DetailProduct.createRoute(productId))

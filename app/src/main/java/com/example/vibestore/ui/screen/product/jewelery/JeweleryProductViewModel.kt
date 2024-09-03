@@ -4,8 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.vibestore.model.ProductResponseItem
+import com.example.vibestore.data.local.entity.Cart
 import com.example.vibestore.data.repository.VibeStoreRepository
+import com.example.vibestore.model.ProductResponseItem
 import com.example.vibestore.ui.common.UiState
 import kotlinx.coroutines.launch
 
@@ -23,6 +24,20 @@ class JeweleryProductViewModel(private val repository: VibeStoreRepository): Vie
             } catch (_: Exception) {
                 _uiState.value = UiState.Error("Unknown Error")
             }
+        }
+    }
+
+    fun addToCart(product: ProductResponseItem) {
+        viewModelScope.launch{
+            val cartItems = Cart(
+                productId = product.id,
+                productName = product.title,
+                productPrice = product.price.toString(),
+                productImage = product.image,
+                productCategory = product.category,
+                productQuantity = 1
+            )
+            repository.addToCart(cartItems)
         }
     }
 }

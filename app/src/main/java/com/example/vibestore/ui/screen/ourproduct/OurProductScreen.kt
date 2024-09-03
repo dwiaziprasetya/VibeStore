@@ -1,5 +1,9 @@
 package com.example.vibestore.ui.screen.ourproduct
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,6 +20,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -33,7 +38,7 @@ import com.example.vibestore.helper.ViewModelFactory
 import com.example.vibestore.model.ProductResponseItem
 import com.example.vibestore.ui.common.UiState
 import com.example.vibestore.ui.component.AnimatedShimmerProduct
-import com.example.vibestore.ui.component.ProductCard
+import com.example.vibestore.ui.component.ProductCard2
 import com.example.vibestore.ui.component.ProductNotFoundAnimation
 import com.example.vibestore.ui.component.SearchBar
 import com.example.vibestore.ui.navigation.model.Screen
@@ -50,6 +55,12 @@ fun OurProductScreen(
 ) {
     val sortValue by remember { mutableStateOf("asc") }
     val uiState by viewModel.uiState.observeAsState(initial = UiState.Loading)
+
+    val visible = remember { mutableStateOf(false) }
+
+    LaunchedEffect(uiState) {
+        visible.value = uiState is UiState.Success
+    }
 
     Scaffold(
         contentWindowInsets = WindowInsets(0, 0, 0, 0),
@@ -96,18 +107,30 @@ fun OurProductScreen(
                         .fillMaxSize()
                 ) {
                     items(items = products) { item ->
-                        ProductCard(
-                            image = item.image,
-                            title = item.title,
-                            modifier = Modifier
-                                .clickable {
-                                    navcontroller.navigate(
-                                        Screen
-                                            .DetailProduct
-                                            .createRoute(item.id)
-                                    )
-                                }
-                        )
+                        AnimatedVisibility(
+                            visible = visible.value,
+                            enter = slideInVertically(
+                                initialOffsetY = { -it },
+                                animationSpec = tween(durationMillis = 300)
+                            ) + fadeIn(animationSpec = tween(durationMillis = 300))
+                        ) {
+                            ProductCard2(
+                                image = item.image,
+                                title = item.title,
+                                modifier = Modifier
+                                    .clickable {
+                                        navcontroller.navigate(
+                                            Screen
+                                                .DetailProduct
+                                                .createRoute(item.id)
+                                        )
+                                    },
+                                rating = item.rating.rate.toString(),
+                                price = item.price.toString(),
+                                category = item.category,
+                                addToCart = { viewModel.addToCart(item) }
+                            )
+                        }
                     }
                 }
             }
