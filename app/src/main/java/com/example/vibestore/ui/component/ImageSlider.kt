@@ -100,9 +100,9 @@ fun PageIndicator(
     selectedColor: Color = MaterialTheme.colorScheme.primary,
     defaultColor: Color = Color.LightGray,
     defaultRadius: Dp = 10.dp,
-    selectedRadius: Dp = 30.dp,
+    selectedRadius: Dp = 25.dp,
     space: Dp = 8.dp,
-    animationDurationMillis: Int = 300
+    animationDurationMillis: Int = 400
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
