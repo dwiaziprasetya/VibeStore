@@ -36,7 +36,7 @@ import androidx.compose.ui.unit.sp
 import com.example.vibestore.R
 import com.example.vibestore.data.local.DataDummy
 import com.example.vibestore.model.Coupon
-import com.example.vibestore.ui.component.CouponCard
+import com.example.vibestore.ui.component.CouponCard2
 import com.example.vibestore.ui.theme.VibeStoreTheme
 import com.example.vibestore.ui.theme.poppinsFontFamily
 
@@ -106,12 +106,11 @@ fun CouponContent(
                     animationSpec = tween(durationMillis = 300)
                 ) + fadeIn(animationSpec = tween(durationMillis = 300))
             ) {
-                CouponCard(
+                CouponCard2(
                     discount = coupon.discountedPrice,
                     description = coupon.description,
                     expiredDate = coupon.expiredDate,
-                    color1 = coupon.color1,
-                    color2 = coupon.color2
+                    couponCode = coupon.couponCode
                 )
             }
         }

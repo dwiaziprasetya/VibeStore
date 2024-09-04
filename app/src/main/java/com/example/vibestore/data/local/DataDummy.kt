@@ -65,17 +65,20 @@ object DataDummy {
             description = "Applies to get free shipping",
             expiredDate = "31 Desember 2024",
             color1 = Color(0xFF9733EE),
-            color2 = Color(0xFFDA22FF)
+            color2 = Color(0xFFDA22FF),
+            couponCode = "FWHWFW45A"
         ),
         Coupon(
             discountedPrice = "25%",
             description = "Applies to get 25% off",
             expiredDate = "31 Desember 2024",
             color1 = Color(0xFFFFA726),
-            color2 = Color(0xFFFFD54F)
+            color2 = Color(0xFFFFD54F),
+            couponCode = "ADERTS4TA"
         ),
         Coupon(
             discountedPrice = "50%",
+            couponCode = "NHJASE32Q",
             description = "Applies to get 50% off",
             expiredDate = "31 Desember 2024",
             color1 = Color(0xFF00C9FF),
