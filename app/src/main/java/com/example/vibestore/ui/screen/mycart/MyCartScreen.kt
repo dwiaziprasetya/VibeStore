@@ -87,7 +87,6 @@ fun MyCartScreen(
     var checkedValue by remember { mutableStateOf(false) }
     var checkedAllValue by remember { mutableStateOf(false) }
     val selectedCartItems by viewModel.selectedCartItems.observeAsState(emptySet())
-    val context = LocalContext.current
     val isCheckoutEnabled = selectedCartItems.isNotEmpty()
 
     LaunchedEffect(cartItems.size, selectedCartItems.size) {
@@ -168,7 +167,7 @@ fun MyCartScreen(
                     },
                     checkedAllValue = checkedAllValue,
                     addOrder = {
-                        viewModel.createOrderFromSelectedItems(context = context)
+                        viewModel.createOrderFromSelectedItems()
                         navHostController.navigate(Screen.Checkout.createRoute(-1))
                     },
                     onCheckedAllChange = { isChecked ->

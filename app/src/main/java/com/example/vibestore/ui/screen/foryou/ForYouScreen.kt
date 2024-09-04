@@ -7,19 +7,20 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.vibestore.helper.ViewModelFactory
 import com.example.vibestore.ui.common.UiState
 import com.example.vibestore.ui.component.AnimatedShimmerProduct
 import com.example.vibestore.ui.component.ProductCard2
-import com.example.vibestore.ui.theme.VibeStoreTheme
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 @Composable
 fun ForYouScreen(
@@ -28,8 +29,11 @@ fun ForYouScreen(
         factory = ViewModelFactory.getInstance(
             context = LocalContext.current,
         )
-    )
+    ),
+    snackbarHostState: SnackbarHostState,
+    scope: CoroutineScope
 ) {
+
     viewModel.uiState.observeAsState(initial = UiState.Loading).value.let { uiState ->
         when (uiState) {
             is UiState.Loading -> {
@@ -58,7 +62,14 @@ fun ForYouScreen(
                             rating = product.rating.rate.toString(),
                             price = product.price.toString(),
                             category = product.category,
-                            addToCart = { viewModel.addToCart(product) }
+                            addToCart = {
+                                viewModel.addToCart(product)
+                                scope.launch {
+                                    snackbarHostState.showSnackbar(
+                                        message = "Product added to cart",
+                                    )
+                                }
+                            },
                         )
                     }
                 }
@@ -69,13 +80,5 @@ fun ForYouScreen(
                 }
             }
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun ForYouScreenPreview() {
-    VibeStoreTheme {
-        ForYouScreen(navigateToDetail = {})
     }
 }

@@ -59,17 +59,28 @@ fun ExpandingText(
         }
     }
 
-
     val annotatedString = buildAnnotatedString {
-        val startIndex = finalText.indexOf("...Show More")
-        if (startIndex != -1) {
-            val endIndex = startIndex + "...Show More".length
-            append(finalText.substring(0, startIndex))
+        val showMoreIndex = finalText.indexOf("...Show More")
+        val showLessIndex = finalText.indexOf("Show less")
+
+        if (showMoreIndex != -1) {
+            val endIndex = showMoreIndex + "...Show More".length
+            append(finalText.substring(0, showMoreIndex))
             withStyle(style = SpanStyle(
                 color = MaterialTheme.colorScheme.primary,
                 fontWeight = FontWeight.SemiBold)
             ) {
-                append(finalText.substring(startIndex, endIndex))
+                append(finalText.substring(showMoreIndex, endIndex))
+            }
+            append(finalText.substring(endIndex))
+        } else if (showLessIndex != -1) {
+            val endIndex = showLessIndex + "Show less".length
+            append(finalText.substring(0, showLessIndex))
+            withStyle(style = SpanStyle(
+                color = MaterialTheme.colorScheme.primary,
+                fontWeight = FontWeight.SemiBold)
+            ) {
+                append(finalText.substring(showLessIndex, endIndex))
             }
             append(finalText.substring(endIndex))
         } else {

@@ -197,7 +197,9 @@ fun HomeScreen(
                     ForYouScreen(
                         navigateToDetail = { productId ->
                             navcontroller.navigate(Screen.DetailProduct.createRoute(productId))
-                        }
+                        },
+                        snackbarHostState = snackbarHostState,
+                        scope = scope
                     )
                 },
                 navigateToSeeAll = {}

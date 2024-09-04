@@ -2,7 +2,6 @@ package com.example.vibestore.ui.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -22,12 +21,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -83,7 +80,7 @@ fun ProductCard2(
     category: String,
     addToCart: () -> Unit,
 ) {
-    var ratingState by remember { mutableFloatStateOf(rating.toFloat()) } //default rating will be 1
+    val ratingState by remember { mutableFloatStateOf(rating.toFloat()) }
 
     Column(
         modifier = modifier
@@ -134,9 +131,6 @@ fun ProductCard2(
                 RatingBar(
                     modifier = Modifier.offset(y = (-2).dp),
                     rating = ratingState,
-                    onRatingChanged = {
-                        ratingState = it
-                    }
                 )
             }
             Row(
@@ -159,8 +153,8 @@ fun ProductCard2(
                     modifier = Modifier
                         .clickable { addToCart() }
                         .background(
-                            color = MaterialTheme.colorScheme.primary, // Warna latar belakang
-                            shape = RoundedCornerShape(10.dp) // Bentuk latar belakang, misalnya lingkaran
+                            color = MaterialTheme.colorScheme.primary,
+                            shape = RoundedCornerShape(10.dp)
                         )
                         .padding(6.dp)
                 )
@@ -198,7 +192,6 @@ private fun ProductCardPreview() {
 @Composable
 fun RatingBar(
     rating: Float,
-    onRatingChanged: (Float) -> Unit,
     modifier: Modifier = Modifier,
     starCount: Int = 5,
     filledStarColor: Color = Color("#FFB000".toColorInt()),
@@ -217,18 +210,6 @@ fun RatingBar(
                 tint = iconTint,
                 modifier = Modifier
                     .size(15.dp)
-                    .clickable {
-                        onRatingChanged(i.toFloat())
-                    }
-                    .pointerInput(Unit) {
-                        detectTapGestures(
-                            onPress = {
-                                val position = it.x / size.width
-                                val newRating = i - 1 + position
-                                onRatingChanged(newRating.coerceIn(0f, starCount.toFloat()))
-                            }
-                        )
-                    }
             )
         }
     }
@@ -237,10 +218,9 @@ fun RatingBar(
 @Preview(showBackground = true)
 @Composable
 fun RatingBarPreview() {
-    var rating by remember { mutableFloatStateOf(3.5f) }
+    val rating by remember { mutableFloatStateOf(3.5f) }
 
     RatingBar(
         rating = rating,
-        onRatingChanged = { newRating -> rating = newRating }
     )
 }

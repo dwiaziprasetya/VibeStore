@@ -1,7 +1,5 @@
 package com.example.vibestore.ui.screen.mycart
 
-import android.content.Context
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -41,7 +39,7 @@ class MyCartViewModel(
         }
     }
 
-    fun createOrderFromSelectedItems(context: Context) {
+    fun createOrderFromSelectedItems() {
         val selectedItems = _selectedCartItems.value.orEmpty()
         if (selectedItems.isNotEmpty()) {
             val totalPrice = selectedItems.sumOf { it.productPrice.toDouble() * it.productQuantity }
@@ -51,17 +49,12 @@ class MyCartViewModel(
             )
             viewModelScope.launch {
                 repository.addOrder(order)
-
-                Toast.makeText(context, "Order created successfully", Toast.LENGTH_SHORT).show()
-
                 selectedItems.forEach { cartItem ->
                     repository.deleteCartById(cartItem.id)
                 }
 
                 _selectedCartItems.value = emptySet()
             }
-        } else {
-            Toast.makeText(context, "No items selected", Toast.LENGTH_SHORT).show()
         }
     }
 
