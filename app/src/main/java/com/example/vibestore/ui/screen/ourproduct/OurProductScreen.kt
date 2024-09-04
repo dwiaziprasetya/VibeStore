@@ -1,9 +1,5 @@
 package com.example.vibestore.ui.screen.ourproduct
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,13 +14,14 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -44,6 +41,7 @@ import com.example.vibestore.ui.component.SearchBar
 import com.example.vibestore.ui.navigation.model.Screen
 import com.example.vibestore.ui.theme.VibeStoreTheme
 import com.example.vibestore.ui.theme.poppinsFontFamily
+import kotlinx.coroutines.launch
 
 
 @Composable
@@ -56,13 +54,13 @@ fun OurProductScreen(
     val sortValue by remember { mutableStateOf("asc") }
     val uiState by viewModel.uiState.observeAsState(initial = UiState.Loading)
 
-    val visible = remember { mutableStateOf(false) }
-
-    LaunchedEffect(uiState) {
-        visible.value = uiState is UiState.Success
-    }
+    val snackbarHostState = remember { androidx.compose.material3.SnackbarHostState() }
+    val scope = rememberCoroutineScope()
 
     Scaffold(
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState)
+        },
         contentWindowInsets = WindowInsets(0, 0, 0, 0),
         modifier = Modifier.statusBarsPadding(),
         topBar = {
@@ -107,30 +105,27 @@ fun OurProductScreen(
                         .fillMaxSize()
                 ) {
                     items(items = products) { item ->
-                        AnimatedVisibility(
-                            visible = visible.value,
-                            enter = slideInVertically(
-                                initialOffsetY = { -it },
-                                animationSpec = tween(durationMillis = 300)
-                            ) + fadeIn(animationSpec = tween(durationMillis = 300))
-                        ) {
-                            ProductCard2(
-                                image = item.image,
-                                title = item.title,
-                                modifier = Modifier
-                                    .clickable {
-                                        navcontroller.navigate(
-                                            Screen
-                                                .DetailProduct
-                                                .createRoute(item.id)
-                                        )
-                                    },
-                                rating = item.rating.rate.toString(),
-                                price = item.price.toString(),
-                                category = item.category,
-                                addToCart = { viewModel.addToCart(item) }
-                            )
-                        }
+                        ProductCard2(
+                            image = item.image,
+                            title = item.title,
+                            modifier = Modifier
+                                .clickable {
+                                    navcontroller.navigate(
+                                        Screen
+                                            .DetailProduct
+                                            .createRoute(item.id)
+                                    )
+                                },
+                            rating = item.rating.rate.toString(),
+                            price = item.price.toString(),
+                            category = item.category,
+                            addToCart = {
+                                viewModel.addToCart(item)
+                                scope.launch {
+                                    snackbarHostState.showSnackbar("Product added to cart")
+                                }
+                            }
+                        )
                     }
                 }
             }

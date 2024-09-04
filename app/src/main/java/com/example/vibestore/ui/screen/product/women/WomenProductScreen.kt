@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.Text
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
@@ -20,6 +21,8 @@ import com.example.vibestore.helper.ViewModelFactory
 import com.example.vibestore.ui.common.UiState
 import com.example.vibestore.ui.component.AnimatedShimmerProduct
 import com.example.vibestore.ui.component.ProductCard2
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 @Composable
 fun WomenProductScreen(
@@ -33,7 +36,9 @@ fun WomenProductScreen(
             context = LocalContext.current,
             limit = limit
         )
-    )
+    ),
+    snackbarHostState: SnackbarHostState,
+    scope: CoroutineScope
 ) {
     viewmodel.uiState.observeAsState(initial = UiState.Loading).value.let { uiState ->
         when (uiState) {
@@ -69,7 +74,14 @@ fun WomenProductScreen(
                             rating = it.rating.rate.toString(),
                             price = it.price.toString(),
                             category = it.category,
-                            addToCart = { viewmodel.addToCart(it) }
+                            addToCart = {
+                                viewmodel.addToCart(it)
+                                scope.launch {
+                                    snackbarHostState.showSnackbar(
+                                        message = "Product added to cart"
+                                    )
+                                }
+                            }
                         )
                     }
                 }

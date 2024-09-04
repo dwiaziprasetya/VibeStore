@@ -10,9 +10,11 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
@@ -25,6 +27,8 @@ import com.example.vibestore.ui.component.AnimatedShimmerProduct
 import com.example.vibestore.ui.component.ProductCard
 import com.example.vibestore.ui.component.ProductCard2
 import com.example.vibestore.ui.theme.VibeStoreTheme
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 @Composable
 fun AllProductScreen(
@@ -37,7 +41,9 @@ fun AllProductScreen(
         factory = ViewModelFactory.getInstance(
             context = LocalContext.current
         )
-    )
+    ),
+    snackbarHostState: SnackbarHostState,
+    scope: CoroutineScope
 ) {
     viewModel.uiState.observeAsState(initial = UiState.Loading).value.let { uiState ->
         when(uiState) {
@@ -77,6 +83,9 @@ fun AllProductScreen(
                                 viewModel.addToCart(
                                     product = it
                                 )
+                                scope.launch {
+                                    snackbarHostState.showSnackbar("Product added to cart")
+                                }
                             }
                         )
                     }
@@ -95,8 +104,12 @@ fun AllProductScreen(
 @Composable
 private fun AllProductScreenPreview() {
     VibeStoreTheme {
-        AllProductScreen(limit = 20, navigateToDetail = {},
-            height = 548.dp)
+        AllProductScreen(
+            limit = 20, navigateToDetail = {},
+            height = 548.dp,
+            snackbarHostState = SnackbarHostState(),
+            scope = rememberCoroutineScope()
+        )
     }
 }
 

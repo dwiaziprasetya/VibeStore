@@ -18,6 +18,7 @@ import androidx.compose.material.TabRowDefaults
 import androidx.compose.material.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material.Text
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -36,6 +37,7 @@ import com.example.vibestore.ui.screen.product.men.MenProductScreen
 import com.example.vibestore.ui.screen.product.women.WomenProductScreen
 import com.example.vibestore.ui.theme.VibeStoreTheme
 import com.example.vibestore.ui.theme.poppinsFontFamily
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -46,6 +48,8 @@ fun TabCategory(
     heightContent: Dp = Dp.Unspecified,
     limit: Int = 20,
     gridHeight: Dp = Dp.Unspecified,
+    snackbarHostState: SnackbarHostState,
+    scope: CoroutineScope,
     navigateToDetail: (Int) -> Unit
 ) {
 
@@ -131,34 +135,44 @@ fun TabCategory(
                             gridHeight, limit,
                             navigateToDetail = navigateToDetail,
                             count = count,
-                            height = heightContent
+                            height = heightContent,
+                            snackbarHostState = snackbarHostState,
+                            scope = scope
                         )
                     } 1 -> {
                         MenProductScreen(
                             gridHeight, limit,
                             navigateToDetail = navigateToDetail,
-                            height = heightContent
+                            height = heightContent,
+                            scope = scope,
+                            snackbarHostState = snackbarHostState
                         )
                     } 2 -> {
                         WomenProductScreen(
                             gridHeight, limit,
                             navigateToDetail = navigateToDetail,
                             count = count,
-                            height = heightContent
+                            height = heightContent,
+                            scope = scope,
+                            snackbarHostState = snackbarHostState
                         )
                     } 3 -> {
                         ElectronicProductScreen(
                             gridHeight, limit,
                             navigateToDetail = navigateToDetail,
                             count = count,
-                            height = heightContent
+                            height = heightContent,
+                            scope = scope,
+                            snackbarHostState = snackbarHostState
                         )
                     } 4 -> {
                         JeweleryProductScreen(
                             gridHeight, limit,
                             navigateToDetail = navigateToDetail,
                             count = count,
-                            height = heightContent
+                            height = heightContent,
+                            scope = scope,
+                            snackbarHostState = snackbarHostState
                         )
                     }
                 }
@@ -171,6 +185,10 @@ fun TabCategory(
 @Composable
 private fun TabCategoryPreview() {
     VibeStoreTheme {
-        TabCategory(navigateToDetail = {})
+        TabCategory(
+            navigateToDetail = {},
+            snackbarHostState = SnackbarHostState(),
+            scope = rememberCoroutineScope()
+        )
     }
 }

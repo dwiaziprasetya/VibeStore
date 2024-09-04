@@ -1,7 +1,5 @@
 package com.example.vibestore.ui.screen.detail
 
-import android.content.Context
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -48,7 +46,7 @@ class DetailViewModel(
         }
     }
 
-    fun addToFavourite(product: ProductResponseItem, context: Context) {
+    fun addToFavourite(product: ProductResponseItem) {
         viewModelScope.launch {
             val favourite = Favourite(
                 productId = product.id,
@@ -59,7 +57,6 @@ class DetailViewModel(
                 productQuantity = 1
             )
             repository.addToFavourite(favourite)
-            Toast.makeText(context, "Product added to favourites", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -68,10 +65,9 @@ class DetailViewModel(
     }
 
 
-    fun deleteFavouriteById(favourite: Favourite, context: Context) {
+    fun deleteFavouriteById(favourite: Favourite) {
         viewModelScope.launch {
             repository.deleteFavouriteById(favourite.id)
-            Toast.makeText(context, "Product removed from favourites", Toast.LENGTH_SHORT).show()
         }
     }
 }

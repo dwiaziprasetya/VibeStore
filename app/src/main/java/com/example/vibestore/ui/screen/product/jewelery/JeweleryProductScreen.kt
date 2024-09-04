@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
@@ -20,6 +21,8 @@ import com.example.vibestore.helper.ViewModelFactory
 import com.example.vibestore.ui.common.UiState
 import com.example.vibestore.ui.component.AnimatedShimmerProduct
 import com.example.vibestore.ui.component.ProductCard2
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 @Composable
 fun JeweleryProductScreen(
@@ -32,7 +35,9 @@ fun JeweleryProductScreen(
         factory = ViewModelFactory.getInstance(
             context = LocalContext.current
         )
-    )
+    ),
+    snackbarHostState: SnackbarHostState,
+    scope: CoroutineScope
 ) {
     viewModel.uiState.observeAsState(initial = UiState.Loading).value.let { uiState ->
         when (uiState) {
@@ -69,6 +74,11 @@ fun JeweleryProductScreen(
                                 viewModel.addToCart(
                                     product = it
                                 )
+                                scope.launch {
+                                    snackbarHostState.showSnackbar(
+                                        message = "Product added to cart"
+                                    )
+                                }
                             },
                             rating = it.rating.rate.toString(),
                             price = it.price.toString(),

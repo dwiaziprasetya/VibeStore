@@ -20,6 +20,8 @@ import com.example.vibestore.helper.ViewModelFactory
 import com.example.vibestore.ui.common.UiState
 import com.example.vibestore.ui.component.AnimatedShimmerProduct
 import com.example.vibestore.ui.component.ProductCard2
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 @Composable
 fun ElectronicProductScreen(
@@ -32,7 +34,9 @@ fun ElectronicProductScreen(
         factory = ViewModelFactory.getInstance(
             context = LocalContext.current
         )
-    )
+    ),
+    scope: CoroutineScope,
+    snackbarHostState: androidx.compose.material3.SnackbarHostState
 ) {
     viewModel.uiState.observeAsState(initial = UiState.Loading).value.let { uiState ->
         when (uiState) {
@@ -69,6 +73,11 @@ fun ElectronicProductScreen(
                                 viewModel.addToCart(
                                     product = it
                                 )
+                                scope.launch {
+                                    snackbarHostState.showSnackbar(
+                                        message = "Product added to cart"
+                                    )
+                                }
                             },
                             category = it.category,
                             price = it.price.toString(),

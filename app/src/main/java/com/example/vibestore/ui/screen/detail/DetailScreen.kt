@@ -25,11 +25,15 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -54,6 +58,7 @@ import com.example.vibestore.ui.component.AnimatedShimmerDetailProduct
 import com.example.vibestore.ui.component.ExpandingText
 import com.example.vibestore.ui.navigation.model.Screen
 import com.example.vibestore.ui.theme.poppinsFontFamily
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -66,12 +71,17 @@ fun DetailScreen(
         )
     )
 ) {
+    val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
     val context = LocalContext.current
     val uiState by viewModel.uiState.observeAsState(initial = UiState.Loading)
     val favouriteItems by viewModel.favouriteItems.observeAsState(emptyList())
     val isProductFavorited by viewModel.isProductFavorited(productId).observeAsState(false)
 
     Scaffold(
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState)
+        },
         topBar = {
             CenterAlignedTopAppBar(
                 modifier = Modifier
@@ -104,13 +114,22 @@ fun DetailScreen(
                             .clickable {
                                 if (isProductFavorited) {
                                     favouriteItems.find { it.productId == productId }?.let {
-                                        viewModel.deleteFavouriteById(it, context)
+                                        viewModel.deleteFavouriteById(it)
+                                        scope.launch {
+                                            snackbarHostState.showSnackbar(
+                                                message = "Product removed from favourites",
+                                            )
+                                        }
                                     }
                                 } else {
                                     viewModel.addToFavourite(
                                         (uiState as UiState.Success<ProductResponseItem>).data,
-                                        context
                                     )
+                                    scope.launch {
+                                        snackbarHostState.showSnackbar(
+                                            message = "Product added to favourites",
+                                        )
+                                    }
                                 }
                             }
                     )
