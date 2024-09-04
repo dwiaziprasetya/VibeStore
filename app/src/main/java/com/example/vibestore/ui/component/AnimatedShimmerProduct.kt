@@ -8,6 +8,8 @@ import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -29,9 +31,7 @@ import com.example.vibestore.ui.theme.VibeStoreTheme
 import com.example.vibestore.ui.theme.poppinsFontFamily
 
 @Composable
-fun AnimatedShimmerProduct(
-    modifier: Modifier = Modifier
-) {
+fun AnimatedShimmerProduct() {
     val shimmerColors = listOf(
         Color.LightGray.copy(alpha = 0.6f),
         Color.LightGray.copy(alpha = 0.2f),
@@ -67,7 +67,7 @@ fun AnimatedShimmerProduct(
 fun ShimmerGridItem(brush: Brush) {
     Column(
         modifier = Modifier
-            .width(196.dp)
+            .width(160.dp)
             .wrapContentHeight()
             .padding(16.dp),
     ) {
@@ -76,9 +76,9 @@ fun ShimmerGridItem(brush: Brush) {
             contentDescription = "model2",
             modifier = Modifier
                 .padding(bottom = 16.dp)
-                .height(196.dp)
+                .height(160.dp)
                 .clip(RoundedCornerShape(8.dp))
-                .width(196.dp)
+                .width(160.dp)
                 .background(brush)
         )
         Text(
@@ -89,10 +89,68 @@ fun ShimmerGridItem(brush: Brush) {
                     shape = RoundedCornerShape(8.dp)
                 ),
             maxLines = 1,
-            fontSize = 12.sp,
+            fontSize = 10.sp,
             fontFamily = poppinsFontFamily,
             fontWeight = FontWeight.Medium,
         )
+        Text(
+            text = "\t\t\t\t\t\t\t" +
+                    "\t\t\t\t\t\t\t" +
+                    "\t\t\t\t\t\t\t" +
+                    "\t\t\t\t\t\t\t",
+            modifier = Modifier
+                .padding(top = 8.dp)
+                .background(
+                    brush = brush,
+                    shape = RoundedCornerShape(8.dp)
+                ),
+            maxLines = 1,
+            fontSize = 10.sp,
+            fontFamily = poppinsFontFamily,
+            fontWeight = FontWeight.Medium,
+        )
+        Text(
+            text = "\t\t\t\t\t\t\t\t\t\t\t\t\t\t",
+            modifier = Modifier
+                .padding(top = 16.dp)
+                .background(
+                    brush = brush,
+                    shape = RoundedCornerShape(8.dp)
+                ),
+            maxLines = 1,
+            fontSize = 10.sp,
+            fontFamily = poppinsFontFamily,
+            fontWeight = FontWeight.Medium,
+        )
+        Row {
+            Text(
+                text = "\t\t\t\t\t\t",
+                modifier = Modifier
+                    .padding(top = 16.dp)
+                    .background(
+                        brush = brush,
+                        shape = RoundedCornerShape(8.dp)
+                    ),
+                maxLines = 1,
+                fontSize = 10.sp,
+                fontFamily = poppinsFontFamily,
+                fontWeight = FontWeight.Medium,
+            )
+            Spacer(modifier = Modifier.weight(1f))
+            Text(
+                text = "\t\t\t\t\t\t",
+                modifier = Modifier
+                    .padding(top = 16.dp)
+                    .background(
+                        brush = brush,
+                        shape = RoundedCornerShape(8.dp)
+                    ),
+                maxLines = 1,
+                fontSize = 10.sp,
+                fontFamily = poppinsFontFamily,
+                fontWeight = FontWeight.Medium,
+            )
+        }
     }
 }
 

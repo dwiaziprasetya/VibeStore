@@ -14,7 +14,6 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
@@ -104,12 +103,12 @@ fun AllProductScreen(
 @Composable
 private fun AllProductScreenPreview() {
     VibeStoreTheme {
-        AllProductScreen(
-            limit = 20, navigateToDetail = {},
-            height = 548.dp,
-            snackbarHostState = SnackbarHostState(),
-            scope = rememberCoroutineScope()
-        )
+//        AllProductScreen(
+//            limit = 20, navigateToDetail = {},
+//            height = 548.dp,
+//            snackbarHostState = SnackbarHostState(),
+//            scope = rememberCoroutineScope()
+//        )
     }
 }
 
