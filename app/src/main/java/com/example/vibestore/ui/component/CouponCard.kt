@@ -1,5 +1,6 @@
 package com.example.vibestore.ui.component
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -154,6 +155,10 @@ fun CouponCard2(
         elevation = CardDefaults.elevatedCardElevation(
             focusedElevation = 6.dp
         ),
+        border = BorderStroke(
+            width = 0.3.dp,
+            color = MaterialTheme.colorScheme.outline
+        ),
         modifier = modifier
             .fillMaxWidth()
             .height(150.dp),
@@ -177,6 +182,7 @@ fun CouponCard2(
             ) {
                 Text(
                     text = discount,
+                    fontFamily = poppinsFontFamily,
                     color = Color.White,
                     textAlign = TextAlign.Center,
                     fontWeight = FontWeight.Bold,
@@ -200,20 +206,25 @@ fun CouponCard2(
                 Text(
                     text = couponCode,
                     color = Color.Black,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 20.sp,
+                    fontFamily = poppinsFontFamily,
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 22.sp,
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     text = description,
-                    color = Color(0xFF4CAF50),  // Warna hijau untuk highlight
-                    fontSize = 14.sp,
+                    color = Color(0xFF4CAF50),
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Medium,
+                    fontFamily = poppinsFontFamily,
                     modifier = Modifier.weight(1f)
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     text = expiredDate,
                     color = Color.Gray,
+                    fontWeight = FontWeight.Medium,
+                    fontFamily = poppinsFontFamily,
                     fontSize = 14.sp
                 )
             }
