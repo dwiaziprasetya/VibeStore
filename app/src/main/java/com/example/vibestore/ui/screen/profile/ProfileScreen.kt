@@ -141,13 +141,13 @@ fun ProfileScreen(
                             text = username.toString(),
                             fontFamily = poppinsFontFamily,
                             fontWeight = FontWeight.SemiBold,
-                            fontSize = 18.sp,
+                            fontSize = 20.sp,
 
                             )
                         Text(
                             text = "$ 2.341.000",
                             fontFamily = poppinsFontFamily,
-                            fontSize = 14.sp,
+                            fontSize = 16.sp,
                             fontWeight = FontWeight.Medium,
                             color = MaterialTheme.colorScheme.outline,
                             modifier = Modifier

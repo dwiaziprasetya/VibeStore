@@ -10,6 +10,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -83,7 +84,11 @@ fun AllProductScreen(
                                     product = it
                                 )
                                 scope.launch {
-                                    snackbarHostState.showSnackbar("Product added to cart")
+                                    snackbarHostState
+                                        .showSnackbar(
+                                            message = "Product added to cart",
+                                            duration = SnackbarDuration.Short
+                                        )
                                 }
                             }
                         )

@@ -14,6 +14,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -59,7 +60,16 @@ fun OurProductScreen(
 
     Scaffold(
         snackbarHost = {
-            SnackbarHost(hostState = snackbarHostState)
+            SnackbarHost(hostState = snackbarHostState) {
+                Snackbar(
+                    modifier = Modifier.padding(16.dp)
+                ) {
+                    Text(
+                        text = it.visuals.message,
+                        fontFamily = poppinsFontFamily
+                    )
+                }
+            }
         },
         contentWindowInsets = WindowInsets(0, 0, 0, 0),
         modifier = Modifier.statusBarsPadding(),

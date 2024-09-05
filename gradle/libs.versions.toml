@@ -30,6 +30,7 @@ runtimeLivedata = "1.6.5"
 roomCompiler = "2.5.2"
 roomRuntime = "2.5.2"
 roomKTX = "2.5.2"
+playServicesPal = "20.3.0"
 
 
 [libraries]
@@ -71,6 +72,7 @@ library = { module = "com.github.f0ris.sweetalert:library", version.ref = "libra
 logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "loggingInterceptor" }
 material = { module = "com.google.android.material:material", version.ref = "material" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+play-services-pal = { group = "com.google.android.gms", name = "play-services-pal", version.ref = "playServicesPal" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
