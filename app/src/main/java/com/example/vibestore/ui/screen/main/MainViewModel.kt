@@ -1,14 +1,15 @@
 package com.example.vibestore.ui.screen.main
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.example.vibestore.model.LoginResponse
+import androidx.lifecycle.asLiveData
 import com.example.vibestore.data.repository.VibeStoreRepository
-import kotlinx.coroutines.flow.Flow
+import com.example.vibestore.model.LoginResponse
 
 class MainViewModel (
     private val repository: VibeStoreRepository
 ) : ViewModel() {
-    fun getSession() : Flow<LoginResponse> {
-        return repository.getSession()
+    fun getSession() : LiveData<LoginResponse> {
+        return repository.getSession().asLiveData()
     }
 }

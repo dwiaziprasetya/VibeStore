@@ -11,7 +11,12 @@ import com.example.vibestore.ui.theme.VibeStoreTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-        installSplashScreen()
+
+        var keepSplashOnScreen = true
+
+        installSplashScreen().setKeepOnScreenCondition {
+            keepSplashOnScreen
+        }
         enableEdgeToEdge(
             statusBarStyle = SystemBarStyle.light(
                 android.graphics.Color.TRANSPARENT,
@@ -22,7 +27,9 @@ class MainActivity : ComponentActivity() {
         actionBar?.hide()
         setContent {
             VibeStoreTheme(dynamicColor = false){
-                RootNavigationGraph(navController = rememberNavController())
+                RootNavigationGraph(navController = rememberNavController()) {
+                    keepSplashOnScreen = false
+                }
             }
         }
     }

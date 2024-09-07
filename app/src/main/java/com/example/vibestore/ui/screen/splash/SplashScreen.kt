@@ -32,7 +32,6 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.vibestore.R
 import com.example.vibestore.helper.ViewModelFactory
-import com.example.vibestore.ui.navigation.model.Screen
 import com.example.vibestore.ui.screen.main.MainViewModel
 import com.example.vibestore.ui.theme.VibeStoreTheme
 import com.example.vibestore.ui.theme.poppinsFontFamily
@@ -67,16 +66,16 @@ fun SplashScreen(
             )
         )
         delay(500)
-        viewModel.getSession().collect { session ->
-            val startDestination = if (session.token.isNotEmpty()) {
-                Screen.MainNav.route
-            } else {
-                Screen.AuthNav.route
-            }
-            navController.navigate(startDestination) {
-                popUpTo(Screen.Splash.route) { inclusive = true }
-            }
-        }
+//        viewModel.getSession().collect { session ->
+//            val startDestination = if (session.token.isNotEmpty()) {
+//                Screen.MainNav.route
+//            } else {
+//                Screen.AuthNav.route
+//            }
+//            navController.navigate(startDestination) {
+//                popUpTo(Screen.Splash.route) { inclusive = true }
+//            }
+//        }
     }
 
     Box(
