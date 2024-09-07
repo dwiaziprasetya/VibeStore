@@ -94,10 +94,6 @@ fun AddAddressScreen(
 
     var hasLocationPermissions by remember { mutableStateOf(false) }
 
-    RequestLocationPermission {
-        hasLocationPermissions = true
-    }
-
     LaunchedEffect(uiState) {
         if (uiState is UiState.Success && !hasZoomedManually) {
             val location = (uiState as UiState.Success<LatLng>).data
@@ -105,6 +101,10 @@ fun AddAddressScreen(
                 update = CameraUpdateFactory.newLatLngZoom(location, 17f)
             )
         }
+    }
+
+    RequestLocationPermission {
+        hasLocationPermissions = true
     }
 
     LaunchedEffect(Unit) {
@@ -470,13 +470,16 @@ fun BottomSheetContent(
 }
 
 @Composable
-fun RequestLocationPermission(onGranted: () -> Unit) {
+fun RequestLocationPermission(onPermissionGranted: () -> Unit) {
     val context = LocalContext.current
     val permissionLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.RequestPermission(),
-        onResult = { isGranted: Boolean ->
-            if (isGranted) {
-                onGranted()
+        contract = ActivityResultContracts.RequestMultiplePermissions(),
+        onResult = { permissions ->
+            val fineLocationGranted = permissions[Manifest.permission.ACCESS_FINE_LOCATION] ?: false
+            val coarseLocationGranted = permissions[Manifest.permission.ACCESS_COARSE_LOCATION] ?: false
+
+            if (fineLocationGranted || coarseLocationGranted) {
+                onPermissionGranted()
             } else {
                 Toast.makeText(context, "Location permission denied", Toast.LENGTH_SHORT).show()
             }
@@ -484,8 +487,14 @@ fun RequestLocationPermission(onGranted: () -> Unit) {
     )
 
     LaunchedEffect(Unit) {
-        permissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+        permissionLauncher.launch(
+            arrayOf(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            )
+        )
     }
+
 }
 
 @Preview(showBackground = true)
