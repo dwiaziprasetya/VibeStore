@@ -42,124 +42,10 @@ class VibeStoreRepository private constructor(
     private val geocoder: Geocoder
 ){
 
+    // Authentification
+
     fun getSession() : Flow<LoginResponse> {
         return pref.getSession()
-    }
-
-    suspend fun addCheckout(checkout: Checkout) {
-        return checkoutDao.insert(checkout)
-    }
-
-    suspend fun addNotification(notification: Notification) {
-        return notificationDao.insert(notification)
-    }
-
-    fun getUnReadNotification(): LiveData<Int> {
-        return notificationDao.getUnreadNotificationCount()
-    }
-
-    suspend fun markAsRead(notificationId: Int) {
-        notificationDao.markAsRead(notificationId)
-    }
-
-    fun getAllNotifications(): LiveData<List<Notification>> {
-        return notificationDao.getAllNotifications()
-    }
-
-    fun getLatestCheckout(): LiveData<Checkout> {
-        return checkoutDao.getLatestCheckout()
-    }
-
-    fun getAllCheckout() : LiveData<List<Checkout>> {
-        return checkoutDao.getAllCheckouts()
-    }
-
-    suspend fun updatePaymentMethodCheckout(checkoutId: Int, paymentMethod: String) {
-        return checkoutDao.updatePaymentMethod(checkoutId, paymentMethod)
-    }
-
-    suspend fun addUsersLocation(userLocation: UserLocation) {
-        return userLocationDao.insertUserLocation(userLocation)
-    }
-
-    suspend fun deleteUsersLocation(id: Int) {
-        return userLocationDao.deleteUserLocation(id)
-    }
-
-    fun getAllUsersLocation(): LiveData<List<UserLocation>> {
-        return userLocationDao.getAllUserLocations()
-    }
-
-    fun getUserLocationById(id: Int): LiveData<UserLocation> {
-        return userLocationDao.getUserLocationById(id)
-    }
-
-    fun getLatestOrder(): LiveData<Order> {
-        return orderDao.getLatestOrder()
-    }
-
-    suspend fun addOrder(order: Order) {
-        return orderDao.insert(order)
-    }
-
-    fun isProductFavorited(productId: Int): LiveData<Boolean> {
-        return favouriteDao.isProductFavorited(productId)
-    }
-
-    suspend fun addToFavourite(favourite: Favourite) {
-        favouriteDao.insert(favourite)
-    }
-
-    fun getAllFavourites(): LiveData<List<Favourite>> {
-        return favouriteDao.getAllFavourites()
-    }
-
-    suspend fun deleteFavouriteById(id: Int) {
-        favouriteDao.deleteById(id)
-    }
-
-    suspend fun updateCartById(cartId: Int, quantity: Int) {
-        cartDao.updateQuantity(cartId, quantity)
-    }
-
-    suspend fun deleteCartById(cartId: Int) {
-        cartDao.deleteById(cartId)
-    }
-
-    fun getAllCartItems() : LiveData<List<Cart>> {
-        return cartDao.getAllCart()
-    }
-
-    suspend fun addToCart(cart: Cart) {
-        val existingCartItem = cartDao.getCartItemByProductId(cart.productId)
-        if (existingCartItem != null){
-            val newQuantity = existingCartItem.productQuantity + cart.productQuantity
-            cartDao.updateQuantity(existingCartItem.id, newQuantity)
-        } else {
-            cartDao.insert(cart)
-        }
-    }
-
-    @SuppressLint("MissingPermission")
-    fun getCurrentLocation() : LiveData<LatLng?> {
-        val liveData = MutableLiveData<LatLng?>()
-        fusedLocationClient.lastLocation.addOnSuccessListener { location ->
-            if (location != null) {
-                Log.d("VibeStoreRepository", "Location: ${location.latitude}, ${location.longitude}")
-                liveData.value = LatLng(location.latitude, location.longitude)
-            } else {
-                Log.d("VibeStoreRepository", "No location found")
-            }
-        }
-        return liveData
-    }
-
-    suspend fun getAddressFromLatLng(latLng: LatLng) : String {
-        return withContext(Dispatchers.IO) {
-            val address = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1)
-            val result = address?.firstOrNull()
-            result?.getAddressLine(0) ?: "Unkown Location"
-        }
     }
 
     fun getUsername() : Flow<String> {
@@ -194,6 +80,136 @@ class VibeStoreRepository private constructor(
     ): UserResponse {
         return apiService.register(username, email, password)
     }
+
+    // Notification
+
+    suspend fun addNotification(notification: Notification) {
+        return notificationDao.insert(notification)
+    }
+
+    fun getAllNotifications(): LiveData<List<Notification>> {
+        return notificationDao.getAllNotifications()
+    }
+
+    suspend fun markAsRead(notificationId: Int) {
+        notificationDao.markAsRead(notificationId)
+    }
+
+    fun getUnReadNotification(): LiveData<Int> {
+        return notificationDao.getUnreadNotificationCount()
+    }
+
+    // Checkout
+
+    suspend fun addCheckout(checkout: Checkout) {
+        return checkoutDao.insert(checkout)
+    }
+
+    fun getLatestCheckout(): LiveData<Checkout> {
+        return checkoutDao.getLatestCheckout()
+    }
+
+    fun getAllCheckout() : LiveData<List<Checkout>> {
+        return checkoutDao.getAllCheckouts()
+    }
+
+    suspend fun updatePaymentMethodCheckout(checkoutId: Int, paymentMethod: String) {
+        return checkoutDao.updatePaymentMethod(checkoutId, paymentMethod)
+    }
+
+    // User Location
+
+    suspend fun addUsersLocation(userLocation: UserLocation) {
+        return userLocationDao.insertUserLocation(userLocation)
+    }
+
+    suspend fun deleteUsersLocation(id: Int) {
+        return userLocationDao.deleteUserLocation(id)
+    }
+
+    fun getAllUsersLocation(): LiveData<List<UserLocation>> {
+        return userLocationDao.getAllUserLocations()
+    }
+
+    fun getUserLocationById(id: Int): LiveData<UserLocation> {
+        return userLocationDao.getUserLocationById(id)
+    }
+
+    @SuppressLint("MissingPermission")
+    fun getCurrentLocation() : LiveData<LatLng?> {
+        val liveData = MutableLiveData<LatLng?>()
+        fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+            if (location != null) {
+                Log.d("VibeStoreRepository", "Location: ${location.latitude}, ${location.longitude}")
+                liveData.value = LatLng(location.latitude, location.longitude)
+            } else {
+                Log.d("VibeStoreRepository", "No location found")
+            }
+        }
+        return liveData
+    }
+
+    suspend fun getAddressFromLatLng(latLng: LatLng) : String {
+        return withContext(Dispatchers.IO) {
+            val address = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1)
+            val result = address?.firstOrNull()
+            result?.getAddressLine(0) ?: "Unkown Location"
+        }
+    }
+
+    // Order
+
+    fun getLatestOrder(): LiveData<Order> {
+        return orderDao.getLatestOrder()
+    }
+
+    suspend fun addOrder(order: Order) {
+        return orderDao.insert(order)
+    }
+
+    // Favourite Product
+
+    fun isProductFavorited(productId: Int): LiveData<Boolean> {
+        return favouriteDao.isProductFavorited(productId)
+    }
+
+    suspend fun addToFavourite(favourite: Favourite) {
+        favouriteDao.insert(favourite)
+    }
+
+    fun getAllFavourites(): LiveData<List<Favourite>> {
+        return favouriteDao.getAllFavourites()
+    }
+
+    suspend fun deleteFavouriteById(id: Int) {
+        favouriteDao.deleteById(id)
+    }
+
+    // Cart Item
+
+    suspend fun updateCartById(cartId: Int, quantity: Int) {
+        cartDao.updateQuantity(cartId, quantity)
+    }
+
+    suspend fun deleteCartById(cartId: Int) {
+        cartDao.deleteById(cartId)
+    }
+
+    fun getAllCartItems() : LiveData<List<Cart>> {
+        return cartDao.getAllCart()
+    }
+
+    suspend fun addToCart(cart: Cart) {
+        val existingCartItem = cartDao.getCartItemByProductId(cart.productId)
+        if (existingCartItem != null){
+            val newQuantity = existingCartItem.productQuantity + cart.productQuantity
+            cartDao.updateQuantity(existingCartItem.id, newQuantity)
+        } else {
+            cartDao.insert(cart)
+        }
+    }
+
+    // Product from API
 
     suspend fun getAllProducts(limit: Int): List<ProductResponseItem> {
         return apiService.getAllProduct(limit)
