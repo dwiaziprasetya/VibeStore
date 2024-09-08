@@ -176,6 +176,7 @@ class VibeStoreRepository private constructor(
         favouriteDao.deleteAllItems()
         orderDao.deleteAllOrders()
         checkoutDao.deleteAllitems()
+        notificationDao.deleteAllNotifications()
         userLocationDao.deleteAllItems()
     }
 

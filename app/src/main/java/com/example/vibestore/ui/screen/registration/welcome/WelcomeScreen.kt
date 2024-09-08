@@ -167,7 +167,7 @@ fun WelcomeScreen(
 
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
-            painter = painterResource(R.drawable.ahahah),
+            painter = painterResource(R.drawable.image_welcome_3),
             contentDescription = null,
             modifier = Modifier
                 .fillMaxSize(),
@@ -216,7 +216,7 @@ fun WelcomeScreen(
                         text = stringResource(R.string.welcome_2),
                         color = Color("#bcbcbc".toColorInt()),
                         fontFamily = poppinsFontFamily,
-                        fontSize = 14.sp
+                        fontSize = 18.sp
                     )
                 }
             }

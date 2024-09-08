@@ -103,7 +103,7 @@ fun HomeScreen(
                                 .size(30.dp)
                         )
                         Text(
-                            text = stringResource(R.string.app_name),
+                            text = "Vibe",
                             fontFamily = poppinsFontFamily,
                             fontWeight = FontWeight.Bold,
                             fontSize = 18.sp,
@@ -111,7 +111,19 @@ fun HomeScreen(
                                 .padding(
                                     start = 8.dp,
                                     top = 8.dp
-                                )
+                                ),
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                        Text(
+                            text = "Store",
+                            fontFamily = poppinsFontFamily,
+                            fontSize = 18.sp,
+                            modifier = Modifier
+                                .padding(
+                                    start = 4.dp,
+                                    top = 8.dp
+                                ),
+                            color = MaterialTheme.colorScheme.primary
                         )
                     }
                 },

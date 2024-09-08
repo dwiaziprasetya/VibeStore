@@ -5,7 +5,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.vibestore.data.repository.VibeStoreRepository
+import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class ProfileViewModel(
     private val repository: VibeStoreRepository
@@ -16,7 +18,9 @@ class ProfileViewModel(
 
     fun logout() {
         viewModelScope.launch {
-            repository.logout()
+            withContext(NonCancellable) {
+                repository.logout()
+            }
         }
     }
 }

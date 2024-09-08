@@ -229,6 +229,7 @@ fun ProfileScreen(
                                     scope.launch {
                                         delay(2000)
                                         dialog?.dismissWithAnimation()
+                                        viewModel.logout()
                                         navController.popBackStack(Screen.MainNav.route, true)
                                         navController.navigate(Screen.AuthNav.route)
                                         Toast
@@ -238,7 +239,6 @@ fun ProfileScreen(
                                                 Toast.LENGTH_SHORT
                                             )
                                             .show()
-                                        viewModel.logout()
                                     }
                                 }
                             )
