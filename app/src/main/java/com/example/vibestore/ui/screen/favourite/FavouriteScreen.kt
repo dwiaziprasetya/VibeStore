@@ -85,12 +85,14 @@ fun FavouriteScreen(
         Box(
             modifier = Modifier
                 .padding(innerPadding)
+                .background(MaterialTheme.colorScheme.background)
                 .fillMaxSize()
         ) {
             if (favouriteItems.isEmpty()) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier
+                        .background(MaterialTheme.colorScheme.background)
                         .align(Alignment.Center)
                 ) {
                     BoxEmptyAnimation(

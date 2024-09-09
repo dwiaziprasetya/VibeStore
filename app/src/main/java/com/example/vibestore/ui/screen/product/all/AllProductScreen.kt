@@ -1,5 +1,6 @@
 package com.example.vibestore.ui.screen.product.all
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,6 +11,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
@@ -50,6 +52,7 @@ fun AllProductScreen(
             is UiState.Loading -> {
                 viewModel.getAllProduct(limit)
                 Box(modifier = Modifier
+                    .background(MaterialTheme.colorScheme.background)
                     .fillMaxWidth()
                     .height(height)
                 ){
@@ -96,7 +99,11 @@ fun AllProductScreen(
                 }
             }
             is UiState.Error -> {
-                Box(modifier = Modifier.fillMaxSize()){
+                Box(
+                    modifier = Modifier
+                        .background(MaterialTheme.colorScheme.background)
+                        .fillMaxSize()
+                ){
                     Text(text = uiState.errorMessage)
                 }
             }

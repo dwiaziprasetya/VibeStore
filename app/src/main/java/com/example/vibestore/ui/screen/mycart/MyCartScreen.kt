@@ -130,12 +130,14 @@ fun MyCartScreen(
         Box(
             modifier = Modifier
                 .padding(innerPadding)
+                .background(MaterialTheme.colorScheme.background)
                 .fillMaxSize()
         ) {
             if (cartItems.isEmpty()) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier
+                        .background(MaterialTheme.colorScheme.background)
                         .align(Alignment.Center)
                 ) {
                     CartEmptyAnimation(

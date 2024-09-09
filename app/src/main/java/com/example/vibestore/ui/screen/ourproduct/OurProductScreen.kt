@@ -1,5 +1,6 @@
 package com.example.vibestore.ui.screen.ourproduct
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -142,11 +143,14 @@ fun OurProductScreen(
             is UiState.Error -> {
                 Box(
                     modifier = Modifier
+                        .background(MaterialTheme.colorScheme.background)
                         .fillMaxSize()
                 ){
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
-                        modifier = Modifier.align(Alignment.Center)
+                        modifier = Modifier
+                            .background(MaterialTheme.colorScheme.background)
+                            .align(Alignment.Center)
                     ) {
                         ProductNotFoundAnimation(
                             modifier = Modifier

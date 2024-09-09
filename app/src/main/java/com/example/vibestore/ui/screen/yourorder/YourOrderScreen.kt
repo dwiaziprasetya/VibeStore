@@ -108,6 +108,7 @@ fun YourOrderScreen(
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier
+                        .background(MaterialTheme.colorScheme.background)
                         .align(Alignment.Center)
                 ) {
                     BoxEmptyAnimation(

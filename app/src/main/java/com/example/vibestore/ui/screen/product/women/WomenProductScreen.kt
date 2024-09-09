@@ -1,5 +1,6 @@
 package com.example.vibestore.ui.screen.product.women
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -9,6 +10,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
@@ -46,11 +48,14 @@ fun WomenProductScreen(
                 viewmodel.getProductByCategory("women's clothing", limit)
                 Box(modifier = Modifier
                     .fillMaxWidth()
+                    .background(MaterialTheme.colorScheme.background)
                     .height(height)
                 ){
                     LazyVerticalGrid(
                         columns = GridCells.Adaptive(196.dp),
-                        modifier = Modifier.heightIn(min = gridHeight, max = gridHeight)
+                        modifier = Modifier
+                            .background(MaterialTheme.colorScheme.background)
+                            .heightIn(min = gridHeight, max = gridHeight)
                     ) {
                         items(count){
                             AnimatedShimmerProduct()
