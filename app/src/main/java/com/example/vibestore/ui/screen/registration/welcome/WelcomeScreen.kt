@@ -232,7 +232,7 @@ fun WelcomeScreen(
                         .padding(vertical = 32.dp)
                         .height(55.dp)
                         .fillMaxWidth(),
-                    shape = RoundedCornerShape(40.dp),
+                    shape = RoundedCornerShape(10.dp),
                     onClick = { isSheetOpen = true },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = MaterialTheme.colorScheme.primary
@@ -306,7 +306,7 @@ fun BottomSheetWelcomeContent(
                     .padding(horizontal = 16.dp)
                     .height(55.dp)
                     .fillMaxWidth(),
-                shape = RoundedCornerShape(40.dp),
+                shape = RoundedCornerShape(10.dp),
                 onClick = onSignUpClick,
                 colors = ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.primary
@@ -332,7 +332,7 @@ fun BottomSheetWelcomeContent(
                     .border(
                         color = MaterialTheme.colorScheme.outline,
                         width = 1.dp,
-                        shape = RoundedCornerShape(40.dp)
+                        shape = RoundedCornerShape(10.dp)
                     ),
                 shape = RoundedCornerShape(40.dp),
                 onClick = onLoginClick,
@@ -390,7 +390,7 @@ fun BottomSheetWelcomeContent(
                     .border(
                         color = MaterialTheme.colorScheme.outline,
                         width = 1.dp,
-                        shape = RoundedCornerShape(40.dp)
+                        shape = RoundedCornerShape(10.dp)
                     ),
                 shape = RoundedCornerShape(40.dp),
                 onClick = onGuestClick,
@@ -430,7 +430,7 @@ fun BottomSheetWelcomeContent(
                     .border(
                         color = MaterialTheme.colorScheme.outline,
                         width = 1.dp,
-                        shape = RoundedCornerShape(40.dp)
+                        shape = RoundedCornerShape(10.dp)
                     ),
                 shape = RoundedCornerShape(40.dp),
                 onClick = onGuestClick,
@@ -470,7 +470,7 @@ fun BottomSheetWelcomeContent(
                     .border(
                         color = MaterialTheme.colorScheme.outline,
                         width = 1.dp,
-                        shape = RoundedCornerShape(40.dp)
+                        shape = RoundedCornerShape(10.dp)
                     ),
                 shape = RoundedCornerShape(40.dp),
                 onClick = onGuestClick,

@@ -209,6 +209,7 @@ fun AddressContent(
             Spacer(modifier = Modifier.size(16.dp))
 
             Button(
+                enabled = selectedItemId != null,
                 modifier = Modifier
                     .height(55.dp)
                     .fillMaxWidth(),

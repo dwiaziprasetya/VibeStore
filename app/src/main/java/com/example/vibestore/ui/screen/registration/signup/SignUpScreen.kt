@@ -347,7 +347,7 @@ fun SignUpContent(
                     .padding(top = 32.dp)
                     .height(55.dp)
                     .fillMaxWidth(),
-                shape = RoundedCornerShape(40.dp),
+                shape = RoundedCornerShape(10.dp),
                 onClick = onSignUpClick,
                 colors = ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.primary
