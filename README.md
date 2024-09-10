@@ -1,11 +1,14 @@
 <h1>Vibe Store 👕🩳</h1>
 
-<p>Vibe Store is a simple Android e-commerce app built using Jetpack Compose and Fake Store API. The app offers a seamless shopping experience with features like product search, checkout system, and more.</p>
+<p>Vibe Store is a simple Android e-commerce app built using Jetpack Compose and Fake Store API. The app offers a seamless shopping experience with features like product search, checkout system, and more.<br><br>
+API : https://fakestoreapi.com/
+</p>
 
 <h2>Features</h2>
 <ul>
   <li>🛒 Checkout System</li>
   <li>🏷️ Coupon Discount</li>
+  <li>✅ MVVM Architecture</li>
   <li>📍 Geocoder</li>
   <li>🔍 Product Search</li>
   <li>🚀 Splash Screen and Animations</li>
