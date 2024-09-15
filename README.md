@@ -40,3 +40,6 @@ API : https://fakestoreapi.com/
 
 <h2>Disclaimer❗</h2>
 <p>This project is a prototype built for simulation and testing purposes.</p>
+
+<h2>INFO ℹ️</h2>
+<p>For Google and Facebook authentication i will update SOON</p>
