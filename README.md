@@ -42,4 +42,4 @@ API : https://fakestoreapi.com/
 <p>This project is a prototype built for simulation and testing purposes.</p>
 
 <h2>INFO ℹ️</h2>
-<p>For Google and Facebook authentication i will update SOON</p>
+<p>For Google and Facebook authentication and other feature will update SOON</p>
