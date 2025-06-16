@@ -1,5 +1,7 @@
 <h1>Vibe Store 👕🩳</h1>
 
+<img src="assets/vibe_store.png" alt="Preview" width="600"/>
+
 <p>Vibe Store is a simple Android e-commerce app built using Jetpack Compose and Fake Store API. The app offers a seamless shopping experience with features like product search, checkout system, and more.<br><br>
 API : https://fakestoreapi.com/
 </p>
