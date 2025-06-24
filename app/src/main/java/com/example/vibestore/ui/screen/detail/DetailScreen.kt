@@ -129,14 +129,23 @@ fun DetailScreen(
                                         }
                                     }
                                 } else {
-                                    viewModel.addToFavourite(
-                                        (uiState as UiState.Success<ProductResponseItem>).data,
-                                    )
-                                    scope.launch {
-                                        snackbarHostState.showSnackbar(
-                                            message = "Product added to favourites",
-                                        )
+
+                                    val data = (uiState as? UiState.Success<ProductResponseItem>)?.data
+                                    if (data != null) {
+                                        viewModel.addToFavourite(data)
+                                        scope.launch {
+                                            snackbarHostState.showSnackbar(
+                                                message = "Product added to favourites",
+                                            )
+                                        }
+                                    } else {
+                                        scope.launch {
+                                            snackbarHostState.showSnackbar(
+                                                message = "Please wait, product is still loading",
+                                            )
+                                        }
                                     }
+
                                 }
                             }
                     )
